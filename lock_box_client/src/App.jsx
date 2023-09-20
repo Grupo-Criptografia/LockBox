@@ -1,19 +1,20 @@
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import {Shift} from "./pages/pageshift.jsx";
+import {ShiftEncrypt} from "./pages/pagesshift/shiftencrypt.jsx";
 import Header from "./components/HeaderComponent.jsx";
+import Menu from "./components/MenuComponent.jsx";
 
 function App() {
     return (
         <div>
-            <h1 className="text-3xl font-bold underline">
-                Lock Box
-            </h1>
             <BrowserRouter>
                 <Header/>
-                <Routes>
-                    <Route path="/" element={<Navigate to="/"/>}/>
-                    <Route path="/shift" element={<Shift/>}/>
-                </Routes>
+                <div className="flex">
+                    <Menu/>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/"/>}/>
+                        <Route path="/shift/encrypt" element={<ShiftEncrypt/>}/>
+                    </Routes>
+                </div>
             </BrowserRouter>
         </div>
     )
