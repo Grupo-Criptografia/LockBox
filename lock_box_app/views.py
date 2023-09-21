@@ -20,11 +20,6 @@ class shiftView(APIView):
         method = request.GET.get('method')
         list_plain_text = []
 
-        print(f"plain_text: {plain_text}")
-        print(f"k: {k}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         try:
 
             if method == 'encrypt':

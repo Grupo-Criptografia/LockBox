@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 class Menu extends Component {
     render() {
         return (
-            <div>
+            <div className="flex h-full">
                 <aside
-                    className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-charcoal border-r rtl:border-r-0 rtl:border-l">
+                    className="flex flex-col w-64 px-5 py-8 overflow-y-auto bg-charcoal border-r rtl:border-r-0 rtl:border-l">
                         <span
                             className="flex title-font text-base font-medium items-center uppercase text-ivory mb-4 md:mb-0">Cryptograms</span>
                     <div className="flex flex-col justify-between flex-1 mt-6">
@@ -35,7 +35,7 @@ class Menu extends Component {
                                                 <li>
                                                     <Link
                                                         className="flex items-center px-3 py-2 text-ivory transition-colors duration-300 transform rounded-lg hover:bg-ivory  hover:text-charcoal"
-                                                        to="/shift">
+                                                        to="/shift/decrypt">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                              fill="currentColor" className="w-5 h-5">
                                                             <path fillRule="evenodd"
@@ -48,7 +48,7 @@ class Menu extends Component {
                                                 <li>
                                                     <Link
                                                         className="flex items-center px-3 py-2 text-ivory transition-colors duration-300 transform rounded-lg hover:bg-ivory  hover:text-charcoal"
-                                                        to="/shift">
+                                                        to="/shift/attack">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                              fill="currentColor" className="w-5 h-5">
                                                             <path fillRule="evenodd"

@@ -4,6 +4,7 @@ const cryptoApi = axios.create({
     baseURL: "http://localhost:8000/api/"
 })
 export const getShift = (data) => {
+    console.log("Api", data);
     return cryptoApi.get("shift/", {
         params: data
     })

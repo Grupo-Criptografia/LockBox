@@ -1,39 +1,29 @@
-import {useEffect, useState} from "react";
-import {getShift} from '../../api/lockbox.api.js'
-import {useForm} from "react-hook-form";
-import * as Yup from "yup";
+import {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import {getShift} from "../../api/lockbox.api.js";
+import * as Yup from 'yup';
 
-export function ShiftEncrypt() {
+
+export function ShiftDecrypt() {
 
     const [data, setData] = useState({
         plain_text: "",
         cipher_text: "",
         k: 0,
         list_plain_text: [],
-        method: "encrypt"
-    })
+    });
 
-    useEffect(() => {
-        console.log(data)
-    }, [data]);
-
-    const {
-        register,
-        handleSubmit,
-        formState: errors
-    } = useForm();
-
-    const onSubmitHandler = async (data) => {
-        data.method = "encrypt"
+    async function onSubmitHandler(values) {
+        values.method = "decrypt";
+        console.log("Values", values)
         try {
-            const response = await getShift(data)
+            const response = await getShift(values)
+            console.log("Response", response)
             setData(response.data)
         } catch (error) {
-            console.log('Error: ', error)
+            console.log("Error", error)
         }
     }
-
 
     return (
         <div className="w-full flex flex-col items-center justify-center">
@@ -44,41 +34,43 @@ export function ShiftEncrypt() {
                         className="md:flex md:items-center md:justify-center md:w-1/2 md:bg-charcoal">
                         <div className="max-h-1/2 px-6 py-6 md:px-8 md:py-0">
 
-                            <h2 className="text-2xl font-semibold text-ivory md:text-ivory"> Information Data
+                            <h2 className="text-2xl font-semibold text-ivory md:text-ivory">
+                                Information Data
                             </h2>
 
                             <p className="mt-2 text-base text-ivory md:text-ivory">
-                                Plain text: {data.plain_text}
+                                Cipher text: {data.cipher_text}
                             </p>
 
                             <p className="mt-2 text-base text-ivory md:text-ivory">
                                 Key: {data.k}
                             </p>
 
-                            {data.cipher_text !== "" && (
+                            {data.plain_text !== "" && (
                                 <p
-                                    className="mt-2 text-base text-ivory md:text-ivory">Cipher text
-                                    : {data.cipher_text} </p>
+                                    className="mt-2 text-base text-ivory md:text-ivory">Plain text
+                                    : {data.plain_text} </p>
                             )}
 
                         </div>
                     </div>
 
                     <div className="flex w-full items-center justify-center pb-6 md:py-0 md:w-1/2">
+
                         <Formik
                             initialValues={
                                 {
-                                    plain_text: '',
+                                    cipher_text: '',
                                     k: ''
                                 }
                             }
 
                             validationSchema={Yup.object({
-                                plain_text: Yup.string()
-                                    .required("Plain text is required"),
+                                cipher_text: Yup.string()
+                                    .required("Cipher text is required"),
                                 k: Yup.number()
-                                    .min(0, "The min number of key is 0")
-                                    .max(25, "The max number key is 25")
+                                    .min(1, "The min number of key is 1")
+                                    .max(26, "The max number key is 26")
                                     .required("Key is required")
                             })}
 
@@ -96,13 +88,13 @@ export function ShiftEncrypt() {
                                                         d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z"/>
                                                 </svg>
                                             </span>
-                                                <Field type="text" name="plain_text"
+                                                <Field type="text" name="cipher_text"
                                                        className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter plain text"/>
+                                                       placeholder="Enter cipher text"/>
                                             </div>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="plain_text"/>
+                                                              name="cipher_text"/>
                                             </div>
                                         </div>
                                     </div>
@@ -140,4 +132,6 @@ export function ShiftEncrypt() {
             </div>
         </div>
     )
+
+
 }
