@@ -41,7 +41,7 @@ export function ShiftEncrypt() {
                 <section
                     className="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
                     <div
-                        className="md:flex md:items-center md:justify-center md:w-1/2 md:bg-charcoal">
+                        className="md:flex md:items-center md:justify-center md:w-1/2 bg-charcoal">
                         <div className="max-h-1/2 px-6 py-6 md:px-8 md:py-0">
 
                             <h2 className="text-2xl font-semibold text-ivory md:text-ivory"> Information Data

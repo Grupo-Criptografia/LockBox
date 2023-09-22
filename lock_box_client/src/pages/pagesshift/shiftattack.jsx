@@ -80,7 +80,7 @@ export function ShiftAttack() {
                 <div className="flex px-2 py-2 flex-col justify-center pb-6 w-full">
                     <span className="text-lg text-charcoal">The posible text plain is:</span>
                     {data.list_plain_text.length > 0 && (
-                        <div className="grid md:grid-cols-3 gap-3 mb-1 ml-1 mr-1 p-2  min-h-[fit-content]">
+                        <div className="grid grid-cols-3 gap-3 mb-1 ml-1 mr-1 p-2">
                             {listRender}
                         </div>
                     )}
