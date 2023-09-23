@@ -1,62 +1,56 @@
 import {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {getShift} from "../../api/lockbox.api.js";
-import * as Yup from 'yup';
+import {getSubstitution} from "../../api/lockbox.api.js";
+import * as Yup from "yup";
 
-
-export function ShiftDecrypt() {
+export function SubsDecrypt() {
 
     const [data, setData] = useState({
         plain_text: "",
         cipher_text: "",
-        k: 0,
-        list_plain_text: [],
-    });
+        k: "",
+        list_attack: {}
+    })
 
-    async function onSubmitHandler(values) {
-        values.method = "decrypt";
-        console.log("Values", values)
+    const onSubmitHandler = async (data) => {
+        data.method = "decrypt"
         try {
-            const response = await getShift(values)
-            console.log("Response", response)
+            const response = await getSubstitution(data)
             setData(response.data)
         } catch (error) {
-            console.log("Error", error)
+            console.log('Error: ', error)
         }
     }
 
-    return (
-        <div className="w-full bg-ivory flex flex-col items-center justify-center">
-            <div>
-                <section
-                    className="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
-                    <div
-                        className="md:flex md:items-center md:justify-center md:w-1/2 bg-charcoal">
-                        <div className="max-h-1/2 px-6 py-6 md:px-8 md:py-0">
 
-                            <h2 className="text-2xl font-semibold text-ivory">
-                                Information Data
+    return (
+        <div className="w-full h-screen bg-ivory flex flex-col items-center justify-center">
+            <section className="text-charcoal w-full body-font">
+                <div
+                    className="flex flex-col w-3/4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
+                    <div className="md:flex md:w-1/2 md:items-center bg-charcoal">
+                        <div className="px-4 py-4 ml-8">
+
+                            <h2 className="text-2xl font-semibold text-ivory md:text-ivory"> Information Data
                             </h2>
 
-                            <p className="mt-2 text-base text-ivory">
-                                Cipher text: {data.cipher_text}
+                            <p className="mt-2 text-base text-ivory md:text-ivory">
+                                Plain text: {data.cipher_text}
                             </p>
 
-                            <p className="mt-2 text-base text-ivory">
+                            <p className="mt-2 text-base text-ivory md:text-ivory">
                                 Key: {data.k}
                             </p>
 
                             {data.plain_text !== "" && (
                                 <p
-                                    className="mt-2 text-base text-ivory md:text-ivory">Plain text
+                                    className="mt-2 text-base text-ivory md:text-ivory">Cipher text
                                     : {data.plain_text} </p>
                             )}
 
                         </div>
                     </div>
-
-                    <div className="flex w-full items-center justify-center pb-6 md:py-0 md:w-1/2">
-
+                    <div className="flex md:w-1/2 items-center justify-center pb-6 md:py-0">
                         <Formik
                             initialValues={
                                 {
@@ -67,18 +61,20 @@ export function ShiftDecrypt() {
 
                             validationSchema={Yup.object({
                                 cipher_text: Yup.string()
-                                    .required("Cipher text is required"),
-                                k: Yup.number()
-                                    .min(1, "The min number of key is 1")
-                                    .max(26, "The max number key is 26")
+                                    .required("Plain text is required"),
+                                k: Yup.string()
+                                    .min(26, "The permutation contain 26 letters")
+                                    .max(26, "The permutation contain 26 letters")
+                                    .uppercase("The permutation is in UPPERCASE")
+                                    .strict()
                                     .required("Key is required")
                             })}
 
                             onSubmit={onSubmitHandler}>
-                            <Form>
+                            <Form className="w-5/6">
                                 <div className="flex flex-col px-6 py-6 my-5 overflow-hidden rounded-lg">
                                     <div className="relative flex items-center">
-                                        <div className="flex flex-col">
+                                        <div className="flex w-full flex-col">
                                             <div>
                                             <span className="absolute">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -94,7 +90,7 @@ export function ShiftDecrypt() {
                                             </div>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="cipher_text"/>
+                                                              name="plain_text"/>
                                             </div>
                                         </div>
                                     </div>
@@ -107,19 +103,20 @@ export function ShiftDecrypt() {
                                                   clipRule="evenodd"/>
                                         </svg>
                                     </span>
-                                        <div className="flex flex-col">
+                                        <div className="flex w-full flex-col">
                                             <div>
-                                                <Field type="number" name="k"
+                                                <Field type="text" name="k"
                                                        className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                                        placeholder="Enter key"/>
                                             </div>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className=" font-normal text-xs text-red-500" name="k"/>
+                                                <ErrorMessage className=" font-normal text-xs text-red-500"
+                                                              name="k"/>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="flex justify-end mt-4">
+                                    <div className="flex w-full justify-end mt-4">
                                         <button type="submit"
                                                 className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">Encrypt
                                         </button>
@@ -128,10 +125,9 @@ export function ShiftDecrypt() {
                             </Form>
                         </Formik>
                     </div>
-                </section>
-            </div>
+                </div>
+
+            </section>
         </div>
     )
-
-
 }

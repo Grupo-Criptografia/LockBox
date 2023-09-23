@@ -28,7 +28,7 @@ export function ShiftAttack() {
     }
 
     return (
-        <div className="w-full flex items-center justify-center">
+        <div className="w-full bg-ivory flex items-center justify-center">
             <section
                 className="flex max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg flex-col">
                 <div className="flex items-center justify-center w-full bg-charcoal">

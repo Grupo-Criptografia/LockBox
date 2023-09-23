@@ -23,11 +23,11 @@ class shiftView(APIView):
 
             if method == 'encrypt':
                 k = int(k)
-                cipher_text = encryptShift(plain_text, k)
+                cipher_text = encryptShift(plain_text, k-1)
 
             if method == 'decrypt':
                 k = int(k)
-                plain_text = decryptShift(cipher_text, k)
+                plain_text = decryptShift(cipher_text, k-1)
 
             if method == 'attack':
                 k = 0
