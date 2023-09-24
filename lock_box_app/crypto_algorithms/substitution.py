@@ -29,4 +29,3 @@ def attackSubs(cipher_text: str):
         "bigrams": tuple(Counter(bigrams(cipher_text)).items()),
         "trigrams": tuple(Counter(trigrams(cipher_text)).items()),
     }
-

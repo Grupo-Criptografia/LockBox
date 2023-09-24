@@ -13,13 +13,13 @@ class Menu extends Component {
                         <div className="space-y-3">
                             <ul className="menu">
                                 <li>
-
                                     {/* Menu para Shift */}
-                                    <details open>
+                                    <details>
                                         <summary>
-                                            <label className="px-3 text-base text-ivory uppercase">Shift</label>
+                                            <label
+                                                className="menu-dropdown-toggle px-3 text-base text-ivory uppercase">Shift</label>
                                         </summary>
-                                        <ul>
+                                        <ul className="menu-dropdown">
                                             <li>
                                                 <Link
                                                     className="flex items-center px-3 py-2 text-ivory transition-colors duration-300 transform rounded-lg hover:bg-ivory  hover:text-charcoal"
@@ -63,7 +63,7 @@ class Menu extends Component {
                                     </details>
 
                                     {/* Menu para Substitution*/}
-                                    <details open>
+                                    <details>
                                         <summary>
                                             <label className="px-3 text-base text-ivory uppercase">Substitution</label>
                                         </summary>
