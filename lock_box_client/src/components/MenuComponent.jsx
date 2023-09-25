@@ -5,7 +5,7 @@ class Menu extends Component {
     render() {
         return (
             <aside
-                className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-charcoal border-r rtl:border-r-0 rtl:border-l">
+                className="flex flex-col w-64 h-auto px-5 py-8 overflow-y-auto bg-charcoal border-r rtl:border-r-0 rtl:border-l">
                         <span
                             className="flex title-font text-base font-medium items-center uppercase text-ivory mb-4 md:mb-0">Cryptograms</span>
                 <div className="flex flex-col justify-between flex-1 mt-6">

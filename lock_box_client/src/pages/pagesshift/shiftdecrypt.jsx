@@ -15,10 +15,8 @@ export function ShiftDecrypt() {
 
     async function onSubmitHandler(values) {
         values.method = "decrypt";
-        console.log("Values", values)
         try {
             const response = await getShift(values)
-            console.log("Response", response)
             setData(response.data)
         } catch (error) {
             console.log("Error", error)
@@ -26,111 +24,175 @@ export function ShiftDecrypt() {
     }
 
     return (
-        <div className="w-full bg-ivory flex flex-col items-center justify-center">
-            <div>
-                <section
-                    className="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
-                    <div
-                        className="md:flex md:items-center md:justify-center md:w-1/2 bg-charcoal">
-                        <div className="max-h-1/2 px-6 py-6 md:px-8 md:py-0">
+        <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
+            {/* Guia de uso formulario */}
 
-                            <h2 className="text-2xl font-semibold text-ivory">
-                                Information Data
-                            </h2>
-
-                            <p className="mt-2 text-base text-ivory">
-                                Cipher text: {data.cipher_text}
-                            </p>
-
-                            <p className="mt-2 text-base text-ivory">
-                                Key: {data.k}
-                            </p>
-
-                            {data.plain_text !== "" && (
-                                <p
-                                    className="mt-2 text-base text-ivory md:text-ivory">Plain text
-                                    : {data.plain_text} </p>
-                            )}
-
+            <div className="container w-full px-5 py-16 mx-auto">
+                <div className="text-center w-full mb-10">
+                    <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
+                        User Guide for Shift Decryption
+                    </h1>
+                    <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Shift Cipher
+                        Decryption Tool. This tool allows you to decrypt ciphertext that has been encoded using a Shift
+                        Cipher, where each letter in the text is shifted by a fixed number of positions (the key).
+                        Below, we explain how to use it effectively.</p>
+                </div>
+                <div className="container px-5 mx-auto flex flex-wrap">
+                    <div className="flex flex-wrap justify-center w-full">
+                        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-2 gap-1 md:w-3/4 md:pr-10 md:py-6">
+                            <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                        1. Enter the Cipher Text:
+                                    </h2>
+                                    <p className="leading-relaxed">
+                                        In the first field of the form, enter the cipher text that you want to decrypt.
+                                        This can be a message or a phrase.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex col-span-2 md:col-span-1 pb-6">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
+                                        2. Enter the Decryption Key (k):
+                                    </h2>
+                                    <p className="leading-relaxed">In the second field, enter the decryption key (k)
+                                        from the range of 1 to 26. This key determines the number of positions each
+                                        letter will be shifted in the alphabet during decryption.For example, if you
+                                        choose k = 3, the letter 'd' will be encrypted as 'a','e' as 'b', and so on</p>
+                                </div>
+                            </div>
+                            <div className="flex col-span-1 pb-6">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                        3. Decrypt the Text:
+                                    </h2>
+                                    <p className="leading-relaxed">
+                                        Once you've entered the cipher text and the decryption key, click the
+                                        "Decrypt" button.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex md:col-span-1 pb-6">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                        4. Encrypted Text:
+                                    </h2>
+                                    <p className="leading-relaxed">
+                                        On the side of the form, you will see the result: your plain text, the
+                                        encryption key used, and the encrypted text.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex col-span-2 pb-6">
+                                <div className="flex flex-col pl-4">
+                                    <h2 className="font-medium title-font text-base text-poppy mb-1 tracking-wider">Note</h2>
+                                    <p className="leading-relaxed">
+                                        Keep in mind that Caesar cipher encryption is relatively simple and may not
+                                        provide strong security for sensitive information. Consider using more advanced
+                                        encryption methods for highly secure communication.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="flex w-full items-center justify-center pb-6 md:py-0 md:w-1/2">
+                {/* Formulario y resultado */}
 
-                        <Formik
-                            initialValues={
-                                {
+                <div className="flex flex-col md:flex-row w-full mx-auto">
+                    <div className="md:w-1/2 w-full flex justify-center h-auto">
+                        <div
+                            className="flex flex-col bg-white text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                            <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
+                                Form Decrypt
+                            </h1>
+                            <Formik
+                                initialValues={{
                                     cipher_text: '',
                                     k: ''
-                                }
-                            }
+                                }}
 
-                            validationSchema={Yup.object({
-                                cipher_text: Yup.string()
-                                    .required("Cipher text is required"),
-                                k: Yup.number()
-                                    .min(1, "The min number of key is 1")
-                                    .max(26, "The max number key is 26")
-                                    .required("Key is required")
-                            })}
+                                validationSchema={Yup.object({
+                                    cipher_text: Yup.string()
+                                        .required("Plain text is required"),
+                                    k: Yup.number()
+                                        .min(0, "The min number of key is 0")
+                                        .max(25, "The max number key is 25")
+                                        .required("Key is required")
+                                })}
 
-                            onSubmit={onSubmitHandler}>
-                            <Form>
-                                <div className="flex flex-col px-6 py-6 my-5 overflow-hidden rounded-lg">
-                                    <div className="relative flex items-center">
-                                        <div className="flex flex-col">
-                                            <div>
-                                            <span className="absolute">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                     fill="currentColor"
-                                                     className="w-6 h-6 mx-3 my-3 text-charcoal">
-                                                    <path
-                                                        d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z"/>
-                                                </svg>
-                                            </span>
-                                                <Field type="text" name="cipher_text"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter cipher text"/>
-                                            </div>
+                                onSubmit={(values, {resetForm}) => {
+                                    onSubmitHandler(values).then(() => {
+                                        notify();
+                                        resetForm();
+                                    }).catch(error => {
+                                        console.error("Error en el envio", error);
+                                    })
+                                }}>
+                                <Form className="w-3/4">
+                                    <div className="grid grid-cols-1 gap-1 mt-4">
+                                        <div>
+                                            <label className="font-medium">Cipher text</label>
+                                            <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
+                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs text-poppy"
                                                               name="cipher_text"/>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="mt-4 flex">
-                                    <span className="absolute mt-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                             className="w-6 h-6 mx-3 text-charcoal">
-                                            <path fillRule="evenodd"
-                                                  d="M8 7a5 5 0 113.61 4.804l-1.903 1.903A1 1 0 019 14H8v1a1 1 0 01-1 1H6v1a1 1 0 01-1 1H3a1 1 0 01-1-1v-2a1 1 0 01.293-.707L8.196 8.39A5.002 5.002 0 018 7zm5-3a.75.75 0 000 1.5A1.5 1.5 0 0114.5 7 .75.75 0 0016 7a3 3 0 00-3-3z"
-                                                  clipRule="evenodd"/>
-                                        </svg>
-                                    </span>
-                                        <div className="flex flex-col">
-                                            <div>
-                                                <Field type="number" name="k"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter key"/>
-                                            </div>
+                                        <div className="mt-3">
+                                            <label className="font-medium">Key</label>
+                                            <Field placeholder="Enter key" type="number" name="k"
+                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className=" font-normal text-xs text-red-500" name="k"/>
+                                                <ErrorMessage className="font-normal text-xs text-poppy" name="k"/>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="flex justify-end mt-4">
+                                    <div className="flex justify-end mt-6">
                                         <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">Encrypt
+                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
+                                            Decrypt
                                         </button>
                                     </div>
-                                </div>
-                            </Form>
-                        </Formik>
+                                </Form>
+                            </Formik>
+                        </div>
                     </div>
-                </section>
+                    <div
+                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
+                        <div className="flex flex-col pl-12 w-full bg-ivory">
+                            <h2 className="text-2xl font-semibold">
+                                Information Data
+                            </h2>
+
+                            {data?.plain_text ?
+                                <div>
+                                    <p className="mt-2 text-xl">
+                                        Cipher text: {data.cipher_text}
+                                    </p>
+                                    <p className="mt-2 text-xl">
+                                        Key: {data.k}
+                                    </p>
+                                    <p
+                                        className="mt-2 text-xl">
+                                        Plain text: {data.plain_text}
+                                    </p>
+                                </div>
+                                :
+                                <p
+                                    className="mt-2 text-xl">
+                                    Please enter a cipher text and key for show a plain text.
+                                </p>
+
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     )
 
 

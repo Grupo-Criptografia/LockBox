@@ -28,64 +28,142 @@ export function ShiftAttack() {
     }
 
     return (
-        <div className="w-full bg-ivory flex items-center justify-center">
-            <section
-                className="flex max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg flex-col">
-                <div className="flex items-center justify-center w-full bg-charcoal">
-                    <Formik
-                        initialValues={
-                            {
-                                cipher_text: ''
-                            }
-                        }
+        <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
+            {/* Guia de uso formulario */}
 
-                        validationSchema={Yup.object({
-                            cipher_text: Yup.string()
-                                .required("Cipher text is required"),
-                        })}
-
-                        onSubmit={onSubmitHandler}>
-                        <Form>
-                            <div
-                                className="flex flex-col p-6 overflow-hidden">
-                                <div className="flex flex-col">
-                                    <div className="flex">
-                                        <p className="py-2.5 px-3 text-charcoal bg-ivory border border-r-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0 rtl:border-r rounded-l-lg">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                 strokeWidth="1.5" stroke="currentColor"
-                                                 className="w-6 text-charcoal h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round"
-                                                      d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
-                                            </svg>
-                                        </p>
-                                        <Field type="text" name="cipher_text" placeholder="Enter cipher text"
-                                               className="block w-full rounded-l-none rtl:rounded-l-lg rtl:rounded-r-none placeholder-gray-400 rounded-lg border border-blue-300 bg-white px-5 py-2.5 text-charcoal focus:bg-white focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"/>
-                                    </div>
-                                    <div className="text-red-600 text-xs font-semibold">
-                                        <ErrorMessage className="font-normal text-xs text-poppy"
-                                                      name="cipher_text"/>
-                                    </div>
-                                </div>
-                                <div className="mt-2 flex justify-end">
-                                    <button type="submit"
-                                            className="px-4 py-3 text-sm font-medium tracking-wider text-ivory uppercase transition-colors duration-300 transform bg-poppy rounded-md hover:bg-ivory hover:text-charcoal focus:bg-ivory focus:outline-none">
-                                        Attack
-                                    </button>
+            <div className="container w-full px-5 py-16 mx-auto">
+                <div className="text-center w-full mb-10">
+                    <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
+                        User Guide for Shift Decryption Attack
+                    </h1>
+                    <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">
+                        Welcome to Lock Box Shift Decryption Attack Tool. This tool allows you to decrypt
+                        messages that have been encrypted using a Caesar cipher. In this guide, we will explain how
+                        to use it to explore all 26 possible shifts and reveal the decrypted text.
+                    </p>
+                </div>
+                <div className="container px-5 mx-auto flex flex-wrap">
+                    <div className="flex flex-wrap justify-center w-full">
+                        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-2 gap-1 md:w-3/4 md:pr-10 md:py-6">
+                            <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                        1. Enter the Cipher Text:
+                                    </h2>
+                                    <p className="leading-relaxed">
+                                        In the first field of the form, enter the cipher text that you want to
+                                        decrypt. This can be a message or a phrase.
+                                    </p>
                                 </div>
                             </div>
-                        </Form>
-                    </Formik>
+                            <div className="flex col-span-1 pb-6">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                        2. Initiate the Attack:
+                                    </h2>
+                                    <p className="leading-relaxed">
+                                        Click the "Attack" button form to begin the decryption attack process.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex md:col-span-2 pb-6">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                        3. Encrypted Text:
+                                    </h2>
+                                    <p className="leading-relaxed">
+                                        On the side of the form, you will find a list of all 26 possible shifts
+                                        along with the corresponding decrypted text for each shift. Each shift
+                                        represents an attempt to decrypt the message using a different shift value.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex col-span-2 pb-6">
+                                <div className="flex flex-col pl-4">
+                                    <h2 className="font-medium title-font text-base text-poppy mb-1 tracking-wider">Note</h2>
+                                    <p className="leading-relaxed">
+                                        Please remember that this attack assumes that the text has been encrypted
+                                        using a Shift Cipher. It may not be effective if another encryption method
+                                        is used or if the language of the message is unknown.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="flex px-2 py-2 flex-col justify-center pb-6 w-full">
-                    <span className="text-lg text-charcoal">The posible text plain is:</span>
-                    {data.list_plain_text.length > 0 && (
-                        <div className="grid grid-cols-3 gap-3 mb-1 ml-1 mr-1 p-2">
-                            {listRender}
+                {/* Formulario y resultado */}
+
+                <div className="flex flex-col md:flex-row w-full mx-auto">
+                    <div className="md:w-1/2 w-full flex justify-center h-auto">
+                        <div
+                            className="flex flex-col bg-white text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                            <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
+                                Form Attack
+                            </h1>
+                            <Formik
+                                initialValues={{
+                                    cipher_text: '',
+                                }}
+
+                                validationSchema={Yup.object({
+                                    cipher_text: Yup.string()
+                                        .required("Plain text is required"),
+                                })}
+
+                                onSubmit={(values, {resetForm}) => {
+                                    onSubmitHandler(values).then(() => {
+                                        notify();
+                                        resetForm();
+                                    }).catch(error => {
+                                        console.error("Error en el envio", error);
+                                    })
+                                }}>
+                                <Form className="w-3/4">
+                                    <div className="grid grid-cols-1 gap-1 mt-4">
+                                        <div>
+                                            <label className="font-medium">Cipher text</label>
+                                            <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
+                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                            <div className="text-red-600 text-xs font-semibold">
+                                                <ErrorMessage className="font-normal text-xs text-poppy"
+                                                              name="cipher_text"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-end mt-6">
+                                        <button type="submit"
+                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
+                                            Attack
+                                        </button>
+                                    </div>
+                                </Form>
+                            </Formik>
                         </div>
-                    )}
+                    </div>
+                    <div
+                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
+                        <div className="flex flex-col pl-12 w-full bg-ivory">
+                            <h2 className="text-2xl font-semibold">
+                                List Plain Text
+                            </h2>
+
+                            {data.list_plain_text?.length ?
+                                <div className="grid grid-cols-3 gap-3 mb-1 ml-1 mr-1 p-2">
+                                    {listRender}
+                                </div>
+                                :
+                                <p
+                                    className="mt-2 text-xl">
+                                    Please enter a cipher text to show a list of possible plain text.
+                                </p>
+                            }
+                        </div>
+                    </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+
     )
 }

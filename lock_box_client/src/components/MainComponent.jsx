@@ -15,13 +15,16 @@ class Main extends Component {
         return (
             <div>
                 <Header/>
-                <div className="flex flex-row max-h-screen">
+                <div className="flex flex-row h-auto">
                     <Menu/>
                     <Routes>
                         <Route path="*" element={<Navigate to="/" replace/>}/>
+
+                        {/*Pages Shift*/}
                         <Route path="/shift/encrypt" element={<ShiftEncrypt/>}/>
                         <Route path="/shift/decrypt" element={<ShiftDecrypt/>}/>
                         <Route path="/shift/attack" element={<ShiftAttack/>}/>
+                        {/*Pages Substitution*/}
                         <Route path="/subs/encrypt" element={<SubsEncrypt/>}/>
                         <Route path="/subs/decrypt" element={<SubsDecrypt/>}/>
                         <Route path="/subs/attack" element={<SubsAttack/>}/>
