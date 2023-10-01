@@ -13,3 +13,14 @@ export const getShift = (data) => {
             throw error;
         })
 };
+
+export const getSubstitution = (data) => {
+    console.log("Api", data);
+    return cryptoApi.get("substitution/", {
+        params: data
+    })
+        .catch(error => {
+            console.log("Error en la solicitud: ", error);
+            throw error;
+        })
+};
