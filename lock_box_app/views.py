@@ -4,8 +4,10 @@ from rest_framework.views import APIView
 
 from .crypto_algorithms.shift import encryptShift, decryptShift, attackShift
 from .crypto_algorithms.substitution import encryptSubs, decryptSubs, attackSubs
-from .serializer import dataShiftSerializer, dataSubstitutionSerializer
-from .tests import dataShiftTest, dataSubstitutionTest
+from .crypto_algorithms.affine import encryptAffine, decryptAffine, attackAffine
+
+from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer
+from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest
 
 
 # Create your views here.
@@ -52,11 +54,6 @@ class substitutionView(APIView):
         method = request.GET.get('method')
         list_attack = {}
 
-        print(f"plain_text: {plain_text}")
-        print(f"k: {k}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         try:
             if method == 'encrypt':
                 cipher_text = encryptSubs(plain_text, k)
@@ -67,14 +64,39 @@ class substitutionView(APIView):
             if method == 'attack':
                 list_attack = attackSubs(cipher_text)
 
-            print(f"plain_text: {plain_text}")
-            print(f"k: {k}")
-            print(f"cipher_text: {cipher_text}")
-            print(f"method: {method}")
-            print(f"list attack. {list_attack}")
-
             data_obj = dataSubstitutionTest(plain_text, cipher_text, k, list_attack)
             serializer_class = dataSubstitutionSerializer(data_obj)
+            return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class affineView(APIView):
+    def post(self, request):
+
+        plain_text = request.data.get('plain_text')
+        k = request.data.get('k')
+        cipher_text = request.data.get('cipher_text')
+        method = request.data.get('method')
+
+        print(f"plain_text: {plain_text}")
+        print(f"k: {k}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
+        try:
+            if method == 'encrypt':
+                cipher_text = encryptAffine(plain_text, k)
+
+            if method == 'decrypt':
+                plain_text = decryptAffine(cipher_text, k)
+
+            if method == 'attack':
+                plain_text, k = attackAffine(cipher_text)
+
+            data_obj = dataAffineTest(plain_text, cipher_text, k)
+            serializer_class = dataAffineSerializer(data_obj)
             return Response(serializer_class.data, status=status.HTTP_200_OK)
 
         except Exception as e:
