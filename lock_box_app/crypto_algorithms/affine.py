@@ -6,7 +6,8 @@ relatively prime with 26
 from math import gcd
 import string
 import math
-from .util import char2int,int2char, probs
+from .util import char2int, int2char, probs
+
 
 def encryptAffine(plain_text: str, key: list[int]) -> str:
     plain_text = plain_text.replace(" ", "").lower()
@@ -123,4 +124,3 @@ def attackAffine(cipher_text: str) -> tuple[str, list]:
             a += 1
             if a == 1:
                 return plain_text, [x, y]
-
