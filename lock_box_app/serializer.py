@@ -17,3 +17,11 @@ class dataSubstitutionSerializer(serializers.Serializer):
             child=serializers.CharField()
         )
     )
+
+
+class dataAffineSerializer(serializers.Serializer):
+    plain_text = serializers.CharField(max_length=200)
+    cipher_text = serializers.CharField(max_length=200)
+    k = serializers.ListField(
+        child=serializers.IntegerField()
+    )

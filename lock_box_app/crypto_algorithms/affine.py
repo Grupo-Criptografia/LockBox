@@ -1,15 +1,15 @@
 """
 Affine cipher.
-`key` must a tuple of two integers from Z_26 and the firt one must be
+`key` must a tuple of two integers from Z_26 and the first one must be
 relatively prime with 26
 """
 from math import gcd
 import string
 import math
-from cryptools.util import char2int, int2char, probs
+from .util import char2int, int2char, probs
 
 
-def encrypt(plain_text: str, key: list[int]) -> str:
+def encryptAffine(plain_text: str, key: list[int]) -> str:
     plain_text = plain_text.replace(" ", "").lower()
     a, b = key
 
@@ -19,7 +19,7 @@ def encrypt(plain_text: str, key: list[int]) -> str:
     return "".join([int2char[(a * char2int[l] + b) % 26] for l in plain_text]).upper()
 
 
-def decrypt(cipher_text: str, key: list[int]) -> str:
+def decryptAffine(cipher_text: str, key: list[int]) -> str:
     cipher_text = cipher_text.replace(" ", "").lower()
     a, b = key
 
@@ -36,18 +36,18 @@ def decrypt(cipher_text: str, key: list[int]) -> str:
 """
 Conjetura
 
-Las suposiciones seran apartir de los dos valores con mayor frecuencia 
+Las suposiciones seran a partir de los dos valores con mayor frecuencia 
 de nuestra cadena, estos los coincidimos con los valores de mayor frecuencia
 en la tabla de frecuencia para el idioma en ingles. Vamos a fijar el primer 
-valor de mayor frecuencia y el otro iremos rotandolo a uno de menor 
+valor de mayor frecuencia y el otro iremos rotándolo a uno de menor 
 frecuencia, esto para las dos tablas
 """
 
 
-def attack(cipher_text: str) -> tuple[str, list]:
-    """Comentarios de la funcion:"""
+def attackAffine(cipher_text: str) -> tuple[str, list]:
+    """Comentarios de la función:"""
 
-    # Frecuencia de la caneda, alfabeto, Frecuencia en ingles
+    # Frecuencia de la cadena, alfabeto, Frecuencia en inglés
     frecuency_text = {i: cipher_text.count(i) for i in set(cipher_text)}
     alphabet = string.ascii_lowercase
     freq = {letter: freq for letter, freq in zip(alphabet, probs)}
@@ -60,7 +60,7 @@ def attack(cipher_text: str) -> tuple[str, list]:
     letter = max(freq, key=freq.get)
     freq.pop(letter)
 
-    # Indice de las dos letras de mayor frecuencia
+    # Índice de las dos letras de mayor frecuencia
     n, m = alphabet.index(letter.lower()), alphabet.index(letter_input.lower())
 
     """'
@@ -68,7 +68,7 @@ def attack(cipher_text: str) -> tuple[str, list]:
 
         n*x + y = m
         p*x + y = q
-    con n ,m , p y q estan en Z_26
+    con n ,m , p y q están en Z_26
     """
     # inversos
     inv = {
@@ -120,8 +120,7 @@ def attack(cipher_text: str) -> tuple[str, list]:
             if math.gcd(x, 26) > 1:
                 break
 
-
-            plain_text = decrypt(cipher_text, [x, y])
+            plain_text = decryptAffine(cipher_text, [x, y])
             a += 1
             if a == 1:
                 return plain_text, [x, y]

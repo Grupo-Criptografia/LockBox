@@ -17,3 +17,10 @@ class dataSubstitutionTest:
         self.cipher_text = cipher_text
         self.k = k
         self.list_attack = list_attack
+
+
+class dataAffineTest:
+    def __init__(self, plain_text: str, cipher_text: str, k: list):
+        self.plain_text = plain_text
+        self.cipher_text = cipher_text
+        self.k = k
