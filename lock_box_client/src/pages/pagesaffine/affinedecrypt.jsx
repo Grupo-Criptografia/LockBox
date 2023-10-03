@@ -3,7 +3,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {createAffine, getSubstitution} from "../../api/lockbox.api.js";
 import * as Yup from "yup";
 
-export function AffineEncrypt() {
+export function AffineDecrypt() {
 
     const [data, setData] = useState({
         plain_text: "",
@@ -12,7 +12,7 @@ export function AffineEncrypt() {
     })
 
     const onSubmitHandler = async (data) => {
-        data.method = "encrypt";
+        data.method = "decrypt";
         data.k = [data.a, data.b];
         try {
             const response = await createAffine(data)
@@ -36,17 +36,17 @@ export function AffineEncrypt() {
                             </h2>
 
                             <p className="mt-2 text-base text-ivory md:text-ivory">
-                                Plain text: {data.plain_text}
+                                Cipher text: {data.cipher_text}
                             </p>
 
                             <p className="mt-2 text-base text-ivory md:text-ivory">
                                 Key: {data.k}
                             </p>
 
-                            {data.cipher_text !== "" && (
+                            {data.plain_text !== "" && (
                                 <p
-                                    className="mt-2 text-base text-ivory md:text-ivory">Cipher text
-                                    : {data.cipher_text} </p>
+                                    className="mt-2 text-base text-ivory md:text-ivory">
+                                    Plain text : {data.plain_text} </p>
                             )}
 
                         </div>
@@ -55,15 +55,17 @@ export function AffineEncrypt() {
                         <Formik
                             initialValues={
                                 {
-                                    plain_text: '',
+                                    cipher_text: '',
                                     a: '',
                                     b: ''
                                 }
                             }
 
                             validationSchema={Yup.object({
-                                plain_text: Yup.string()
-                                    .required("Plain text is required"),
+                                cipher_text: Yup.string()
+                                    .uppercase()
+                                    .strict()
+                                    .required("Cipher text is required"),
                                 a: Yup.number()
                                     .required("Key a is required")
                                     .test("inverse_mod_26", "Key 'a' is not an inverse mod 26", function (value) {
@@ -77,7 +79,7 @@ export function AffineEncrypt() {
                                             }
                                         }
 
-                                        return false
+                                        return false;
                                     }),
                                 b: Yup.number()
                                     .required("Key b is required")
@@ -104,13 +106,13 @@ export function AffineEncrypt() {
                                                         d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z"/>
                                                 </svg>
                                             </span>
-                                                <Field type="text" name="plain_text"
+                                                <Field type="text" name="cipher_text"
                                                        className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter plain text"/>
+                                                       placeholder="Enter cipher text"/>
                                             </div>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="plain_text"/>
+                                                              name="cipher_text"/>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +164,7 @@ export function AffineEncrypt() {
 
                                     <div className="flex w-full justify-end mt-4">
                                         <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">Encrypt
+                                                className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">Decrypt
                                         </button>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 """
 Affine cipher.
-`key` must a tuple of two integers from Z_26 and the firt one must be
+`key` must a tuple of two integers from Z_26 and the first one must be
 relatively prime with 26
 """
 from math import gcd
@@ -45,7 +45,7 @@ frecuencia, esto para las dos tablas
 
 
 def attackAffine(cipher_text: str) -> tuple[str, list]:
-    """Comentarios de la funcion:"""
+    """Comentarios de la función:"""
 
     # Frecuencia de la cadena, alfabeto, Frecuencia en inglés
     frecuency_text = {i: cipher_text.count(i) for i in set(cipher_text)}
@@ -60,7 +60,7 @@ def attackAffine(cipher_text: str) -> tuple[str, list]:
     letter = max(freq, key=freq.get)
     freq.pop(letter)
 
-    # Indice de las dos letras de mayor frecuencia
+    # Índice de las dos letras de mayor frecuencia
     n, m = alphabet.index(letter.lower()), alphabet.index(letter_input.lower())
 
     """'
@@ -68,7 +68,7 @@ def attackAffine(cipher_text: str) -> tuple[str, list]:
 
         n*x + y = m
         p*x + y = q
-    con n ,m , p y q estan en Z_26
+    con n ,m , p y q están en Z_26
     """
     # inversos
     inv = {
