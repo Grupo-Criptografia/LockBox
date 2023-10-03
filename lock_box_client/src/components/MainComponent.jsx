@@ -8,6 +8,9 @@ import {SubsEncrypt} from "../pages/pagessubs/subsencrypt.jsx";
 import Menu from "./MenuComponent.jsx";
 import {SubsDecrypt} from "../pages/pagessubs/subsdecrypt.jsx";
 import {SubsAttack} from "../pages/pagessubs/subsattack.jsx";
+import {AffineEncrypt} from "../pages/pagesaffine/affineencrypt.jsx";
+import {AffineDecrypt} from "../pages/pagesaffine/affinedecrypt.jsx";
+import {AffineAttack} from "../pages/pagesaffine/affineattack.jsx";
 
 class Main extends Component {
 
@@ -28,6 +31,11 @@ class Main extends Component {
                         <Route path="/subs/encrypt" element={<SubsEncrypt/>}/>
                         <Route path="/subs/decrypt" element={<SubsDecrypt/>}/>
                         <Route path="/subs/attack" element={<SubsAttack/>}/>
+                        {/*Pages Affine*/}
+                        <Route path="/affine/encrypt" element={<AffineEncrypt/>}/>
+                        <Route path="/affine/decrypt" element={<AffineDecrypt/>}/>
+                        <Route path="/affine/attack" element={<AffineAttack/>}/>
+
                     </Routes>
                 </div>
             </div>
