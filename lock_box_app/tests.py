@@ -24,3 +24,5 @@ class dataAffineTest:
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
+
+
