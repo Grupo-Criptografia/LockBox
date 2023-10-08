@@ -107,6 +107,8 @@ class permutationView(APIView):
         cipher_text = request.data.get('cipher_text')
         method = request.data.get('method')
 
+        k = [int(key.strip()) for key in k.split(",")]
+
         print(f"plain_text: {plain_text}")
         print(f"k: {k}")
         print(f"cipher_text: {cipher_text}")

@@ -11,6 +11,8 @@ import {SubsAttack} from "../pages/pagessubs/subsattack.jsx";
 import {AffineEncrypt} from "../pages/pagesaffine/affineencrypt.jsx";
 import {AffineDecrypt} from "../pages/pagesaffine/affinedecrypt.jsx";
 import {AffineAttack} from "../pages/pagesaffine/affineattack.jsx";
+import {PermutationEncrypt} from "../pages/pagespermutation/permutationencrypt.jsx";
+import {PermutationDecrypt} from "../pages/pagespermutation/permutationdecrypt.jsx";
 
 class Main extends Component {
 
@@ -35,7 +37,9 @@ class Main extends Component {
                         <Route path="/affine/encrypt" element={<AffineEncrypt/>}/>
                         <Route path="/affine/decrypt" element={<AffineDecrypt/>}/>
                         <Route path="/affine/attack" element={<AffineAttack/>}/>
-
+                        {/*Pages Permutation*/}
+                        <Route path="/permutation/encrypt" element={<PermutationEncrypt/>}/>
+                        <Route path="/permutation/decrypt" element={<PermutationDecrypt/>}/>
                     </Routes>
                 </div>
             </div>
