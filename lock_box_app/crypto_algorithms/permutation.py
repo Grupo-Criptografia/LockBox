@@ -32,7 +32,7 @@ def encryptPermutation(plain_text: str, key: list[int]) -> str:
 
     # Agregando las letras encriptadas
     cipher_text = ""
-    for box in range(0, m - 1):  # Selección de la subcadena
+    for box in range(0, len(pieces)):  # Selección de la subcadena
         for i in range(0, m):  # Encriptación por letra
             cipher_text += pieces[box][asignacion[i]]
     return cipher_text.upper()
@@ -70,7 +70,7 @@ def decryptPermutation(cipher_text: str, key: list[int]) -> str:
 
     # Agregando las letras encriptadas
     plain_text = ""
-    for box in range(0, m - 1):  # Selección de la subcadena
+    for box in range(0, len(pieces)):  # Selección de la subcadena
         for i in range(0, m):  # Encriptación por letra
             plain_text += pieces[box][asignacion[i]]
 
@@ -84,3 +84,5 @@ Es igual para la función que ataca el hill. Por lo tanto usaremos la del Hill
 
 Aquí el usuario llega con una matriz dada
 """
+
+print(encryptPermutation("nicolasalvarez", [3, 6, 1, 5, 2, 4, 7]))
