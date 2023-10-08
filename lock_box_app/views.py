@@ -14,12 +14,12 @@ from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest
 # Create your views here.
 
 class shiftView(APIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request):
 
-        plain_text = request.GET.get('plain_text')
-        k = request.GET.get('k')
-        cipher_text = request.GET.get('cipher_text')
-        method = request.GET.get('method')
+        plain_text = request.data.get('plain_text')
+        k = request.data.get('k')
+        cipher_text = request.data.get('cipher_text')
+        method = request.data.get('method')
         list_plain_text = []
 
         try:
@@ -46,13 +46,13 @@ class shiftView(APIView):
 
 class substitutionView(APIView):
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
 
-        plain_text = request.GET.get('plain_text')
+        plain_text = request.data.get('plain_text')
 
-        k = request.GET.get('k')
-        cipher_text = request.GET.get('cipher_text')
-        method = request.GET.get('method')
+        k = request.data.get('k')
+        cipher_text = request.data.get('cipher_text')
+        method = request.data.get('method')
         list_attack = {}
 
         try:

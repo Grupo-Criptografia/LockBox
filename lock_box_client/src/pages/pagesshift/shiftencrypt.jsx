@@ -19,22 +19,12 @@ export function ShiftEncrypt() {
         console.log(data)
     }, [data]);
 
-    const notify = () => toast.success('🦄 Wow so easy!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-    });
 
     const onSubmitHandler = async (data) => {
         data.method = "encrypt"
         try {
             const response = await getShift(data)
-            setData(response.data)
+            setData(response)
         } catch (error) {
             console.log('Error: ', error)
         }
@@ -142,11 +132,9 @@ export function ShiftEncrypt() {
 
                                 onSubmit={(values, {resetForm}) => {
                                     onSubmitHandler(values).then(() => {
-                                        notify();
                                         resetForm();
                                     }).catch(error => {
                                         console.error("Error en el envio", error);
-                                        messageError();
                                     })
                                 }}>
                                 <Form className="w-3/4">
@@ -189,15 +177,14 @@ export function ShiftEncrypt() {
 
                             {data?.cipher_text ?
                                 <div>
-                                    <p
-                                        className="mt-2 text-xl">
-                                        Cipher text: {data.cipher_text}
+                                    <p className="mt-2 text-xl">
+                                        Plain text: {data.plain_text}
                                     </p>
                                     <p className="mt-2 text-xl">
                                         Key: {data.k}
                                     </p>
                                     <p className="mt-2 text-xl">
-                                        Plain text: {data.plain_text}
+                                        Cipher text: {data.cipher_text}
                                     </p>
                                 </div>
                                 :
