@@ -1,11 +1,11 @@
-def encrypt(plain_text: str, key: list[int]) -> str:
+def encryptPermutation(plain_text: str, key: list[int]) -> str:
     """
     `plain_text` -> str(texto para encriptar)
     `key` -> list[imagenes de la permutación en orden 1,2,3,...]
 
-    Retorna un texto encriptado (en mayusculas) con el cripto sistema de permutaciones
+    Retorna un texto encriptado (en mayúsculas) con el cripto sistema de permutaciones
     """
-    # partición en m bloques de tamaño m, llaves desde el indice 0, aginación de la llave con el dic
+    # partición en m bloques de tamaño m, llaves desde el índice 0, asignación de la llave con el dic
     m = len(key)
     key = [x - 1 for x in key]
     asignacion = {x: idx for idx, x in enumerate(key)}
@@ -32,17 +32,17 @@ def encrypt(plain_text: str, key: list[int]) -> str:
 
     # Agregando las letras encriptadas
     cipher_text = ""
-    for box in range(0, m - 1):  # Selección de la subcadena
+    for box in range(0, len(pieces)):  # Selección de la subcadena
         for i in range(0, m):  # Encriptación por letra
             cipher_text += pieces[box][asignacion[i]]
     return cipher_text.upper()
 
 
-def decrypt(cipher_text: str, key: list[int]) -> str:
+def decryptPermutation(cipher_text: str, key: list[int]) -> str:
     """
     Retorna un texto decifrado (en minusculas) con el cripto sistema de permutaciones
     """
-    # partición en m bloques de tamaño m, llaves desde el indice 0, aginación de la llave con el dic.
+    # partición en m bloques de tamaño m, llaves desde el índice 0, asignación de la llave con el dic.
     cipher_text = cipher_text.lower()
     m = len(key)
     key = [x - 1 for x in key]
@@ -70,7 +70,7 @@ def decrypt(cipher_text: str, key: list[int]) -> str:
 
     # Agregando las letras encriptadas
     plain_text = ""
-    for box in range(0, m - 1):  # Selección de la subcadena
+    for box in range(0, len(pieces)):  # Selección de la subcadena
         for i in range(0, m):  # Encriptación por letra
             plain_text += pieces[box][asignacion[i]]
 
@@ -80,7 +80,9 @@ def decrypt(cipher_text: str, key: list[int]) -> str:
 """
 def attack(): 
 
-Es igual para la función que ataqua el hill. Por lo tanto usaremos la del Hill
+Es igual para la función que ataca el hill. Por lo tanto usaremos la del Hill
 
 Aquí el usuario llega con una matriz dada
 """
+
+print(encryptPermutation("nicolasalvarez", [3, 6, 1, 5, 2, 4, 7]))

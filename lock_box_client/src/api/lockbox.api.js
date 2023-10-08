@@ -34,3 +34,17 @@ export const createAffine = (data) => {
             throw error;
         });
 };
+
+
+export const createPermutation = (data) => {
+    return cryptoApi.post("permutation/", data)
+        .then(response => {
+            console.log("Api: ", data)
+            console.log("Response from server:", response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.log("Error in the request:", error);
+            throw error;
+        });
+};
