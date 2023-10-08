@@ -8,10 +8,10 @@ from string import ascii_lowercase, ascii_uppercase
 from math import ceil, gcd
 from collections import Counter
 from itertools import islice
-from util import int2char, str2int, probs
+from .util import int2char, str2int, probs
 
 
-def encrypt(plain_text: str, key: str) -> str:
+def encryptVigenere(plain_text: str, key: str) -> str:
     """
     Encrypts a text in Vigenere cipher given a `cipher_text` and the `key`.
     """
@@ -20,7 +20,7 @@ def encrypt(plain_text: str, key: str) -> str:
     plain_text_int = str2int(plain_text.lower())
 
     if len(key_int) > len(plain_text_int):
-        raise Exception("Key length can't be greater than plain tet length.")
+        raise Exception("Key length can't be greater than plain text length.")
 
     n = ceil(len(plain_text_int) / len(key_int))
 
@@ -29,7 +29,7 @@ def encrypt(plain_text: str, key: str) -> str:
     ).upper()
 
 
-def decrypt(cipher_text: str, key: str) -> str:
+def decryptVigenere(cipher_text: str, key: str) -> str:
     """
     Decrypts a text in Vigenere cipher given a `cipher_text` and the `key`.
     """
@@ -123,3 +123,15 @@ def attack(cipher_text: str, m: int):
         key += int2char[mg_quantity.index(max(mg_quantity))]
 
     return key.upper()
+
+
+def attackVigenere(cipher_text: str, m: int) -> dict:
+    kasiski_result = kasiski_test(cipher_text)
+    coincidence_result = index_of_coincidence(cipher_text)
+    attack_result = attack(cipher_text, m)
+
+    return {
+        'Kasiski': kasiski_result,
+        'Coincidence': coincidence_result,
+        'Attack': attack_result
+    }
