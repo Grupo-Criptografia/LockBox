@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {createAffine, getSubstitution} from "../../api/lockbox.api.js";
+import {createAffine} from "../../api/lockbox.api.js";
 import * as Yup from "yup";
 
 export function AffineDecrypt() {

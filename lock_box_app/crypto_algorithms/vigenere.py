@@ -16,6 +16,7 @@ def encryptVigenere(plain_text: str, key: str) -> str:
     Encrypts a text in Vigenere cipher given a `cipher_text` and the `key`.
     """
 
+    plain_text = "".join(plain_text.split())
     key_int = str2int(key.lower())
     plain_text_int = str2int(plain_text.lower())
 

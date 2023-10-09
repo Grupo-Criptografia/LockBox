@@ -27,8 +27,8 @@ class dataAffineTest:
 
 
 class dataVigenereTest:
-    def __init__(self, plain_text: str, cipher_text: str, k: str, attack: dict):
+    def __init__(self, plain_text: str, cipher_text: str, k: str, list_attack: dict):
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
-        self.attack = attack
+        self.list_attack = list_attack
