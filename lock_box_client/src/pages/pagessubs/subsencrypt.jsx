@@ -16,7 +16,7 @@ export function SubsEncrypt() {
         data.method = "encrypt"
         try {
             const response = await getSubstitution(data)
-            setData(response.data)
+            setData(response)
         } catch (error) {
             console.log('Error: ', error)
         }

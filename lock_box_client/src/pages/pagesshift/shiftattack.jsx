@@ -17,11 +17,9 @@ export function ShiftAttack() {
 
     async function onSubmitHandler(values) {
         values.method = "attack";
-        console.log("Values", values)
         try {
             const response = await getShift(values)
-            console.log("Response", response)
-            setData(response.data)
+            setData(response)
         } catch (error) {
             console.log("Error", error)
         }
@@ -113,7 +111,6 @@ export function ShiftAttack() {
 
                                 onSubmit={(values, {resetForm}) => {
                                     onSubmitHandler(values).then(() => {
-                                        notify();
                                         resetForm();
                                     }).catch(error => {
                                         console.error("Error en el envio", error);

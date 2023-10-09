@@ -25,3 +25,10 @@ class dataAffineSerializer(serializers.Serializer):
     k = serializers.ListField(
         child=serializers.IntegerField()
     )
+
+
+class dataVigenereSerializer(serializers.Serializer):
+    plain_text = serializers.CharField(max_length=200)
+    cipher_text = serializers.CharField(max_length=200)
+    k = serializers.CharField(max_length=200)
+    attack = serializers.DictField()

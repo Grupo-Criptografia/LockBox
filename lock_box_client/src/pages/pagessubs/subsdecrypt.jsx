@@ -16,7 +16,7 @@ export function SubsDecrypt() {
         data.method = "decrypt"
         try {
             const response = await getSubstitution(data)
-            setData(response.data)
+            setData(response)
         } catch (error) {
             console.log('Error: ', error)
         }
@@ -35,7 +35,7 @@ export function SubsDecrypt() {
                             </h2>
 
                             <p className="mt-2 text-base text-ivory md:text-ivory">
-                                Plain text: {data.cipher_text}
+                                Cipher text: {data.cipher_text}
                             </p>
 
                             <p className="mt-2 text-base text-ivory md:text-ivory">
@@ -43,9 +43,9 @@ export function SubsDecrypt() {
                             </p>
 
                             {data.plain_text !== "" && (
-                                <p
-                                    className="mt-2 text-base text-ivory md:text-ivory">Cipher text
-                                    : {data.plain_text} </p>
+                                <p className="mt-2 text-base text-ivory md:text-ivory">
+                                    Plain text : {data.plain_text}
+                                </p>
                             )}
 
                         </div>

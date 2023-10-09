@@ -34,8 +34,7 @@ export function SubsAttack() {
         data.method = "attack"
         try {
             const response = await getSubstitution(data)
-            console.log(response.data)
-            setData(response.data)
+            setData(response)
         } catch (error) {
             console.log('Error: ', error)
         }

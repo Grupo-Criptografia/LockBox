@@ -17,7 +17,7 @@ export function ShiftDecrypt() {
         values.method = "decrypt";
         try {
             const response = await getShift(values)
-            setData(response.data)
+            setData(response)
         } catch (error) {
             console.log("Error", error)
         }
