@@ -13,6 +13,9 @@ import {AffineDecrypt} from "../pages/pagesaffine/affinedecrypt.jsx";
 import {AffineAttack} from "../pages/pagesaffine/affineattack.jsx";
 import {PermutationEncrypt} from "../pages/pagespermutation/permutationencrypt.jsx";
 import {PermutationDecrypt} from "../pages/pagespermutation/permutationdecrypt.jsx";
+import {VigenereEncrypt} from "../pages/pagesvigenere/vigenereencrypt.jsx";
+import {VigenereDecrypt} from "../pages/pagesvigenere/vigeneredecrypt.jsx";
+import {VigenereAttack} from "../pages/pagesvigenere/vigenereattack.jsx";
 
 class Main extends Component {
 
@@ -40,6 +43,10 @@ class Main extends Component {
                         {/*Pages Permutation*/}
                         <Route path="/permutation/encrypt" element={<PermutationEncrypt/>}/>
                         <Route path="/permutation/decrypt" element={<PermutationDecrypt/>}/>
+                        {/*Pages Permutation*/}
+                        <Route path="/vigenere/encrypt" element={<VigenereEncrypt/>}/>
+                        <Route path="/vigenere/decrypt" element={<VigenereDecrypt/>}/>
+                        <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
                     </Routes>
                 </div>
             </div>

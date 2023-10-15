@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {getSubstitution} from "../../api/lockbox.api.js";
+import {createSubstitution} from "../../api/lockbox.api.js";
 import * as Yup from "yup";
 
 export function SubsDecrypt() {
@@ -15,7 +15,7 @@ export function SubsDecrypt() {
     const onSubmitHandler = async (data) => {
         data.method = "decrypt"
         try {
-            const response = await getSubstitution(data)
+            const response = await createSubstitution(data)
             setData(response)
         } catch (error) {
             console.log('Error: ', error)
@@ -65,8 +65,6 @@ export function SubsDecrypt() {
                                 k: Yup.string()
                                     .min(26, "The permutation contain 26 letters")
                                     .max(26, "The permutation contain 26 letters")
-                                    .uppercase("The permutation is in UPPERCASE")
-                                    .strict()
                                     .required("Key is required")
                             })}
 
@@ -85,7 +83,7 @@ export function SubsDecrypt() {
                                                 </svg>
                                             </span>
                                                 <Field type="text" name="cipher_text"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                                       className="block w-full uppercase py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                                        placeholder="Enter cipher text"/>
                                             </div>
                                             <div className="text-red-600 text-xs font-semibold">
@@ -106,7 +104,7 @@ export function SubsDecrypt() {
                                         <div className="flex w-full flex-col">
                                             <div>
                                                 <Field type="text" name="k"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                                       className="block w-full uppercase py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                                        placeholder="Enter key"/>
                                             </div>
                                             <div className="text-red-600 text-xs font-semibold">

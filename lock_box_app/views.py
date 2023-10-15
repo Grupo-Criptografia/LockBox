@@ -131,7 +131,7 @@ class vigenereView(APIView):
         k = request.data.get('k')
         cipher_text = request.data.get('cipher_text')
         m = request.data.get('m')
-        attack = {}
+        list_attack = {}
         method = request.data.get('method')
 
         print(f"plain_text: {plain_text}")
@@ -147,8 +147,8 @@ class vigenereView(APIView):
 
         if method == 'attack':
             m = int(m)
-            attack = attackVigenere(cipher_text, m)
+            list_attack = attackVigenere(cipher_text, m)
 
-        data_obj = dataVigenereTest(plain_text, cipher_text, k, attack)
+        data_obj = dataVigenereTest(plain_text, cipher_text, k, list_attack)
         serializer_class = dataVigenereSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
