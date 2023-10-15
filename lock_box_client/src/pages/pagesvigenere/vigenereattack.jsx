@@ -1,38 +1,35 @@
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useState} from "react";
-import {createSubstitution,} from "../../api/lockbox.api.js";
+import {createVigenere} from "../../api/lockbox.api.js";
+import * as Yup from "yup";
 
-export function SubsAttack() {
+export function VigenereAttack() {
 
     const [data, setData] = useState({
         plain_text: "",
         cipher_text: "",
         k: "",
+        m: "",
         list_attack: {
-            letters: [],
-            bigrams: [],
-            trigrams: []
+            Attack: '',
+            Coincidence: {
+                mean_iocs: [],
+                m_ioc: ''
+            },
+            Kasiski: {
+                trg: [],
+                trg_indices: [],
+                m_kasiski: ''
+            }
         }
     })
-
-
-    const listLettersRender = data.list_attack.letters.map((letter, index) => (
-        <p className="leading-relaxed text-center mb-5" key={index}>{letter}</p>
-    ));
-
-    const listBigramsRender = data.list_attack.bigrams.map((bigram, index) => (
-        <p className="leading-relaxed text-center mb-5" key={index}>{bigram}</p>
-    ));
-
-    const listTrigramsRender = data.list_attack.trigrams.map((trigram, index) => (
-        <p className="leading-relaxed text-center mb-5" key={index}>{trigram}</p>
-    ));
 
 
     const onSubmitHandler = async (data) => {
         data.method = "attack"
         try {
-            const response = await createSubstitution(data)
+            const response = await createVigenere(data)
+            console.log(response)
             setData(response)
         } catch (error) {
             console.log('Error: ', error)
@@ -43,16 +40,16 @@ export function SubsAttack() {
     return (
         <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
             <div className="container w-full px-5 py-16 mx-auto">
+
                 <div className="text-center w-full mb-10">
                     <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                        Substitution Cipher Text Attack User Guide
+                        Vigenere Cipher Text Attack User Guide
                     </h1>
                     <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Substitution
                         Cipher Text Analyzer. This tool allows you to unravel and
                         understand encrypted text that has been encoded using a substitution cipher. Below, we
                         explain how to use it easily and effectively</p>
                 </div>
-
                 <div className="container px-5 mx-auto flex flex-wrap">
                     <div className="flex flex-wrap justify-center w-full">
                         <div className="grid md:grid-cols-2 grid-cols-1 md:gap-2 gap-1 md:w-3/4 md:pr-10 md:py-6">
@@ -136,7 +133,6 @@ export function SubsAttack() {
                     </div>
                 </div>
 
-
                 <div
                     className="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-auto">
                     <div
@@ -153,14 +149,48 @@ export function SubsAttack() {
                     </div>
 
                     <div className="flex items-center justify-center pb-5 md:py-5 md:w-1/2">
-                        <Formik initialValues={{
-                            cipher_attack: ''
-                        }} onSubmit={onSubmitHandler}>
+                        <Formik
+                            initialValues={{
+                                cipher_attack: '',
+                                m: ''
+                            }}
+                            validationSchema={Yup.object({
+                                cipher_text: Yup.string()
+                                    .required("Cipher text is required"),
+                                m: Yup.number()
+                                    .min(1, "Length of the key must be greater than 1")
+                                    .required("This input is required")
+                            })}
+
+                            onSubmit={(values, {resetForm}) => {
+                                onSubmitHandler(values).then(() => {
+                                    resetForm();
+                                }).catch(error => {
+                                    console.error("Error en el envio", error);
+                                })
+                            }}>
+
                             <Form className="w-3/4">
                                 <div className="grid grid-cols-1 gap-1 mt-4">
                                     <div>
+                                        <label className="font-medium">Cipher text</label>
                                         <Field placeholder="Cipher text" as="textarea" name="cipher_text"
                                                className="block uppercase  mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-200 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                        <div className="text-red-600 text-xs font-semibold">
+                                            <ErrorMessage className="font-normal text-xs text-poppy"
+                                                          name="cipher_text"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 gap-1 mt-4">
+                                    <div>
+                                        <label className="font-medium">Length of the key: </label>
+                                        <Field placeholder="length" type="number" name="m"
+                                               className="block uppercase  mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                        <div className="text-red-600 text-xs font-semibold">
+                                            <ErrorMessage className="font-normal text-xs text-poppy"
+                                                          name="m"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="flex justify-end mt-6">
@@ -174,40 +204,20 @@ export function SubsAttack() {
                     </div>
                 </div>
 
-                {data.list_attack.letters.length > 0 && (
-                    <div className="flex flex-wrap md:flex-row md:justify-start justify-center flex-col mt-10">
-                        <div className="p-4 lg:w-1/3">
-                            <div className="h-full flex items-start">
-                                <div className="flex-grow pl-6">
-                                    <h1 className="title-font text-xl font-medium text-gray-900 mb-3">Letters</h1>
-                                    <div className="grid grid-cols-2 text-charcoal gap-2">
-                                        {listLettersRender}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-4 md:border md:border-x-charcoal lg:w-1/3">
-                            <div className="h-full flex items-start">
-                                <div className="flex-grow pl-6">
-                                    <h1 className="title-font text-xl font-medium text-gray-900 mb-3">Bigrams</h1>
-                                    <div className="grid text-charcoal grid-cols-2 gap-2">
-                                        {listBigramsRender}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-4 lg:w-1/3">
-                            <div className="h-full flex items-start">
-                                <div className="flex-grow pl-6">
-                                    <h1 className="title-font text-xl font-medium text-gray-900 mb-3">Trigrams</h1>
-                                    <div className="grid grid-cols-2 text-charcoal gap-2">
-                                        {listTrigramsRender}
-                                    </div>
+                {data?.list_attack.Attack ?
+                    <div className="p-4 lg:w-1/3">
+                        <div className="h-full flex items-start">
+                            <div className="flex-grow pl-6">
+                                <h1 className="title-font text-xl font-medium text-gray-900 mb-3">Posible key: </h1>
+                                <div className="grid grid-cols-2 text-charcoal gap-2">
+                                    {data.list_attack.Attack}
                                 </div>
                             </div>
                         </div>
                     </div>
-                )}
+                    :
+                    <div></div>
+                }
             </div>
         </section>
     )

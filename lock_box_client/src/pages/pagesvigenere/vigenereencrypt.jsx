@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {createPermutation} from '../../api/lockbox.api.js'
+import {createVigenere} from '../../api/lockbox.api.js'
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 
-export function PermutationEncrypt() {
+export function VigenereEncrypt() {
 
     const [data, setData] = useState({
         plain_text: "",
@@ -17,13 +17,13 @@ export function PermutationEncrypt() {
 
     const onSubmitHandler = async (data) => {
         data.method = "encrypt"
+        console.log(data)
         try {
-            const response = await createPermutation(data)
-            const k_string = response.k.join(", ")
+            const response = await createVigenere(data)
             setData({
                 plain_text: response.plain_text,
                 cipher_text: response.cipher_text,
-                k: k_string
+                k: response.k
             })
         } catch (error) {
             console.log('Error: ', error)
@@ -39,7 +39,7 @@ export function PermutationEncrypt() {
 
                 <div className="text-center w-full mb-10">
                     <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                        User Guide for Permutation Encryption
+                        User Guide for Vigenere Encryption
                     </h1>
                     <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Shift Cipher
                         Encryption Tool. This tool allows you to encrypt plain text using a Shift cipher, where each
@@ -127,15 +127,12 @@ export function PermutationEncrypt() {
                                         .required("Plain text is required"),
                                     k: Yup.string()
                                         .required("Key is required")
-                                        .test("Key valida", "El tamaño de la lista no particiona el texto plano", function (value) {
+                                        .test("Valid key", "The size of the key must not be larger than the size of the plain text.", function (value) {
                                             const {plain_text} = this.parent;
-                                            const keysArray = value.split(",").map((key) => Number(key.trim()));
-                                            return plain_text.length % keysArray.length === 0;
+                                            return plain_text.split(" ").join("").length >= value.split(" ").join("").length;
                                         })
-                                        .test("Key valida", "No se deben repetir números", function (value) {
-                                            const keysArray = value.split(",").map((key) => Number(key.trim()));
-                                            const uniqueKeys = new Set(keysArray);
-                                            return uniqueKeys.size === keysArray.length
+                                        .test("Valid key", "The key must not be whitespace.", function (value) {
+                                            return value.split(" ").join("").length === value.length;
                                         })
                                 })}
 
@@ -160,7 +157,7 @@ export function PermutationEncrypt() {
                                         <div className="mt-3">
                                             <label className="font-medium">Key</label>
                                             <Field placeholder="Enter key" type="text" name="k"
-                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                                   className="block w-full uppercase mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs text-poppy" name="k"/>
                                             </div>

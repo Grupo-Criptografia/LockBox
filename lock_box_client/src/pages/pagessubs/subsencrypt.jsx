@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {getSubstitution} from "../../api/lockbox.api.js";
+import {createSubstitution} from "../../api/lockbox.api.js";
 import * as Yup from "yup";
 
 export function SubsEncrypt() {
@@ -15,7 +15,7 @@ export function SubsEncrypt() {
     const onSubmitHandler = async (data) => {
         data.method = "encrypt"
         try {
-            const response = await getSubstitution(data)
+            const response = await createSubstitution(data)
             setData(response)
         } catch (error) {
             console.log('Error: ', error)
@@ -26,7 +26,8 @@ export function SubsEncrypt() {
     return (
         <div className="w-full h-screen bg-ivory flex flex-col items-center justify-center">
             <section className="text-charcoal w-full body-font">
-                <div className="flex flex-col w-3/4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
+                <div
+                    className="flex flex-col w-3/4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
                     <div className="md:flex md:w-1/2 md:items-center bg-charcoal">
                         <div className="px-4 py-4 ml-8">
 
@@ -62,10 +63,8 @@ export function SubsEncrypt() {
                                 plain_text: Yup.string()
                                     .required("Plain text is required"),
                                 k: Yup.string()
-                                    .min(26, "The permutation contain 26 letters")
-                                    .max(26, "The permutation contain 26 letters")
-                                    .uppercase("The permutation is in UPPERCASE")
-                                    .strict()
+                                    .min(26, "The permutation must contain all 26 letters of the alphabet.")
+                                    .max(26, "The permutation must contain all 26 letters of the alphabet.")
                                     .required("Key is required")
                             })}
 
@@ -105,7 +104,7 @@ export function SubsEncrypt() {
                                         <div className="flex w-full flex-col">
                                             <div>
                                                 <Field type="text" name="k"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                                       className="block w-full uppercase py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                                        placeholder="Enter key"/>
                                             </div>
                                             <div className="text-red-600 text-xs font-semibold">
