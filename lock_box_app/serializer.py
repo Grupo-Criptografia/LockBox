@@ -32,3 +32,9 @@ class dataVigenereSerializer(serializers.Serializer):
     cipher_text = serializers.CharField(max_length=200)
     k = serializers.CharField(max_length=200)
     list_attack = serializers.DictField()
+
+
+class dataSDESSerializer(serializers.Serializer):
+    plain_text = serializers.CharField(max_length=200)
+    cipher_text = serializers.CharField(max_length=200)
+    k = serializers.IntegerField()
