@@ -126,7 +126,7 @@ Make sure you have the following requirements installed on your system:
    source venv-env/bin/activate
    
    # On Windows systems
-   venv\Scripts\activate
+   source venv/Scripts/activate
    ```
 
 4. Inside the virtual environment, use pip to install Python requirements from the `requirements.txt` file:
