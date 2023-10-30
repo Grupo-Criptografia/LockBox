@@ -156,9 +156,11 @@ class sdesView(APIView):
     def post(self, request):
 
         plain_text = request.data.get('plain_text')
-        k = int(request.data.get('k'))
+        k = request.data.get('k')
         cipher_text = request.data.get('cipher_text')
         method = request.data.get('method')
+
+        k = int(k, 2)
 
         print(f"plain_text: {plain_text}")
         print(f"k: {k}")
@@ -166,10 +168,10 @@ class sdesView(APIView):
         print(f"method: {method}")
 
         if method == 'encrypt':
-            cipher_text = encrypt_des(plain_text, k)
+            cipher_text = encrypt_des(k, plain_text)
 
         if method == 'decrypt':
-            plain_text = decrypt_des(cipher_text, k)
+            plain_text = decrypt_des(k, plain_text)
 
         data_obj = dataSDESTest(plain_text, cipher_text, k)
         serializer_class = dataSDESSerializer(data_obj)
