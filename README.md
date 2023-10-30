@@ -143,8 +143,11 @@ Make sure you have the following requirements installed on your system:
     ```sh
    npm install
    ```
-
-7. To check that the installation was successful run the following commands:
+7. To verify that every tool is installed, run this command:
+   ```sh
+   python -m pip install --upgrade setuptools
+   ```
+8. To check that the installation was successful run the following commands:
    *  Open a terminal in the project's root directory and run:
    ```sh
    # On Unix or MacOS systems
