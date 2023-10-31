@@ -9,9 +9,11 @@ from .crypto_algorithms.substitution import encryptSubs, decryptSubs, attackSubs
 from .crypto_algorithms.affine import encryptAffine, decryptAffine, attackAffine
 from .crypto_algorithms.permutation import encryptPermutation, decryptPermutation
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
+from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 
-from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer
-from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest
+from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
+    dataSDESSerializer
+from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest
 
 
 # Decorador personalizado para manejar excepciones
@@ -55,7 +57,7 @@ class shiftView(APIView):
 
 class substitutionView(APIView):
     @handle_exceptions
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
 
         plain_text = request.data.get('plain_text')
 
@@ -134,11 +136,6 @@ class vigenereView(APIView):
         list_attack = {}
         method = request.data.get('method')
 
-        print(f"plain_text: {plain_text}")
-        print(f"k: {k}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         if method == 'encrypt':
             cipher_text = encryptVigenere(plain_text, k)
 
@@ -151,4 +148,31 @@ class vigenereView(APIView):
 
         data_obj = dataVigenereTest(plain_text, cipher_text, k, list_attack)
         serializer_class = dataVigenereSerializer(data_obj)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+
+class sdesView(APIView):
+    @handle_exceptions
+    def post(self, request):
+
+        plain_text = request.data.get('plain_text')
+        k = request.data.get('k')
+        cipher_text = request.data.get('cipher_text')
+        method = request.data.get('method')
+
+        k = int(k, 2)
+
+        print(f"plain_text: {plain_text}")
+        print(f"k: {k}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
+        if method == 'encrypt':
+            cipher_text = encrypt_des(k, plain_text)
+
+        if method == 'decrypt':
+            plain_text = decrypt_des(k, plain_text)
+
+        data_obj = dataSDESTest(plain_text, cipher_text, k)
+        serializer_class = dataSDESSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)

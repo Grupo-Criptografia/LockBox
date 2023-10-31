@@ -107,14 +107,14 @@ def decrypt(key, cipher_text):
     return fp(fk(keyGen(key)[0], swapNibbles(data)))
 
 
-def encrypt_text(key, plain_text):
+def encrypt_des(key, plain_text):
     cipher_text_bits = [encrypt(key, ord(i)) for i in plain_text]
     cipher_text_bytes = [i.to_bytes(1, byteorder="big") for i in cipher_text_bits]
 
     return b64encode(b"".join(cipher_text_bytes)).decode()
 
 
-def decrypt_text(key, cipher_text):
+def decrypt_des(key, cipher_text):
     print(b64decode(cipher_text))
     cipher_text = [i for i in b64decode(cipher_text)]
     plain_text_bytes = [decrypt(key, i) for i in cipher_text]
@@ -122,10 +122,3 @@ def decrypt_text(key, cipher_text):
     return "".join([chr(i) for i in plain_text_bytes])
 
 
-if __name__ == "__main__":
-    string = "attackatdown"
-    print(0b0110010110)
-    cipher_text = encrypt_text(0b0110010110, string)
-    print(cipher_text)
-    decrypted_text = decrypt_text(0b0110010110, cipher_text)
-    print(decrypted_text)

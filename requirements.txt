@@ -1,0 +1,9 @@
+django~=4.2.5
+djangorestframework~=3.14.0
+django-cors-headers==3.8.0
+coreapi==2.3.3
+numpy==1.26.0
+nltk==3.8.1
+cryptools~=0.0.6
+sympy~=1.12
+tinyec~=0.4.0
