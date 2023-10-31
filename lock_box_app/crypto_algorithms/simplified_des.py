@@ -122,10 +122,3 @@ def decrypt_des(key, cipher_text):
     return "".join([chr(i) for i in plain_text_bytes])
 
 
-if __name__ == "__main__":
-    string = "attackatdown"
-    print(0b0110010110)
-    cipher_text = encrypt_des(0b0110010110, string)
-    print(cipher_text)
-    decrypted_text = decrypt_des(0b0110010110, cipher_text)
-    print(decrypted_text)

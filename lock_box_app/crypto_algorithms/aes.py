@@ -1,4 +1,4 @@
-from cryptools.util import pad_image_arr, unpad_image_arr
+from .util import pad_image_arr, unpad_image_arr
 from Crypto.Cipher import AES
 import numpy as np
 

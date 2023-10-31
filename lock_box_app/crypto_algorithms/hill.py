@@ -1,7 +1,7 @@
 import numpy as np
 from sympy import Matrix
 from sympy.matrices.common import NonInvertibleMatrixError
-from cryptools.util import str2int, int2str
+from .util import str2int, int2str
 
 
 def encrypt_image(img_arr: np.ndarray, key: np.ndarray):
@@ -42,7 +42,7 @@ def decrypt_text(cipher_text: str, key) -> str:
 
 
 def encrypt(
-    data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int
+        data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int
 ) -> np.ndarray:
     """
     Encrypts the numerical data `data` with the matrix key `key` modulo `mod`
@@ -60,7 +60,7 @@ def encrypt(
     key = np.array(key)
 
     if len(data) % m == 0:
-        xs = [np.array(data[i : i + m]) for i in range(0, len(data), m)]
+        xs = [np.array(data[i: i + m]) for i in range(0, len(data), m)]
         ys = [(xs[i] @ key) % mod for i in range(len(xs))]
     else:
         raise Exception(
@@ -71,7 +71,7 @@ def encrypt(
 
 
 def decrypt(
-    data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int
+        data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int
 ) -> np.ndarray:
     """
     Decrypts the numerical data `data` with the matrix key `key` modulo `mod`
@@ -86,7 +86,7 @@ def decrypt(
     inv_key = np.array(inv_key)
 
     if len(data) % m == 0:
-        xs = [np.array(data[i : i + m]) for i in range(0, len(data), m)]
+        xs = [np.array(data[i: i + m]) for i in range(0, len(data), m)]
         ys = [(xs[i] @ inv_key) % mod for i in range(len(xs))]
     else:
         raise Exception(
