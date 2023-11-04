@@ -16,18 +16,19 @@ import {PermutationDecrypt} from "../pages/pagespermutation/permutationdecrypt.j
 import {VigenereEncrypt} from "../pages/pagesvigenere/vigenereencrypt.jsx";
 import {VigenereDecrypt} from "../pages/pagesvigenere/vigeneredecrypt.jsx";
 import {VigenereAttack} from "../pages/pagesvigenere/vigenereattack.jsx";
+import Home from "./HomeComponent.jsx";
 
 class Main extends Component {
 
     render() {
         return (
-            <div>
+            <div className="flex flex-col">
                 <Header/>
-                <div className="flex flex-row h-auto">
+                <div className="flex flex-row">
                     <Menu/>
                     <Routes>
                         <Route path="*" element={<Navigate to="/" replace/>}/>
-
+                        <Route path="/" element={<Home/>}/>
                         {/*Pages Shift*/}
                         <Route path="/shift/encrypt" element={<ShiftEncrypt/>}/>
                         <Route path="/shift/decrypt" element={<ShiftDecrypt/>}/>
