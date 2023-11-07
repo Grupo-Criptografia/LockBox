@@ -178,10 +178,10 @@ class sdesView(APIView):
         serializer_class = dataSDESSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
 
+
 class hillView(APIView):
     @handle_exceptions
     def post(self, request):
-
         plain_text = request.data.get('plain_text')
         k = request.data.get('k')
         cipher_text = request.data.get('cipher_text')
@@ -194,9 +194,7 @@ class hillView(APIView):
 
         if method == 'encript':
             cipher_text = encrypt_text(plain_text, k)
-        
+
         data_obj = dataHillTest(plain_text, cipher_text, k)
         serializer_class = dataHillSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-    
-    

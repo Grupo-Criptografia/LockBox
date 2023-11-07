@@ -16,11 +16,8 @@ import {PermutationDecrypt} from "../pages/pagespermutation/permutationdecrypt.j
 import {VigenereEncrypt} from "../pages/pagesvigenere/vigenereencrypt.jsx";
 import {VigenereDecrypt} from "../pages/pagesvigenere/vigeneredecrypt.jsx";
 import {VigenereAttack} from "../pages/pagesvigenere/vigenereattack.jsx";
-<<<<<<< HEAD
 import Home from "./HomeComponent.jsx";
-=======
-//import { HillEncrypt } from "../pages/pageshill/hillencrypt.jsx";
->>>>>>> dfee9d1ee3e6329cb20ac5df2b13090941e67a7a
+
 
 class Main extends Component {
 

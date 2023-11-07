@@ -1,7 +1,8 @@
 from django.urls import path
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
-from lock_box_app.views import shiftView, substitutionView, affineView, permutationView, vigenereView, sdesView, hillView
+from lock_box_app.views import shiftView, substitutionView, affineView, permutationView, vigenereView, sdesView, \
+    hillView
 
 routers = routers.DefaultRouter()
 
