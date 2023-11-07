@@ -1,5 +1,7 @@
 from functools import wraps
 
+
+#generar archivos de importación para estos from import
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,11 +12,13 @@ from .crypto_algorithms.affine import encryptAffine, decryptAffine, attackAffine
 from .crypto_algorithms.permutation import encryptPermutation, decryptPermutation
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
-from .crypto_algorithms.hill import encrypt_text, decrypt_text
+from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill
+
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
     dataSDESSerializer, dataHillSerializer
 from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest
+
 
 
 # Decorador personalizado para manejar excepciones
@@ -192,9 +196,12 @@ class hillView(APIView):
         print(f"cipher_text: {cipher_text}")
         print(f"method: {method}")
 
-        if method == 'encript':
-            cipher_text = encrypt_text(plain_text, k)
-        
+        if method == 'encrypt':
+            cipher_text = encrypt_text_hill(plain_text, k)
+
+        if method == 'decrypt':
+            plain_text = decrypt_text_hill(cipher_text, k)
+
         data_obj = dataHillTest(plain_text, cipher_text, k)
         serializer_class = dataHillSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
