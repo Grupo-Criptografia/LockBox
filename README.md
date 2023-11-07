@@ -148,7 +148,7 @@ Make sure you have the following requirements installed on your system:
    python -m pip install --upgrade setuptools
    ```
 8. To check that the installation was successful run the following commands:
-   *  Open a terminal in the project's root directory and run:
+   *  Open a terminal in the **project's root directory** and run:
    ```sh
    # On Unix or MacOS systems
    python3 manage.py runserver
