@@ -1,45 +1,43 @@
-/* eslint-disable react/no-unescaped-entities */
-import {useState} from "react";
-import {ErrorMessage, Field, Form, Formik} from "formik";
-import {getShift} from "../../api/lockbox.api.js";
+import {useEffect, useState} from "react";
+import {createHill, getShift} from '../../api/lockbox.api.js'
+import {useForm} from "react-hook-form";
 import * as Yup from "yup";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import {toast, ToastContainer} from "react-toastify";
 
-export function ShiftAttack() {
+export function HillEncrypt() {
+    const[data, setData] = useState({
+        plain_text: "",
+        cipher_text: "", 
+        k:[],
+        method: "encrypt"
+    })
 
-    const [data, setData] = useState({
-        cipher_text: "",
-        k: 0,
-        list_plain_text: []
-    });
+    useEffect(() => {
+        console.log(data)
+    }, [data]);
 
-    const listRender = data.list_plain_text.map((plain_text, index) => (
-        <p className="text-base text-charcoal" key={index}>{index + 1}. {plain_text}</p>
-    ));
-
-    async function onSubmitHandler(values) {
-        values.method = "attack";
+    const onSubmitHandler = async (data) => {
+        data.method = "encrypt"
         try {
-            const response = await getShift(values)
+            const response = await createHill(data)
             setData(response)
         } catch (error) {
-            console.log("Error", error)
+            console.log('Error: ', error)
         }
     }
-
     return (
         <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
+            {/* Guia de uso formulario */}
 
             <div className="container w-full px-5 py-16 mx-auto">
-                {/* Guia de uso formulario */}
                 <div className="text-center w-full mb-10">
                     <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                        User Guide for Shift Decryption Attack
+                        User Guide for Hill Encryption
                     </h1>
-                    <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">
-                        Welcome to Lock Box Shift Decryption Attack Tool. This tool allows you to decrypt
-                        messages that have been encrypted using a Caesar cipher. In this guide, we will explain how
-                        to use it to explore all 26 possible shifts and reveal the decrypted text.
-                    </p>
+                    <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Hill Cipher
+                        Encryption Tool. This tool allows you to encrypt plain text using a Hill cipher, which (in this case), encrypts
+                        a plain text creating a matrix</p>
                 </div>
                 <div className="container px-5 mx-auto flex flex-wrap">
                     <div className="flex flex-wrap justify-center w-full">
@@ -47,33 +45,44 @@ export function ShiftAttack() {
                             <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
                                 <div className="flex-grow pl-4">
                                     <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                        1. Enter the Cipher Text:
+                                        1. Enter the Encrypted Text:
                                     </h2>
                                     <p className="leading-relaxed">
-                                        In the first field of the form, enter the cipher text that you want to
-                                        decrypt. This can be a message or a phrase.
+                                        In the first field of the form, enter the plain text that you want to encrypt.
+                                        This can be a message or a phrase.
                                     </p>
+                                </div>
+                            </div>
+                            <div className="flex col-span-2 md:col-span-1 pb-6">
+                                <div className="flex-grow pl-4">
+                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
+                                        2. Enter the Encryption Key (k):
+                                    </h2>
+                                    <p className="leading-relaxed">In the second field, enter the encryption key (k)
+                                        from the range of 1 to 26. This key determines the number of positions each
+                                        letter will be shifted in the alphabet during encryption.For example, if you
+                                        choose k = 3, the letter 'a' will be encrypted as 'd','b' as 'e', and so on</p>
                                 </div>
                             </div>
                             <div className="flex col-span-1 pb-6">
                                 <div className="flex-grow pl-4">
                                     <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                        2. Initiate the Attack:
+                                        3. Encrypt the Text:
                                     </h2>
                                     <p className="leading-relaxed">
-                                        Click the "Attack" button form to begin the decryption attack process.
+                                        Once you've entered the plain text and the encryption key, click the
+                                        "Encrypt" button.
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex md:col-span-2 pb-6">
+                            <div className="flex md:col-span-1 pb-6">
                                 <div className="flex-grow pl-4">
                                     <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                        3. Encrypted Text:
+                                        4. Decrypted Text:
                                     </h2>
                                     <p className="leading-relaxed">
-                                        On the side of the form, you will find a list of all 26 possible shifts
-                                        along with the corresponding decrypted text for each shift. Each shift
-                                        represents an attempt to decrypt the message using a different shift value.
+                                        On the side of the form, you will see the result: your cipher text, the
+                                        decryption key used, and the plain text.
                                     </p>
                                 </div>
                             </div>
@@ -81,9 +90,9 @@ export function ShiftAttack() {
                                 <div className="flex flex-col pl-4">
                                     <h2 className="font-medium title-font text-base text-poppy mb-1 tracking-wider">Note</h2>
                                     <p className="leading-relaxed">
-                                        Please remember that this attack assumes that the text has been encrypted
-                                        using a Shift Cipher. It may not be effective if another encryption method
-                                        is used or if the language of the message is unknown.
+                                        Shift cipher decryption is a straightforward process, but it's important to use
+                                        the correct key. If you suspect the ciphertext uses a different encryption
+                                        method or an incorrect key, decryption may not yield the desired result.
                                     </p>
                                 </div>
                             </div>
@@ -92,21 +101,27 @@ export function ShiftAttack() {
                 </div>
 
                 {/* Formulario y resultado */}
+
                 <div className="flex flex-col md:flex-row w-full mx-auto">
                     <div className="md:w-1/2 w-full flex justify-center h-auto">
                         <div
                             className="flex flex-col bg-white text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
-                                Form Attack
+                                Form Encrypt
                             </h1>
                             <Formik
                                 initialValues={{
-                                    cipher_text: '',
+                                    plain_text: '',
+                                    k: ''
                                 }}
 
                                 validationSchema={Yup.object({
-                                    cipher_text: Yup.string()
+                                    plain_text: Yup.string()
                                         .required("Plain text is required"),
+                                    k: Yup.number()
+                                        .min(0, "The min number of key is 0")
+                                        .max(25, "The max number key is 25")
+                                        .required("Key is required")
                                 })}
 
                                 onSubmit={(values, {resetForm}) => {
@@ -119,12 +134,20 @@ export function ShiftAttack() {
                                 <Form className="w-3/4">
                                     <div className="grid grid-cols-1 gap-1 mt-4">
                                         <div>
-                                            <label className="font-medium">Cipher text</label>
-                                            <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
+                                            <label className="font-medium">Plain text</label>
+                                            <Field placeholder="Enter plain text" as="textarea" name="plain_text"
                                                    className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="cipher_text"/>
+                                                              name="plain_text"/>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <label className="font-medium">Key</label>
+                                            <Field placeholder="Enter key" type="number" name="k"
+                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                            <div className="text-red-600 text-xs font-semibold">
+                                                <ErrorMessage className="font-normal text-xs text-poppy" name="k"/>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +155,7 @@ export function ShiftAttack() {
                                     <div className="flex justify-end mt-6">
                                         <button type="submit"
                                                 className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
-                                            Attack
+                                            Encrypt
                                         </button>
                                     </div>
                                 </Form>
@@ -143,24 +166,32 @@ export function ShiftAttack() {
                         className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
                         <div className="flex flex-col pl-12 w-full bg-ivory">
                             <h2 className="text-2xl font-semibold">
-                                List Plain Text
+                                Information Data
                             </h2>
 
-                            {data.list_plain_text?.length ?
-                                <div className="grid grid-cols-3 gap-3 mb-1 ml-1 mr-1 p-2">
-                                    {listRender}
+                            {data?.cipher_text ?
+                                <div>
+                                    <p className="mt-2 text-xl">
+                                        Plain text: {data.plain_text}
+                                    </p>
+                                    <p className="mt-2 text-xl">
+                                        Key: {data.k}
+                                    </p>
+                                    <p className="mt-2 text-xl">
+                                        Cipher text: {data.cipher_text}
+                                    </p>
                                 </div>
                                 :
                                 <p
                                     className="mt-2 text-xl">
-                                    Please enter a cipher text to show a list of possible plain text.
+                                    Please enter a plaint text and key for show a cipher text.
                                 </p>
+
                             }
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     )
 }

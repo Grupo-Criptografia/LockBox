@@ -22,3 +22,4 @@ export const createSubstitution = (data) => sendRequest("substitution/", data);
 export const createAffine = (data) => sendRequest("affine/", data);
 export const createPermutation = (data) => sendRequest("permutation/", data);
 export const createVigenere = (data) => sendRequest("vigenere/", data);
+export const createHill = (data) => sendRequest("hill/", data);

@@ -11,7 +11,8 @@ export default {
             colors: {
                 'poppy': '#F8721B',
                 'charcoal': '#373839',
-                'ivory': '#F2EBE6'
+                'ivory': '#F2EBE6',
+                'verde_prymary': '#56704C'
             }
         },
     },
