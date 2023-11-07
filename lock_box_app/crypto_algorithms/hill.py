@@ -24,16 +24,16 @@ def decrypt_image(img_arr: np.ndarray, key):
     return decrypt(img_arr.flatten(), key, 256).astype(np.uint8).reshape(*img_arr.shape)
 
 
-def encrypt_text(plain_text: str, key) -> str:
+def encrypt_text_hill(plain_text: str, key) -> str:
     """
     Encrypts a text `plain_text` given the matrix `key` with the Hill cipher.
     """
     data = str2int(plain_text)
-
+    print(key)
     return int2str(list(encrypt(data, key, 26))).upper()
 
 
-def decrypt_text(cipher_text: str, key) -> str:
+def decrypt_text_hill(cipher_text: str, key) -> str:
     """
     Decrypts a cipher text `cipher_text` given the matrix `key` with the Hill cipher.
     """

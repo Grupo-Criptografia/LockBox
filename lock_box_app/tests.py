@@ -42,7 +42,7 @@ class dataSDESTest:
 
 
 class dataHillTest:
-    def __init__(self, plain_text: str, cipher_text: str, k: int):
+    def __init__(self, plain_text: str, cipher_text: str, k: list[list]):
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
