@@ -12,7 +12,7 @@ class Home extends Component {
 
                         <p className="mt-4 text-sm text-charcoal whitespace-pre-line lg:text-base">Desbloquea el poder
                             de la criptografía con herramientas interactivas diseñadas para todos. Ya seas un
-                            entusiasta, un educador o simplemente curioso, [Nombre del Proyecto] te invita a sumergirte
+                            entusiasta, un educador o simplemente curioso, LockBox te invita a sumergirte
                             en la práctica de la encriptación y el descifrado. Con una interfaz intuitiva y sin la
                             necesidad de conocimientos previos, podrás: </p>
 
