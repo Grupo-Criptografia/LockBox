@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {useEffect, useState} from "react";
 import {createVigenere} from '../../api/lockbox.api.js'
 import * as Yup from "yup";

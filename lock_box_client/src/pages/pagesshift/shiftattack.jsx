@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getShift} from "../../api/lockbox.api.js";

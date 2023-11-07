@@ -16,6 +16,7 @@ import {PermutationDecrypt} from "../pages/pagespermutation/permutationdecrypt.j
 import {VigenereEncrypt} from "../pages/pagesvigenere/vigenereencrypt.jsx";
 import {VigenereDecrypt} from "../pages/pagesvigenere/vigeneredecrypt.jsx";
 import {VigenereAttack} from "../pages/pagesvigenere/vigenereattack.jsx";
+//import { HillEncrypt } from "../pages/pageshill/hillencrypt.jsx";
 
 class Main extends Component {
 
@@ -47,6 +48,8 @@ class Main extends Component {
                         <Route path="/vigenere/encrypt" element={<VigenereEncrypt/>}/>
                         <Route path="/vigenere/decrypt" element={<VigenereDecrypt/>}/>
                         <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
+                        {/*Pages Hill*/}
+                        {/* <Route path="/hill/encrypt" element={<HillEncrypt/>}/> */}
                     </Routes>
                 </div>
             </div>
