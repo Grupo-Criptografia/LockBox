@@ -7,7 +7,6 @@ const cryptoApi = axios.create({
 const sendRequest = (endpoint, data) => {
     return cryptoApi.post(endpoint, data)
         .then(response => {
-            console.log("Api: ", data);
             console.log("Response from server:", response.data);
             return response.data;
         })

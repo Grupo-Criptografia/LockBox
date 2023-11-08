@@ -17,6 +17,8 @@ import {VigenereEncrypt} from "../pages/pagesvigenere/vigenereencrypt.jsx";
 import {VigenereDecrypt} from "../pages/pagesvigenere/vigeneredecrypt.jsx";
 import {VigenereAttack} from "../pages/pagesvigenere/vigenereattack.jsx";
 import Home from "./HomeComponent.jsx";
+import {HillEncrypt} from "../pages/pageshill/hillencrypt.jsx";
+import {HillDecrypt} from "../pages/pageshill/hilldecrypt.jsx";
 
 
 class Main extends Component {
@@ -50,7 +52,8 @@ class Main extends Component {
                         <Route path="/vigenere/decrypt" element={<VigenereDecrypt/>}/>
                         <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
                         {/*Pages Hill*/}
-                        {/* <Route path="/hill/encrypt" element={<HillEncrypt/>}/> */}
+                        <Route path="/hill/encrypt" element={<HillEncrypt/>}/>
+                        <Route path="/hill/decrypt" element={<HillDecrypt/>}/>
                     </Routes>
                 </div>
             </div>

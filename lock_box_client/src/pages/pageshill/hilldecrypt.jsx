@@ -1,11 +1,9 @@
 import {useEffect, useState} from "react";
-import {createHill, getShift} from '../../api/lockbox.api.js'
-import {useForm} from "react-hook-form";
+import {createHill} from '../../api/lockbox.api.js'
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {toast, ToastContainer} from "react-toastify";
 
-export function HillEncrypt() {
+export function HillDecrypt() {
 
     const [matrixSize, setMatrixSize] = useState(2);
 
@@ -18,8 +16,7 @@ export function HillEncrypt() {
     const [data, setData] = useState({
         plain_text: "",
         cipher_text: "",
-        k: createInitialMatrix(matrixSize),
-        method: "encrypt"
+        k: createInitialMatrix(matrixSize)
     })
 
     useEffect(() => {
@@ -77,7 +74,7 @@ export function HillEncrypt() {
     };
 
     const onSubmitHandler = async (data) => {
-        data.method = "encrypt"
+        data.method = "decrypt"
         try {
             const response = await createHill(data)
             setData(response)
@@ -91,7 +88,7 @@ export function HillEncrypt() {
             <div className="container w-full px-5 py-16 mx-auto">
                 <div className="text-center w-full mb-10">
                     <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                        User Guide for Hill Encryption
+                        User Guide for Hill Decrypt
                     </h1>
                     <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Hill Cipher
                         Encryption Tool. This tool allows you to encrypt plain text using a Hill cipher, which (in this
@@ -166,19 +163,19 @@ export function HillEncrypt() {
                         <div
                             className="flex flex-col bg-white text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
-                                Form Encrypt
+                                Form Decrypt
                             </h1>
                             <Formik
                                 initialValues={{
-                                    plain_text: '',
+                                    cipher_text: '',
                                     k: createInitialMatrix(matrixSize),
                                 }}
 
                                 validationSchema={Yup.object({
-                                    plain_text: Yup.string()
-                                        .required("Plain text is required")
-                                        .test('Length plain text',
-                                            "The Length of the plain text is not divisible for the length matrix",
+                                    cipher_text: Yup.string()
+                                        .required("Cipher text is required")
+                                        .test('Length cipher text',
+                                            "The Length of the cipher text is not divisible for the length matrix",
                                             function (value) {
                                                 const {k} = this.parent;
 
@@ -243,13 +240,13 @@ export function HillEncrypt() {
                                         <Form className="w-3/4">
                                             <div className="grid grid-cols-1 gap-1 mt-4">
                                                 <div>
-                                                    <label className="font-medium">Plain text</label>
-                                                    <Field placeholder="Enter plain text" as="textarea"
-                                                           name="plain_text"
-                                                           className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                                    <label className="font-medium">Cipher text</label>
+                                                    <Field placeholder="Cipher plain text" as="textarea"
+                                                           name="cipher_text"
+                                                           className="block mt-2 w-full uppercase placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                                     <div className="text-red-600 text-xs font-semibold">
                                                         <ErrorMessage className="font-normal text-xs text-poppy"
-                                                                      name="plain_text"/>
+                                                                      name="cipher_text"/>
                                                     </div>
                                                 </div>
 
@@ -286,7 +283,7 @@ export function HillEncrypt() {
                                             <div className="flex justify-end mt-6">
                                                 <button type="submit"
                                                         className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
-                                                    Encrypt
+                                                    Decrypt
                                                 </button>
                                             </div>
                                         </Form>
@@ -302,7 +299,7 @@ export function HillEncrypt() {
                                 Information Data
                             </h2>
 
-                            {data?.cipher_text ?
+                            {data?.plain_text ?
                                 <div>
                                     <p className="mt-2 text-xl">
                                         Plain text: {data.plain_text}
