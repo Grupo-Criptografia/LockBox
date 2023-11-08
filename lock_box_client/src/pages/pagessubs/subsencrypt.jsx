@@ -63,9 +63,15 @@ export function SubsEncrypt() {
                                 plain_text: Yup.string()
                                     .required("Plain text is required"),
                                 k: Yup.string()
-                                    .min(26, "The permutation must contain all 26 letters of the alphabet.")
-                                    .max(26, "The permutation must contain all 26 letters of the alphabet.")
                                     .required("Key is required")
+                                    .test("no-repeat", "Plain text must not be a permutation of alphabet",
+                                        value => {
+                                            if (value.length !== 26) return false;
+
+                                            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+                                            const valueLowercase = value.toLowerCase();
+                                            return alphabet.split('').every(letter => valueLowercase.includes(letter));
+                                        })
                             })}
 
                             onSubmit={onSubmitHandler}>

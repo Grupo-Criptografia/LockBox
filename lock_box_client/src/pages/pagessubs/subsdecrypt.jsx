@@ -66,6 +66,14 @@ export function SubsDecrypt() {
                                     .min(26, "The permutation contain 26 letters")
                                     .max(26, "The permutation contain 26 letters")
                                     .required("Key is required")
+                                    .test("no-repeat", "Plain text must not be a permutation of alphabet",
+                                        value => {
+                                            if (value.length !== 26) return false;
+
+                                            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+                                            const valueLowercase = value.toLowerCase();
+                                            return alphabet.split('').every(letter => valueLowercase.includes(letter));
+                                        })
                             })}
 
                             onSubmit={onSubmitHandler}>
