@@ -12,10 +12,12 @@ from .crypto_algorithms.permutation import encryptPermutation, decryptPermutatio
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill
+from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
     dataSDESSerializer, dataHillSerializer
-from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest
+from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest, \
+    dataTDESTest
 
 
 # Decorador personalizado para manejar excepciones
@@ -201,4 +203,39 @@ class hillView(APIView):
 
         data_obj = dataHillTest(plain_text, cipher_text, k)
         serializer_class = dataHillSerializer(data_obj)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+
+class tdesView(APIView):
+    @handle_exceptions
+    def post(self, request):
+
+        plain_img = request.data.get('plain_img')
+        k = request.data.get('k')
+        cipher_img = request.data.get('cipher_img')
+        method = request.data.get('method')
+        mode = request.data.get('mode')
+
+        print(f"plain_img: {plain_img}")
+        print(f"k: {k}")
+        print(f"cipher_img: {cipher_img}")
+        print(f"method: {method}")
+
+        if method == 'encrypt':
+            if mode == 'ECB':
+                cipher_img = encrypt_image_tdes(plain_img, k, mode)
+            if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
+                cipher_img = encrypt_image_tdes(plain_img, k, mode, iv=b"initvect")
+            if mode == 'CTR':
+                cipher_img = encrypt_image_tdes(plain_img, k, mode, initial_value=b"casaverd")
+        if method == 'decrypt':
+            if mode == 'ECB':
+                cipher_img = decrypt_image_tdes(plain_img, k, mode)
+            if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
+                cipher_img = decrypt_image_tdes(plain_img, k, mode, iv=b"initvect")
+            if mode == 'CTR':
+                cipher_img = decrypt_image_tdes(plain_img, k, mode, initial_value=b"casaverd")
+
+        data_obj = dataTDESTest(plain_img, cipher_img, k, mode)
+        serializer_class = dataSDESSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)

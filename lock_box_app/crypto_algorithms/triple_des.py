@@ -1,10 +1,10 @@
-from .util import pad_image_arr, unpad_image_arr
+from util import pad_image_arr, unpad_image_arr, convert_img_arr, convert_arr_img
 from Crypto.Cipher import DES3
 import numpy as np
+from PIL import Image
 
 
-def encrypt_image(plain_img_arr, *args, **kwargs):
-
+def encrypt_image_tdes(plain_img_arr, *args, **kwargs):
     modes = {
         "ECB": DES3.MODE_ECB,
         "CBC": DES3.MODE_CBC,
@@ -29,8 +29,7 @@ def encrypt_image(plain_img_arr, *args, **kwargs):
     return cipher_img_arr
 
 
-def decrypt_image(cipher_img_arr, *args, **kwargs):
-
+def decrypt_image_tdes(cipher_img_arr, *args, **kwargs):
     modes = {
         "ECB": DES3.MODE_ECB,
         "CBC": DES3.MODE_CBC,
@@ -54,3 +53,17 @@ def decrypt_image(cipher_img_arr, *args, **kwargs):
     plain_img_arr = unpad_image_arr(plain_img_arr)
 
     return plain_img_arr
+
+
+if __name__ == "__main__":
+    key = b"holamellamodavid"
+    print("K: ", key)
+    plain_img_arr = convert_img_arr(Image.open("./img/block/clear/bw.png"))
+    encrypt = encrypt_image_tdes(plain_img_arr, key, "CBC", iv=b"initvect")
+    print("Encrypt: ", encrypt)
+    image_enc = convert_arr_img(encrypt)
+    image_enc.show()
+    cipher_img_arr = convert_img_arr(image_enc)
+    decrypt = decrypt_image_tdes(cipher_img_arr, key, "CBC", iv=b"initvect")
+    image_dec = convert_arr_img(decrypt)
+    image_dec.show()
