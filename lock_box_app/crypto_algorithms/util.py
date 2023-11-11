@@ -1,3 +1,6 @@
+import base64
+import io
+from io import BytesIO
 from string import ascii_lowercase
 import numpy as np
 from PIL import Image
@@ -78,9 +81,43 @@ def unpad_image_arr(img_arr):
     return plain_img_arr
 
 
+def pad_image(image, block_size):
+    width, height = image.size
+    pad_rows = block_size - (height % block_size)
+
+    # Create a new image with padding
+    if pad_rows < block_size:
+        padded_image = Image.new(image.mode, (width, height + pad_rows), color=(255, 255, 255))
+        padded_image.paste(image, (0, 0))
+        return padded_image
+    else:
+        return image
+
+
+def unpad_image(image):
+    width, height = image.size
+
+    # Find and remove the padding
+    for row in range(height - 1, -1, -1):
+        if all(pixel == 255 for pixel in image.getpixel((0, row))):
+            height -= 1
+        else:
+            break
+
+    return image.crop((0, 0, width, height))
+
+
 def convert_img_arr(image):
+    image = Image.open(
+        io.BytesIO(
+            base64.decodebytes(bytes(image, 'utf-8'))
+        )
+    )
     return np.asarray(image)
 
 
 def convert_arr_img(array):
-    return Image.fromarray(array)
+    buffered = BytesIO()
+    image = Image.fromarray(array)
+    image.save(buffered, format="JPEG")
+    return base64.b64encode(buffered.getvalue())

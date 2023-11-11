@@ -20,7 +20,7 @@ class dataSubstitutionSerializer(serializers.Serializer):
 
 
 class dataAffineSerializer(serializers.Serializer):
-    plain_text = serializers.ImageField(blank='', default='', upload="")
+    plain_text = serializers.CharField(max_length=200)
     cipher_text = serializers.CharField(max_length=200)
     k = serializers.ListField(
         child=serializers.IntegerField()
@@ -51,6 +51,7 @@ class dataHillSerializer(serializers.Serializer):
 
 
 class dataTDESSerializer(serializers.Serializer):
-    plain_img = serializers.CharField(max_length=200)
-    cipher_img = serializers.CharField(max_length=200)
-    k = serializers.IntegerField()
+    plain_img = serializers.CharField()
+    cipher_img = serializers.CharField()
+    k = serializers.CharField(max_length=20)
+    mode = serializers.CharField(max_length=3)

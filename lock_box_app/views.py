@@ -1,4 +1,5 @@
 from functools import wraps
+from .crypto_algorithms.util import convert_arr_img, convert_img_arr
 
 # generar archivos de importación para estos from import
 from rest_framework import status
@@ -15,7 +16,7 @@ from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill
 from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillSerializer
+    dataSDESSerializer, dataHillSerializer, dataTDESSerializer
 from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest, \
     dataTDESTest
 
@@ -216,26 +217,25 @@ class tdesView(APIView):
         method = request.data.get('method')
         mode = request.data.get('mode')
 
-        print(f"plain_img: {plain_img}")
-        print(f"k: {k}")
-        print(f"cipher_img: {cipher_img}")
-        print(f"method: {method}")
-
         if method == 'encrypt':
+            plain_img_arr = convert_img_arr(plain_img)
             if mode == 'ECB':
-                cipher_img = encrypt_image_tdes(plain_img, k, mode)
+                cipher_img = encrypt_image_tdes(plain_img_arr, k.encode(), mode)
             if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
-                cipher_img = encrypt_image_tdes(plain_img, k, mode, iv=b"initvect")
+                cipher_img = encrypt_image_tdes(plain_img, k.encode(), mode, iv=b"initvect")
             if mode == 'CTR':
-                cipher_img = encrypt_image_tdes(plain_img, k, mode, initial_value=b"casaverd")
+                cipher_img = encrypt_image_tdes(plain_img, k.encode(), mode, initial_value=b"casaverd")
+            cipher_img = convert_arr_img(cipher_img)
         if method == 'decrypt':
+            cipher_img_arr = convert_img_arr(cipher_img)
             if mode == 'ECB':
-                cipher_img = decrypt_image_tdes(plain_img, k, mode)
+                plain_img = decrypt_image_tdes(cipher_img_arr, k, mode)
             if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
-                cipher_img = decrypt_image_tdes(plain_img, k, mode, iv=b"initvect")
+                plain_img = decrypt_image_tdes(cipher_img_arr, k, mode, iv=b"initvect")
             if mode == 'CTR':
-                cipher_img = decrypt_image_tdes(plain_img, k, mode, initial_value=b"casaverd")
+                plain_img = decrypt_image_tdes(cipher_img_arr, k, mode, initial_value=b"casaverd")
+            plain_img = convert_arr_img(plain_img)
 
         data_obj = dataTDESTest(plain_img, cipher_img, k, mode)
-        serializer_class = dataSDESSerializer(data_obj)
+        serializer_class = dataTDESSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)

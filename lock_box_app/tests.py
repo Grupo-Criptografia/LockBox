@@ -49,7 +49,8 @@ class dataHillTest:
 
 
 class dataTDESTest:
-    def __init__(self, plain_img: str, cipher_img: str, mode: str, k: str):
+    def __init__(self, plain_img: str, cipher_img: str, k: str, mode: str):
         self.plain_img = plain_img
         self.cipher_img = cipher_img
         self.k = k
+        self.mode = mode
