@@ -4,7 +4,7 @@ import {Component} from "react";
 class Header extends Component {
     render() {
         return (
-            <header className="text-charcoal body-font bg-poppy">
+            <header className="text-charcoal body-font bg-verde_prymary">
                 <div className="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
                     <Link to="/" className="flex title-font font-medium items-center text-charcoal mb-4 md:mb-0">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
@@ -22,7 +22,6 @@ class Header extends Component {
                     </nav>
                 </div>
             </header>
-
         )
     }
 }

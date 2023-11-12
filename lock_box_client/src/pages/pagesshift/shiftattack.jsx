@@ -28,9 +28,9 @@ export function ShiftAttack() {
 
     return (
         <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
-            {/* Guia de uso formulario */}
 
             <div className="container w-full px-5 py-16 mx-auto">
+                {/* Guia de uso formulario */}
                 <div className="text-center w-full mb-10">
                     <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
                         User Guide for Shift Decryption Attack
@@ -92,7 +92,6 @@ export function ShiftAttack() {
                 </div>
 
                 {/* Formulario y resultado */}
-
                 <div className="flex flex-col md:flex-row w-full mx-auto">
                     <div className="md:w-1/2 w-full flex justify-center h-auto">
                         <div
