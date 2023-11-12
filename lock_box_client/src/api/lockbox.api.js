@@ -1,11 +1,16 @@
 import axios from "axios";
 
-const cryptoApi = axios.create({
+const lockBoxApi = axios.create({
     baseURL: "http://localhost:8000/api/"
 })
 
 const sendRequest = (endpoint, data) => {
-    return cryptoApi.post(endpoint, data)
+    console.log("SendRequest:", data);
+    return lockBoxApi.post(endpoint, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data' // Establecer el tipo de contenido como 'multipart/form-data' para cargar archivos
+        }
+    })
         .then(response => {
             console.log("Response from server:", response.data);
             return response.data;
@@ -22,3 +27,4 @@ export const createAffine = (data) => sendRequest("affine/", data);
 export const createPermutation = (data) => sendRequest("permutation/", data);
 export const createVigenere = (data) => sendRequest("vigenere/", data);
 export const createHill = (data) => sendRequest("hill/", data);
+export const createTdes = (data) => sendRequest("TDES/", data);

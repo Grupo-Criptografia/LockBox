@@ -2,6 +2,7 @@ import base64
 from Crypto.Util import number
 from pprint import pprint
 
+
 def pad_text(text: str) -> str:
     """
     Pads the text to get a size that is multiple of 4
@@ -29,7 +30,6 @@ def encrypt_rabin(plain_text: str, n: int):
 
 
 def decrypt_rabin(cipher_text, p, q) -> list:
-
     # decode from base64
     ct_enc = str2bytes(cipher_text)
     # cast bytes to int
@@ -45,7 +45,7 @@ def decrypt_rabin(cipher_text, p, q) -> list:
 
 
 def encrypt(plain_text: int, n: int) -> int:
-    return plain_text**2 % n
+    return plain_text ** 2 % n
 
 
 def decrypt(a, p, q):
@@ -105,8 +105,8 @@ if __name__ == "__main__":
 
     plain_text = "z"
     c = 1
-    while True: 
-        c += 1  
+    while True:
+        c += 1
         plain_text = pad_text(plain_text)
 
         # decode to base64
@@ -117,7 +117,7 @@ if __name__ == "__main__":
         if enc_i >= n:
             break
         else:
-            plain_text = "z"*c
+            plain_text = "z" * c
 
     print(f"Maximum text size: {c}")
 

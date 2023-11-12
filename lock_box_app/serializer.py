@@ -49,7 +49,8 @@ class dataHillSerializer(serializers.Serializer):
 
 
 class dataTDESSerializer(serializers.Serializer):
-    plain_img = serializers.CharField()
-    cipher_img = serializers.CharField()
-    k = serializers.CharField(max_length=20)
-    mode = serializers.CharField(max_length=3)
+    plain_img = serializers.ImageField(allow_empty_file=True)
+    cipher_img = serializers.ImageField(allow_empty_file=True)
+    k = serializers.CharField()
+    method = serializers.CharField()
+    mode = serializers.CharField()
