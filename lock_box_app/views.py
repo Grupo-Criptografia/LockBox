@@ -2,7 +2,7 @@ from functools import wraps
 from PIL import Image
 from numpy import asarray
 import os
-#generar archivos de importación para estos from import
+# generar archivos de importación para estos from import
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,11 +16,10 @@ from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 
-
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillSerializer, dataTDESSerializer, dataRabinSerializer
-from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest, \
-    dataTDESTest, dataRabinTest
+    dataSDESSerializer, dataHillSerializer, dataRabinSerializer
+from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest,
+                    dataRabinTest)
 
 
 # Decorador personalizado para manejar excepciones
@@ -188,21 +187,19 @@ class sdesView(APIView):
 class hillView(APIView):
     @handle_exceptions
     def post(self, request):
-        
-        
+
         file_path = '../feligustin.jpg'
         absolute_path = os.path.abspath(file_path)
         img = Image.open(absolute_path)
         numpydata = asarray(img)
-        
+
         plain_text = request.data.get('plain_text')
         k = request.data.get('k')
         cipher_text = request.data.get('cipher_text')
-        #plain_img = request.data.get('plain_img')
+        # plain_img = request.data.get('plain_img')
         plain_img = numpydata
         cipher_img = request.data.get('cipher_img')
         method = request.data.get('method')
-        
 
         print(f"plain_text: {plain_text}")
         print(f"k: {k}")
@@ -216,7 +213,7 @@ class hillView(APIView):
 
         if method == 'decrypt':
             plain_text = decrypt_text_hill(cipher_text, k)
-            
+
         if method == 'encrypt_img':
             k = asarray(k)
             cipher_img = encrypt_image_hill(plain_img, k)
@@ -224,7 +221,7 @@ class hillView(APIView):
         if method == 'decrypt_img':
             k = asarray(k)
             plain_img = decrypt_image_hill(cipher_img, k)
-            
+
         data_obj = dataHillTest(plain_text, cipher_text, plain_img, cipher_img, k)
         serializer_class = dataHillSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
@@ -233,15 +230,14 @@ class hillView(APIView):
 class tdesView(APIView):
     @handle_exceptions
     def post(self, request):
-
         plain_img = request.data.get('plain_img')
         k = request.data.get('k')
         cipher_img = request.data.get('cipher_img')
         method = request.data.get('method')
         mode = request.data.get('mode')
 
-        if method == 'encrypt':
-            plain_img_arr = convert_img_arr(plain_img)
+        """if method == 'encrypt':
+           plain_img_arr = convert_img_arr(plain_img)
             if mode == 'ECB':
                 cipher_img = encrypt_image_tdes(plain_img_arr, k.encode(), mode)
             if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
@@ -257,13 +253,14 @@ class tdesView(APIView):
                 plain_img = decrypt_image_tdes(cipher_img_arr, k, mode, iv=b"initvect")
             if mode == 'CTR':
                 plain_img = decrypt_image_tdes(cipher_img_arr, k, mode, initial_value=b"casaverd")
-            plain_img = convert_arr_img(plain_img)
+            plain_img = convert_arr_img(plain_img)"""
 
-        data_obj = dataTDESTest(plain_img, cipher_img, k, mode)
+        """data_obj = dataTDESTest(plain_img, cipher_img, k, mode)
         serializer_class = dataTDESSerializer(data_obj)
-        return Response(serializer_class.data, status=status.HTTP_200_OK)
-    
-class RabinView(APIView):
+        return Response(serializer_class.data, status=status.HTTP_200_OK)"""
+
+
+class rabinView(APIView):
     @handle_exceptions
     def post(self, request):
 

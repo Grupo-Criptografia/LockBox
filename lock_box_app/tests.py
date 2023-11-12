@@ -39,7 +39,8 @@ class dataSDESTest:
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
-        
+
+
 class dataRabinTest:
     def __init__(self, plain_text: str, cipher_text: str, k: int):
         self.plain_text = plain_text
@@ -48,7 +49,7 @@ class dataRabinTest:
 
 
 class dataHillTest:
-    def __init__(self, plain_text: str, cipher_text: str, k:list[list], plain_img:list[list], cipher_img:list[list]):
+    def __init__(self, plain_text: str, cipher_text: str, k: list[list], plain_img: list[list], cipher_img: list[list]):
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
