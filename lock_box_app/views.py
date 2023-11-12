@@ -14,12 +14,13 @@ from .crypto_algorithms.permutation import encryptPermutation, decryptPermutatio
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
+from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillSerializer, dataTDESSerializer
+    dataSDESSerializer, dataHillSerializer, dataTDESSerializer, dataRabinSerializer
 from .tests import dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest, \
-    dataTDESTest
+    dataTDESTest, dataRabinTest
 
 
 # Decorador personalizado para manejar excepciones
@@ -260,4 +261,30 @@ class tdesView(APIView):
 
         data_obj = dataTDESTest(plain_img, cipher_img, k, mode)
         serializer_class = dataTDESSerializer(data_obj)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
+    
+class RabinView(APIView):
+    @handle_exceptions
+    def post(self, request):
+
+        plain_text = request.data.get('plain_text')
+        k = request.data.get('k')
+        cipher_text = request.data.get('cipher_text')
+        method = request.data.get('method')
+
+        k = int(k, 2)
+
+        print(f"plain_text: {plain_text}")
+        print(f"k: {k}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
+        if method == 'encrypt':
+            cipher_text = encrypt_rabin(k, plain_text)
+
+        if method == 'decrypt':
+            plain_text = decrypt_rabin(k, plain_text)
+
+        data_obj = dataRabinTest(plain_text, cipher_text, k)
+        serializer_class = dataRabinSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)

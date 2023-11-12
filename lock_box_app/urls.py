@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 from lock_box_app.views import shiftView, substitutionView, affineView, permutationView, vigenereView, sdesView, \
-    hillView, tdesView
+    hillView, tdesView, rabinView
 
 routers = routers.DefaultRouter()
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('vigenere/', vigenereView.as_view()),
     path('sdes/', sdesView.as_view()),
     path('hill/', hillView.as_view()),
+    path('rabin/', rabinView.as_view()),
     path('TDES/', tdesView.as_view()),
     path("docs/", include_docs_urls(title="LockBox API")),
 ]
