@@ -43,7 +43,9 @@ class dataSDESSerializer(serializers.Serializer):
 class dataRabinSerializer(serializers.Serializer):
     plain_text = serializers.CharField(max_length=200)
     cipher_text = serializers.CharField(max_length=200)
-    k = serializers.IntegerField()
+    n = serializers.IntegerField()
+    p = serializers.IntegerField()
+    q = serializers.IntegerField()
 
 
 class dataHillSerializer(serializers.Serializer):

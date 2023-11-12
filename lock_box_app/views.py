@@ -265,23 +265,24 @@ class rabinView(APIView):
     def post(self, request):
 
         plain_text = request.data.get('plain_text')
-        k = request.data.get('k')
         cipher_text = request.data.get('cipher_text')
+        n = request.data.get('n')
+        p = request.data.get('p')
+        q = request.data.get('q')
         method = request.data.get('method')
 
-        k = int(k, 2)
-
         print(f"plain_text: {plain_text}")
-        print(f"k: {k}")
+        print(f"n: {n}")
+        print(f"p,q: {p, q}")
         print(f"cipher_text: {cipher_text}")
         print(f"method: {method}")
 
         if method == 'encrypt':
-            cipher_text = encrypt_rabin(k, plain_text)
+            cipher_text = encrypt_rabin(plain_text, n)
 
         if method == 'decrypt':
-            plain_text = decrypt_rabin(k, plain_text)
+            plain_text = decrypt_rabin(plain_text, p, q)
 
-        data_obj = dataRabinTest(plain_text, cipher_text, k)
+        data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)

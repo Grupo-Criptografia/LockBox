@@ -42,10 +42,12 @@ class dataSDESTest:
 
 
 class dataRabinTest:
-    def __init__(self, plain_text: str, cipher_text: str, k: int):
+    def __init__(self, plain_text: str, cipher_text: str, n: int, p: int, q: int):
         self.plain_text = plain_text
         self.cipher_text = cipher_text
-        self.k = k
+        self.n = n
+        self.p = p
+        self.q = q
 
 
 class dataHillTest:
