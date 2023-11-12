@@ -42,8 +42,12 @@ class dataSDESSerializer(serializers.Serializer):
 class dataHillSerializer(serializers.Serializer):
     plain_text = serializers.CharField(max_length=200)
     cipher_text = serializers.CharField(max_length=200)
+    plain_img = serializers.ListField(
+        child = serializers.ListField()
+    )
+    cipher_img = serializers.ListField(
+        child = serializers.ListField()
+    )
     k = serializers.ListField(
-        child = serializers.ListField(
-            
-        )
+        child = serializers.ListField()
     )

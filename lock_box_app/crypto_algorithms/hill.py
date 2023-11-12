@@ -4,7 +4,7 @@ from sympy.matrices.common import NonInvertibleMatrixError
 from .util import str2int, int2str
 
 
-def encrypt_image(img_arr: np.ndarray, key: np.ndarray):
+def encrypt_image_hill(img_arr: np.ndarray, key: np.ndarray):
     """
     Encrypts an image `img_arr` in the form of a numpy NDarray with a invertible matrix `key`
     modulo 256 using the Hill cipher.
@@ -14,7 +14,7 @@ def encrypt_image(img_arr: np.ndarray, key: np.ndarray):
     return encrypt(img_arr.flatten(), key, 256).astype(np.uint8).reshape(*img_arr.shape)
 
 
-def decrypt_image(img_arr: np.ndarray, key):
+def decrypt_image_hill(img_arr: np.ndarray, key):
     """
     Decrypts an image `img_arr` in the form of a numpy NDarray with a invertible matrix `key`
     modulo 256 using the Hill cipher.

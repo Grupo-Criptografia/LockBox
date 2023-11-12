@@ -1,6 +1,7 @@
 from functools import wraps
-
-
+from PIL import Image
+from numpy import asarray
+import os
 #generar archivos de importación para estos from import
 from rest_framework import status
 from rest_framework.response import Response
@@ -12,7 +13,7 @@ from .crypto_algorithms.affine import encryptAffine, decryptAffine, attackAffine
 from .crypto_algorithms.permutation import encryptPermutation, decryptPermutation
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
-from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill
+from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
 
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
@@ -185,15 +186,27 @@ class sdesView(APIView):
 class hillView(APIView):
     @handle_exceptions
     def post(self, request):
-
+        
+        
+        file_path = '../feligustin.jpg'
+        absolute_path = os.path.abspath(file_path)
+        img = Image.open(absolute_path)
+        numpydata = asarray(img)
+        
         plain_text = request.data.get('plain_text')
         k = request.data.get('k')
         cipher_text = request.data.get('cipher_text')
+        #plain_img = request.data.get('plain_img')
+        plain_img = numpydata
+        cipher_img = request.data.get('cipher_img')
         method = request.data.get('method')
+        
 
         print(f"plain_text: {plain_text}")
         print(f"k: {k}")
         print(f"cipher_text: {cipher_text}")
+        print(f"plain image{plain_img}")
+        print(f"cipher image{cipher_img}")
         print(f"method: {method}")
 
         if method == 'encrypt':
@@ -201,8 +214,16 @@ class hillView(APIView):
 
         if method == 'decrypt':
             plain_text = decrypt_text_hill(cipher_text, k)
+            
+        if method == 'encrypt_img':
+            k = asarray(k)
+            cipher_img = encrypt_image_hill(plain_img, k)
 
-        data_obj = dataHillTest(plain_text, cipher_text, k)
+        if method == 'decrypt_img':
+            k = asarray(k)
+            plain_img = decrypt_image_hill(cipher_img, k)
+            
+        data_obj = dataHillTest(plain_text, cipher_text, plain_img, cipher_img, k)
         serializer_class = dataHillSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
     
