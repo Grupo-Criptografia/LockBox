@@ -102,6 +102,9 @@ if __name__ == "__main__":
 
     p, q = prime_3mod4()
     n = p * q
+    
+    print(p)
+    print(q)
 
     plain_text = "z"
     c = 1

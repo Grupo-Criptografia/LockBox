@@ -40,17 +40,31 @@ class dataSDESSerializer(serializers.Serializer):
     k = serializers.IntegerField()
 
 
+class dataRabinSerializer(serializers.Serializer):
+    plain_text = serializers.CharField(max_length=200)
+    cipher_text = serializers.CharField(max_length=200)
+    n = serializers.IntegerField()
+    p = serializers.IntegerField()
+    q = serializers.IntegerField()
+
+
 class dataHillSerializer(serializers.Serializer):
     plain_text = serializers.CharField(max_length=200)
     cipher_text = serializers.CharField(max_length=200)
+    plain_img = serializers.ListField(
+        child=serializers.ListField()
+    )
+    cipher_img = serializers.ListField(
+        child=serializers.ListField()
+    )
     k = serializers.ListField(
         child=serializers.ListField()
     )
 
 
-class dataTDESSerializer(serializers.Serializer):
-    plain_img = serializers.ImageField(allow_empty_file=True)
-    cipher_img = serializers.ImageField(allow_empty_file=True)
+class TdesSerializer(serializers.Serializer):
+    plain_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    cipher_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
     k = serializers.CharField()
-    method = serializers.CharField()
     mode = serializers.CharField()
+    method = serializers.CharField()

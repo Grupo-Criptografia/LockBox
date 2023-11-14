@@ -107,17 +107,20 @@ def unpad_image(image):
     return image.crop((0, 0, width, height))
 
 
-def convert_img_arr(image):
-    image = Image.open(
-        io.BytesIO(
-            base64.decodebytes(bytes(image, 'utf-8'))
-        )
-    )
-    return np.asarray(image)
+def convert_img_base64(image):
+    image = Image.open(image)
+    image_bytes = BytesIO()
+    image.save(image_bytes, format='PNG')
+    return base64.b64encode(image_bytes.getvalue()).decode('utf-8')
 
 
-def convert_arr_img(array):
-    buffered = BytesIO()
-    image = Image.fromarray(array)
-    image.save(buffered, format="JPEG")
-    return base64.b64encode(buffered.getvalue())
+def convert_pil_image_to_base64(pil_image):
+    # Convert the PIL Image to bytes
+    with BytesIO() as image_bytes:
+        pil_image.save(image_bytes, format='PNG')
+        image_bytes = image_bytes.getvalue()
+
+    # Encode the image bytes as a base64-encoded string
+    base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+
+    return base64_encoded_image
