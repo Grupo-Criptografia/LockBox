@@ -22,9 +22,10 @@ from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
+from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillSerializer, dataRabinSerializer, TdesSerializer
+    dataSDESSerializer, dataHillSerializer, dataRabinSerializer, TdesSerializer, AesSerializer
 from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest,
                     dataRabinTest)
 
@@ -313,3 +314,54 @@ class rabinView(APIView):
         data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+
+class aesView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    @handle_exceptions
+    def post(self, request, *args, **kwargs):
+        aesSerializer = AesSerializer(data=request.data)
+
+        if aesSerializer.is_valid():
+            plain_img = request.data['plain_img']
+            k = request.data.get('k')
+            cipher_img = request.data['cipher_img']
+            method = request.data.get('method')
+            mode = request.data.get('mode')
+
+            iv = bytes.fromhex("3E B2 66 97 3F 64 CC A0 4F E6 B5 A7 F6 95 D3 27")
+            ctr = bytes.fromhex("8C F1 AC 1A B2 A1 AE D6 32 73 85 D5 B2 19 62 9F")
+
+            if method == 'encrypt':
+                if mode == 'ECB':
+                    cipher_img = Image.fromarray(encrypt_image_aes(plain_img, bytes.fromhex(k), mode))
+                if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
+                    cipher_img = Image.fromarray(encrypt_image_aes(plain_img, bytes.fromhex(k), mode, iv=iv))
+                if mode == 'CTR':
+                    cipher_img = Image.fromarray(
+                        encrypt_image_aes(plain_img, bytes.fromhex(k), mode, initial_value=ctr))
+
+                plain_img_base64 = convert_img_base64(plain_img)
+                cipher_img_base64 = convert_pil_image_to_base64(cipher_img)
+
+            if method == 'decrypt':
+                if mode == 'ECB':
+                    plain_img = Image.fromarray(decrypt_image_aes(cipher_img, bytes.fromhex(k), mode))
+                if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
+                    plain_img = Image.fromarray(decrypt_image_aes(cipher_img, bytes.fromhex(k), mode, iv=iv))
+                if mode == 'CTR':
+                    plain_img = Image.fromarray(
+                        decrypt_image_aes(cipher_img, bytes.fromhex(k), mode, initial_value=ctr))
+
+                plain_img_base64 = convert_pil_image_to_base64(plain_img)
+                cipher_img_base64 = convert_img_base64(cipher_img)
+
+        response = {
+            'plain_img': plain_img_base64,
+            'cipher_img': cipher_img_base64,
+            'k': k,
+            'mode': mode
+        }
+
+        return Response(response, status=status.HTTP_200_OK)

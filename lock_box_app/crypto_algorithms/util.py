@@ -108,19 +108,28 @@ def unpad_image(image):
 
 
 def convert_img_base64(image):
-    image = Image.open(image)
-    image_bytes = BytesIO()
-    image.save(image_bytes, format='PNG')
-    return base64.b64encode(image_bytes.getvalue()).decode('utf-8')
+    try:
+        image = Image.open(image)
+        image_bytes = BytesIO()
+        image.save(image_bytes, format='PNG')
+        return base64.b64encode(image_bytes.getvalue()).decode('utf-8')
+    except Exception as e:
+        print(f"Error converting image to base64: {str(e)}")
+        return None
 
 
 def convert_pil_image_to_base64(pil_image):
     # Convert the PIL Image to bytes
-    with BytesIO() as image_bytes:
-        pil_image.save(image_bytes, format='PNG')
-        image_bytes = image_bytes.getvalue()
+    try:
+        with BytesIO() as image_bytes:
+            pil_image.save(image_bytes, format='PNG')
+            image_bytes = image_bytes.getvalue()
 
-    # Encode the image bytes as a base64-encoded string
-    base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+        # Encode the image bytes as a base64-encoded string
+        base64_encoded_image = base64.b64encode(image_bytes).decode('utf-8')
 
-    return base64_encoded_image
+        return base64_encoded_image
+
+    except Exception as e:
+        print(f"Error converting image to base64: {str(e)}")
+        return None
