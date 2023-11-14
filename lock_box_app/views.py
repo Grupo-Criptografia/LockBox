@@ -1,11 +1,17 @@
 from functools import wraps
 from PIL import Image
+from io import BytesIO
+import base64
+
+from .crypto_algorithms.util import convert_img_base64, convert_pil_image_to_base64
+
 from numpy import asarray
 import os
 # generar archivos de importación para estos from import
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser
 
 from .crypto_algorithms.shift import encryptShift, decryptShift, attackShift
 from .crypto_algorithms.substitution import encryptSubs, decryptSubs, attackSubs
@@ -15,9 +21,10 @@ from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attack
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
+from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillSerializer, dataRabinSerializer
+    dataSDESSerializer, dataHillSerializer, dataRabinSerializer, TdesSerializer
 from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest,
                     dataRabinTest)
 
@@ -228,36 +235,54 @@ class hillView(APIView):
 
 
 class tdesView(APIView):
+    parser_classes = (MultiPartParser,)
+
     @handle_exceptions
-    def post(self, request):
-        plain_img = request.data.get('plain_img')
-        k = request.data.get('k')
-        cipher_img = request.data.get('cipher_img')
-        method = request.data.get('method')
-        mode = request.data.get('mode')
+    def post(self, request, *args, **kwargs):
+        tdesSerializer = TdesSerializer(data=request.data)
 
-        """if method == 'encrypt':
-           plain_img_arr = convert_img_arr(plain_img)
-            if mode == 'ECB':
-                cipher_img = encrypt_image_tdes(plain_img_arr, k.encode(), mode)
-            if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
-                cipher_img = encrypt_image_tdes(plain_img, k.encode(), mode, iv=b"initvect")
-            if mode == 'CTR':
-                cipher_img = encrypt_image_tdes(plain_img, k.encode(), mode, initial_value=b"casaverd")
-            cipher_img = convert_arr_img(cipher_img)
-        if method == 'decrypt':
-            cipher_img_arr = convert_img_arr(cipher_img)
-            if mode == 'ECB':
-                plain_img = decrypt_image_tdes(cipher_img_arr, k, mode)
-            if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
-                plain_img = decrypt_image_tdes(cipher_img_arr, k, mode, iv=b"initvect")
-            if mode == 'CTR':
-                plain_img = decrypt_image_tdes(cipher_img_arr, k, mode, initial_value=b"casaverd")
-            plain_img = convert_arr_img(plain_img)"""
+        print(f"Request: {tdesSerializer.is_valid()}")
 
-        """data_obj = dataTDESTest(plain_img, cipher_img, k, mode)
-        serializer_class = dataTDESSerializer(data_obj)
-        return Response(serializer_class.data, status=status.HTTP_200_OK)"""
+        if tdesSerializer.is_valid():
+            plain_img = request.data['plain_img']
+            k = request.data.get('k')
+            cipher_img = request.data['cipher_img']
+            method = request.data.get('method')
+            mode = request.data.get('mode')
+
+            if method == 'encrypt':
+                if mode == 'ECB':
+                    cipher_img = Image.fromarray(encrypt_image_tdes(plain_img, k.encode(), mode))
+                if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
+                    cipher_img = Image.fromarray(encrypt_image_tdes(plain_img, k.encode(), mode, iv=b'initvect'))
+                if mode == 'CTR':
+                    cipher_img = Image.fromarray(
+                        encrypt_image_tdes(plain_img, k.encode(), mode, initial_value=b'casaverb'))
+
+                plain_img_base64 = convert_img_base64(plain_img)
+                cipher_img_base64 = convert_pil_image_to_base64(cipher_img)
+
+            if method == 'decrypt':
+                if mode == 'ECB':
+                    plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode))
+                    plain_img.show()
+                if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
+                    plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode, iv=b'initvect'))
+                if mode == 'CTR':
+                    plain_img = Image.fromarray(
+                        decrypt_image_tdes(cipher_img, k.encode(), mode, initial_value=b'casaverb'))
+
+                plain_img_base64 = convert_pil_image_to_base64(plain_img)
+                cipher_img_base64 = convert_img_base64(cipher_img)
+
+        response = {
+            'plain_img': plain_img_base64,
+            'cipher_img': cipher_img_base64,
+            'k': k,
+            'mode': mode
+        }
+
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class rabinView(APIView):

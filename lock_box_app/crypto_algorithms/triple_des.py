@@ -1,10 +1,10 @@
-from .util import pad_image_arr, unpad_image_arr, convert_img_arr, convert_arr_img
+from .util import pad_image_arr, unpad_image_arr
 from Crypto.Cipher import DES3
 import numpy as np
 from PIL import Image
 
 
-def encrypt_image_tdes(plain_img_arr, *args, **kwargs):
+def encrypt_image_tdes(plain_img_file, *args, **kwargs):
     modes = {
         "ECB": DES3.MODE_ECB,
         "CBC": DES3.MODE_CBC,
@@ -12,6 +12,9 @@ def encrypt_image_tdes(plain_img_arr, *args, **kwargs):
         "CFB": DES3.MODE_CFB,
         "CTR": DES3.MODE_CTR,
     }
+
+    plain_image = Image.open(plain_img_file)
+    plain_img_arr = np.asarray(plain_image)
 
     args = (DES3.adjust_key_parity(args[0]), modes[args[1]])
 
@@ -29,7 +32,7 @@ def encrypt_image_tdes(plain_img_arr, *args, **kwargs):
     return cipher_img_arr
 
 
-def decrypt_image_tdes(cipher_img_arr, *args, **kwargs):
+def decrypt_image_tdes(cipher_image_file, *args, **kwargs):
     modes = {
         "ECB": DES3.MODE_ECB,
         "CBC": DES3.MODE_CBC,
@@ -37,6 +40,9 @@ def decrypt_image_tdes(cipher_img_arr, *args, **kwargs):
         "CFB": DES3.MODE_CFB,
         "CTR": DES3.MODE_CTR,
     }
+
+    cipher_image = Image.open(cipher_image_file)
+    cipher_img_arr = np.asarray(cipher_image)
 
     args = (args[0], modes[args[1]])
 
