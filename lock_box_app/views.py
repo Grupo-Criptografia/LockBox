@@ -241,12 +241,16 @@ class tdesView(APIView):
     def post(self, request, *args, **kwargs):
         tdesSerializer = TdesSerializer(data=request.data)
 
+        print(f"Request: {request.data}")
+
         if tdesSerializer.is_valid():
             plain_img = request.data['plain_img']
             k = request.data.get('k')
             cipher_img = request.data['cipher_img']
             method = request.data.get('method')
             mode = request.data.get('mode')
+
+            print(f"plain_img: {plain_img}")
 
             if method == 'encrypt':
                 if mode == 'ECB':
@@ -273,14 +277,17 @@ class tdesView(APIView):
                 plain_img_base64 = convert_pil_image_to_base64(plain_img)
                 cipher_img_base64 = convert_img_base64(cipher_img)
 
-        response = {
-            'plain_img': plain_img_base64,
-            'cipher_img': cipher_img_base64,
-            'k': k,
-            'mode': mode
-        }
+            response = {
+                'plain_img': plain_img_base64,
+                'cipher_img': cipher_img_base64,
+                'k': k,
+                'mode': mode
+            }
 
-        return Response(response, status=status.HTTP_200_OK)
+            return Response(response, status=status.HTTP_200_OK)
+
+        else:
+            return Response(tdesSerializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class rabinView(APIView):

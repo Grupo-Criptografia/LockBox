@@ -4,11 +4,11 @@ const lockBoxApi = axios.create({
     baseURL: "http://localhost:8000/api/"
 })
 
-const sendRequest = (endpoint, data) => {
+const sendRequest = (endpoint, data, contentType = 'application/json') => {
     console.log("SendRequest:", data);
     return lockBoxApi.post(endpoint, data, {
         headers: {
-            'Content-Type': 'multipart/form-data' // Establecer el tipo de contenido como 'multipart/form-data' para cargar archivos
+            'Content-Type': contentType // Establecer el tipo de contenido como 'multipart/form-data' para cargar archivos
         }
     })
         .then(response => {
@@ -27,4 +27,4 @@ export const createAffine = (data) => sendRequest("affine/", data);
 export const createPermutation = (data) => sendRequest("permutation/", data);
 export const createVigenere = (data) => sendRequest("vigenere/", data);
 export const createHill = (data) => sendRequest("hill/", data);
-export const createTdes = (data) => sendRequest("TDES/", data);
+export const createTdes = (data) => sendRequest("TDES/", data, 'multipart/form-data');
