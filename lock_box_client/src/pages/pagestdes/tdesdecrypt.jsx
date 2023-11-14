@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Formik, Form, Field} from 'formik';
 import {createTdes} from "../../api/lockbox.api.js";
 
-export function TdesEncrypt() {
+export function TdesDecrypt() {
 
     const [data, setData] = useState(null);
 
@@ -15,11 +15,11 @@ export function TdesEncrypt() {
     const onSubmit = async (values) => {
         try {
             const formData = new FormData();
-            formData.append('plain_img', values.image);
+            formData.append('plain_img', '');
             formData.append('k', values.k);
-            formData.append('cipher_img', '');
+            formData.append('cipher_img', values.image);
             formData.append('mode', values.mode);
-            formData.append('method', 'encrypt');
+            formData.append('method', 'decrypt');
 
             // Envía la imagen al servidor utilizando Axios
             const response = await createTdes(formData)
@@ -28,7 +28,7 @@ export function TdesEncrypt() {
 
             // Realiza cualquier acción adicional después de enviar la imagen
         } catch (error) {
-            console.error('Error al enviar la imagen:', error);
+            console.error('Error to send image:', error);
         }
     };
 

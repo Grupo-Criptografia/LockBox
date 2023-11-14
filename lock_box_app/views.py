@@ -250,8 +250,6 @@ class tdesView(APIView):
             method = request.data.get('method')
             mode = request.data.get('mode')
 
-            print(f"plain_img: {plain_img}")
-
             if method == 'encrypt':
                 if mode == 'ECB':
                     cipher_img = Image.fromarray(encrypt_image_tdes(plain_img, k.encode(), mode))
@@ -267,7 +265,6 @@ class tdesView(APIView):
             if method == 'decrypt':
                 if mode == 'ECB':
                     plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode))
-                    plain_img.show()
                 if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
                     plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode, iv=b'initvect'))
                 if mode == 'CTR':
