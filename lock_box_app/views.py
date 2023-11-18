@@ -2,6 +2,8 @@ from functools import wraps
 from PIL import Image
 from io import BytesIO
 import base64
+import numpy as np
+import ast
 
 from .crypto_algorithms.util import convert_img_base64, convert_pil_image_to_base64
 
@@ -25,8 +27,8 @@ from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillSerializer, dataRabinSerializer, TdesSerializer, AesSerializer
-from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTest,
+    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, dataRabinSerializer, TdesSerializer, AesSerializer
+from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTextTest,
                     dataRabinTest)
 
 
@@ -192,28 +194,18 @@ class sdesView(APIView):
         return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
-class hillView(APIView):
+class hillTextView(APIView):
     @handle_exceptions
     def post(self, request):
-
-        file_path = '../feligustin.jpg'
-        absolute_path = os.path.abspath(file_path)
-        img = Image.open(absolute_path)
-        numpydata = asarray(img)
 
         plain_text = request.data.get('plain_text')
         k = request.data.get('k')
         cipher_text = request.data.get('cipher_text')
-        # plain_img = request.data.get('plain_img')
-        plain_img = numpydata
-        cipher_img = request.data.get('cipher_img')
         method = request.data.get('method')
 
         print(f"plain_text: {plain_text}")
         print(f"k: {k}")
         print(f"cipher_text: {cipher_text}")
-        print(f"plain image{plain_img}")
-        print(f"cipher image{cipher_img}")
         print(f"method: {method}")
 
         if method == 'encrypt':
@@ -222,19 +214,47 @@ class hillView(APIView):
         if method == 'decrypt':
             plain_text = decrypt_text_hill(cipher_text, k)
 
-        if method == 'encrypt_img':
-            k = asarray(k)
-            cipher_img = encrypt_image_hill(plain_img, k)
-
-        if method == 'decrypt_img':
-            k = asarray(k)
-            plain_img = decrypt_image_hill(cipher_img, k)
-
-        data_obj = dataHillTest(plain_text, cipher_text, plain_img, cipher_img, k)
-        serializer_class = dataHillSerializer(data_obj)
+        data_obj = dataHillTextTest(plain_text, cipher_text, k)
+        serializer_class = dataHillTextSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
+#TODO
+class hillImgView(APIView):
+    #Para recibir archivos
+    parser_classes= (MultiPartParser,)
+    
+    @handle_exceptions
+    #los últimos parámetros son para aceptar opcionalmente más argumentos
+    def post(self, request, *args, **kwargs):
+        HillImgSerializer = dataHillImgSerializer(data=request.data)
+        print(f"serializervalid:{HillImgSerializer.is_valid()}")
+        if HillImgSerializer.is_valid():
+            plain_img = request.data['plain_img']
+            k = request.data.get('k')
+            cipher_img = request.data['cipher_img']
+            method =request.data.get('method')
+            
+        if method == 'encrypt':
+            # cipher_img = Image.fromarray(encrypt_image_hill(np.ndarray(plain_img), np.ndarray(k)))
+            print(f"k: {k}")
+            k = ast.literal_eval(k)
+            cipher_img = Image.fromarray(encrypt_image_hill(plain_img, np.array(k)))
+            plain_img_base64 = convert_img_base64(plain_img)
+            cipher_img_base64 = convert_pil_image_to_base64(cipher_img)
+            
+        if method == 'decrypt':
+            k = ast.literal_eval(k)
+            plain_img = Image.fromarray(decrypt_image_hill(cipher_img, k))
+            plain_img_base64 = convert_pil_image_to_base64(plain_img)
+            cipher_img_base64 = convert_img_base64(cipher_img)            
 
-
+        response = {
+            'plain_img': plain_img_base64,
+            'cipher_img': cipher_img_base64,
+            'k': k,
+            'method': method
+        } 
+        
+        return Response(response, status=status.HTTP_200_OK)
 class tdesView(APIView):
     parser_classes = (MultiPartParser,)
 
