@@ -5,7 +5,8 @@ import {ShiftEncrypt} from "../pages/pagesshift/shiftencrypt.jsx";
 import {ShiftDecrypt} from "../pages/pagesshift/shiftdecrypt.jsx";
 import {ShiftAttack} from "../pages/pagesshift/shiftattack.jsx";
 import {SubsEncrypt} from "../pages/pagessubs/subsencrypt.jsx";
-import Menu from "./MenuComponent.jsx";
+
+import Menu2 from "./MenuComponent2.jsx";
 import {SubsDecrypt} from "../pages/pagessubs/subsdecrypt.jsx";
 import {SubsAttack} from "../pages/pagessubs/subsattack.jsx";
 import {AffineEncrypt} from "../pages/pagesaffine/affineencrypt.jsx";
@@ -22,10 +23,8 @@ class Main extends Component {
 
     render() {
         return (
-            <div className="flex flex-col">
-                <Header/>
                 <div className="flex flex-row">
-                    <Menu/>
+                    <Menu2/>
                     <Routes>
                         <Route path="*" element={<Navigate to="/" replace/>}/>
                         <Route path="/" element={<Home/>}/>
@@ -50,7 +49,6 @@ class Main extends Component {
                         <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
                     </Routes>
                 </div>
-            </div>
         )
     }
 

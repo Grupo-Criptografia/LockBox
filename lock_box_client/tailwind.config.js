@@ -12,7 +12,8 @@ export default {
                 'poppy': '#F8721B',
                 'charcoal': '#373839',
                 'ivory': '#F2EBE6',
-                'verde_prymary': '#56704C'
+                'brownish1': '#B07D62',
+                'brownish2':'#392210'
             }
         },
     },
