@@ -24,7 +24,6 @@ export function TdesEncrypt() {
             // Envía la imagen al servidor utilizando Axios
             const response = await createTdes(formData)
             setData(response)
-            console.log(response)
 
             // Realiza cualquier acción adicional después de enviar la imagen
         } catch (error) {

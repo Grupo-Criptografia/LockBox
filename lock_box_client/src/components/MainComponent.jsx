@@ -25,6 +25,8 @@ import {AesEncrypt} from "../pages/pagesaes/aesencrypt.jsx";
 import {AesDecrypt} from "../pages/pagesaes/aesdecrypt.jsx";
 import {RabinEncrypt} from "../pages/pagesrabin/rabinencrypt.jsx";
 import {RabinDecrypt} from "../pages/pagesrabin/rabindecrypt.jsx";
+import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
+import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
 
 
 class Main extends Component {
@@ -60,7 +62,10 @@ class Main extends Component {
                         {/*Pages Hill*/}
                         <Route path="/hill/encrypt" element={<HillEncrypt/>}/>
                         <Route path="/hill/decrypt" element={<HillDecrypt/>}/>
-                        {/*Pages Hill*/}
+                        {/*Pages Hill Image*/}
+                        <Route path="/hillImg/encrypt" element={<HillImgEncrypt/>}/>
+                        <Route path="/hillImg/decrypt" element={<HillImgDecrypt/>}/>
+                        {/*Pages Tdes*/}
                         <Route path={"/tdes/encrypt"} element={<TdesEncrypt/>}/>
                         <Route path={"/tdes/decrypt"} element={<TdesDecrypt/>}/>
                         {/*Pages AES*/}

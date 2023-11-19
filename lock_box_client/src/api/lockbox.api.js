@@ -27,6 +27,7 @@ export const createAffine = (data) => sendRequest("affine/", data);
 export const createPermutation = (data) => sendRequest("permutation/", data);
 export const createVigenere = (data) => sendRequest("vigenere/", data);
 export const createHill = (data) => sendRequest("hillText/", data);
+export const createHillImg = (data) => sendRequest("hillImg/", data, 'multipart/form-data')
 export const createTdes = (data) => sendRequest("TDES/", data, 'multipart/form-data');
 export const createAES = (data) => sendRequest("AES/", data, 'multipart/form-data');
 export const createRabin = (data) => sendRequest("rabin/", data);
