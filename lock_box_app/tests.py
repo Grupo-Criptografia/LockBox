@@ -50,10 +50,8 @@ class dataRabinTest:
         self.q = q
 
 
-class dataHillTest:
-    def __init__(self, plain_text: str, cipher_text: str, k: list[list], plain_img: list[list], cipher_img: list[list]):
+class dataHillTextTest:
+    def __init__(self, plain_text: str, cipher_text: str, k: list[list]):
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
-        self.plain_img = plain_img
-        self.cipher_img = cipher_img

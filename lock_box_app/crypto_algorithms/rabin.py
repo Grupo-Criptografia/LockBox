@@ -13,6 +13,7 @@ def pad_text(text: str) -> str:
 
 
 def encrypt_rabin(plain_text: str, n: int):
+    plain_text = plain_text.replace(" ", "").lower()
     plain_text = pad_text(plain_text)
 
     # decode to base64
@@ -99,36 +100,9 @@ def prime_3mod4():
 
 
 if __name__ == "__main__":
-
     p, q = prime_3mod4()
     n = p * q
 
     print(p)
     print(q)
     print(n)
-
-    plain_text = "z"
-    c = 1
-    while True:
-        c += 1
-        plain_text = pad_text(plain_text)
-
-        # decode to base64
-        enc = base64.b64decode(plain_text)
-        # cast bytes to int
-        enc_i = bytes2int(enc)
-
-        if enc_i >= n:
-            break
-        else:
-            plain_text = "z" * c
-
-    print(f"Maximum text size: {c}")
-
-    plain_text = "attack at dawn"
-    plain_text = plain_text.replace(" ", "").lower()
-    cipher_text = encrypt_rabin(plain_text, n)
-    plane_text = decrypt_rabin(cipher_text, p, q)
-
-    print(cipher_text)
-    pprint(plane_text)
