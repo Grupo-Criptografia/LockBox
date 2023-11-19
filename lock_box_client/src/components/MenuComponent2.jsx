@@ -4,17 +4,17 @@ import {Link} from "react-router-dom";
 class Menu2 extends Component {
     render() {
         return (
-            <aside class="flex flex-col w-2/5 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l  dark:bg-gray-900 dark:border-gray-700">
+            <aside class="flex flex-col w-1/5 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l  dark:bg-gray-900 dark:border-gray-700">
                 <a><img src="./src/assets/img/lockbox_logo-2.png" class="w-auto h-auto"/></a>
 
                 <ul className="menu py-8 px-0">
-                    <li><a class="font-semibold text-black dark:text-white">Home</a></li>
+                    <li><Link class="font-semibold text-black dark:text-white" to ="/">Home</Link></li>
                     <li>
                         {/*Establecemos el menu desplegable para los cifrados clasicos*/}
                         <details open>
                         <summary class="font-semibold text-black dark:text-white">Classic ciphers</summary>
                         <ul>
-                            <li><a class="font-semibold text-black dark:text-white">Shift cipher</a></li>
+                            <li><Link class="font-semibold text-black dark:text-white" to ="/home/shift">Shift cipher</Link></li>
                             <li><a class="font-semibold text-black dark:text-white">Affine cipher</a></li>
                             {/*Consideramos que el cifrado Vigenere es cifrado y analisis */}
                             <li><a class="font-semibold text-black dark:text-white">Vigenère cipher</a></li>

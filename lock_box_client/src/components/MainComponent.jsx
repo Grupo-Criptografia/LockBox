@@ -28,21 +28,20 @@ import {RabinEncrypt} from "../pages/pagesrabin/rabinencrypt.jsx";
 import {RabinDecrypt} from "../pages/pagesrabin/rabindecrypt.jsx";
 import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
 import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
+import { HomeShift } from "../pages/pagesshift/homeshift.jsx";
 
 
 class Main extends Component {
 
     render() {
         return (
-                <div className="flex flex-row">
+                <div className="flex flex-row-2">
                     <Menu2/>
                     <Routes>
                         <Route path="*" element={<Navigate to="/" replace/>}/>
                         <Route path="/" element={<Home/>}/>
                         {/*Pages Shift*/}
-                        <Route path="/shift/encrypt" element={<ShiftEncrypt/>}/>
-                        <Route path="/shift/decrypt" element={<ShiftDecrypt/>}/>
-                        <Route path="/shift/attack" element={<ShiftAttack/>}/>
+                        <Route path="/home/shift" element={<HomeShift/>}/>
                         {/*Pages Substitution*/}
                         <Route path="/subs/encrypt" element={<SubsEncrypt/>}/>
                         <Route path="/subs/decrypt" element={<SubsDecrypt/>}/>

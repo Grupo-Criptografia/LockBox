@@ -4,7 +4,7 @@ import img_int from '../assets/img/img_int2.jpg'
 class Home extends Component {
     render() {
         return (
-            <div className="md:flex  h-auto w-auto bg-brownish1 place-content-center py-20 ">
+            <div className="md:flex  h-auto w-4/5 bg-brownish1 place-content-center py-20 ">
                 <div
                     className="flex items-center justify-center px-6 bg-ivory lg:h-auto lg:w-4/5 rounded-md">
                     <div>
