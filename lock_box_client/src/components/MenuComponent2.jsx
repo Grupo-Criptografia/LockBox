@@ -11,7 +11,7 @@ class Menu2 extends Component {
                     <li><Link class="font-semibold text-black dark:text-white" to="/">Home</Link></li>
                     <li>
                         {/*Establecemos el menu desplegable para los cifrados clasicos*/}
-                        <details>
+                        <details open>
                             <summary className="font-semibold text-black dark:text-white">Classic ciphers</summary>
                             <ul>
                                 <li><Link class="font-semibold text-black dark:text-white" to="/home/shift">Shift

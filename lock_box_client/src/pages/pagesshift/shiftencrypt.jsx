@@ -32,7 +32,7 @@ export function ShiftEncrypt() {
 
 
     return (
-        <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
+        <section className=" flex flex-col bg-white w-full text-charcoal body-font">
 
             <div className="container w-full px-5 py-16 mx-auto">
                 {/* Guia de uso formulario */}
@@ -94,7 +94,7 @@ export function ShiftEncrypt() {
                             </div>
                             <div className="flex col-span-2 pb-6">
                                 <div className="flex flex-col pl-4">
-                                    <h2 className="font-medium title-font text-base text-poppy mb-1 tracking-wider">Note</h2>
+                                    <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
                                     <p className="leading-relaxed">
                                         Shift cipher decryption is a straightforward process, but it's important to use
                                         the correct key. If you suspect the ciphertext uses a different encryption
@@ -110,7 +110,7 @@ export function ShiftEncrypt() {
                 <div className="flex flex-col md:flex-row w-full mx-auto">
                     <div className="md:w-1/2 w-full flex justify-center h-auto">
                         <div
-                            className="flex flex-col bg-white text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                            className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
                                 Form Encrypt
                             </h1>
@@ -152,14 +152,14 @@ export function ShiftEncrypt() {
                                             <Field placeholder="Enter key" type="number" name="k"
                                                    className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy" name="k"/>
+                                                <ErrorMessage className="font-normal text-xs" name="k"/>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="flex justify-end mt-6">
                                         <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
+                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-color3 rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
                                             Encrypt
                                         </button>
                                     </div>
@@ -169,8 +169,8 @@ export function ShiftEncrypt() {
                     </div>
 
                     <div
-                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full bg-ivory">
+                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-color3 flex justify-center items-center">
+                        <div className="flex flex-col pl-12 w-full bg-white">
                             <h2 className="text-2xl font-semibold">
                                 Information Data
                             </h2>
