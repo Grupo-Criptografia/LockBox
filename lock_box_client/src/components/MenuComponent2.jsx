@@ -18,11 +18,12 @@ class Menu2 extends Component {
                                     cipher</Link></li>
                                 <li><a className="font-semibold text-black dark:text-white">Affine cipher</a></li>
                                 {/*Consideramos que el cifrado Vigenere es cifrado y analisis */}
-                                <li><a className="font-semibold text-black dark:text-white">Vigenère cipher</a></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="/home/vigenere">Vigenère
+                                    cipher</Link></li>
                                 <li><a className="font-semibold text-black dark:text-white">Permutation cipher</a></li>
                                 {/*Debe haber cifrado de texto e imagen */}
                                 <li><a className="font-semibold text-black dark:text-white">Hill cipher</a></li>
-                                {/*Consideramos el cifrado  y el analisis de frecuencia*/}
+                                {/*Consideramos el cifrado y el analisis de frecuencia*/}
                                 <li><a className="font-semibold text-black dark:text-white">Substitution cipher</a></li>
                             </ul>
                         </details>
