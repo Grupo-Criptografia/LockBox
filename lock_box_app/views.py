@@ -46,6 +46,34 @@ def handle_exceptions(view_func):
     return wrapper
 
 
+# class shiftView(APIView):
+#     @handle_exceptions
+#     def post(self, request):
+
+#         plain_text = request.data.get('plain_text')
+#         k = request.data.get('k')
+#         cipher_text = request.data.get('cipher_text')
+#         method = request.data.get('method')
+#         list_plain_text = []
+
+#         if method == 'encrypt':
+#             k = int(k)
+#             cipher_text = encryptShift(plain_text, k - 1)
+
+#         if method == 'decrypt':
+#             k = int(k)
+#             plain_text = decryptShift(cipher_text, k - 1)
+
+#         if method == 'attack':
+#             k = 0
+#             list_plain_text = attackShift(cipher_text)
+
+#         data_obj = dataShiftTest(plain_text, cipher_text, k, list_plain_text)
+#         serializer_class = dataShiftSerializer(data_obj)
+#         return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+#HACK
+
 class shiftView(APIView):
     @handle_exceptions
     def post(self, request):
@@ -71,6 +99,7 @@ class shiftView(APIView):
         data_obj = dataShiftTest(plain_text, cipher_text, k, list_plain_text)
         serializer_class = dataShiftSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
+
 
 
 class substitutionView(APIView):
