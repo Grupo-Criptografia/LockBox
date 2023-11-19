@@ -5,7 +5,7 @@ def getKeyPair():
     (publicKey, privateKey) = rsa.newkeys(512)
     return publicKey, privateKey
 
-def encrypt(plain_text: str, key) -> str:
+def RSAencrypt(plain_text: str, key) -> str:
     try:
         plain_text = plain_text.encode('ascii')
         en2 = []
@@ -21,24 +21,17 @@ def encrypt(plain_text: str, key) -> str:
         return en
     except: 
         return False
-def decrypt(cipher_text: str, key) -> str:
+def RSAdecrypt(cipher_text: str, key) -> str:
     try:
         plain = ""
         keyLength = rsa.common.byte_size(key.n)
-        lenBytes = len(encrypt("a", key))
+        lenBytes = len(RSAencrypt("a", key))
         bytesEnc = [base64.b64decode(cipher_text[i:i+lenBytes].encode('ascii')) for i in range(0, len(cipher_text), lenBytes)]
         for by in bytesEnc:
             blocksize = keyLength
             encrypted = rsa.transform.bytes2int(by)
             decrypted = rsa.core.decrypt_int(encrypted,key.d, key.n)
             plain += rsa.transform.int2bytes(decrypted, blocksize).replace(b'\00', b'').decode('ascii')
-        print("return: ", plain)
         return plain
     except:
         return False
-
-def calculeND(P, Q, E):
-    return {
-        "N": str(P * Q), 
-        "D": str(pow(E, -1, int(totient(P * Q))))
-    }

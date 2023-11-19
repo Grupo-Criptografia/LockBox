@@ -4,6 +4,7 @@ from io import BytesIO
 import base64
 import numpy as np
 import ast
+import rsa.pkcs1
 
 from .crypto_algorithms.util import convert_img_base64, convert_pil_image_to_base64
 
@@ -25,11 +26,12 @@ from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encryp
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
+from .crypto_algorithms.RSA import RSAdecrypt, RSAencrypt
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, dataRabinSerializer, TdesSerializer, AesSerializer
+    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, dataRabinSerializer, TdesSerializer, AesSerializer, dataRSASerializer
 from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTextTest,
-                    dataRabinTest)
+                    dataRabinTest, dataRSATest)
 
 
 # Decorador personalizado para manejar excepciones
@@ -331,6 +333,35 @@ class rabinView(APIView):
 
         data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
+    
+class RSAView(APIView):
+    @handle_exceptions
+    def post(self, request):
+
+        plain_text = request.data.get('plain_text')
+        cipher_text = request.data.get('cipher_text')
+        public_key = request.data.get('public_key')
+        private_key = request.data.get('private_key')
+        method = request.data.get('method')
+
+        print(f"plain_text: {plain_text}")
+        print(f"public_key [n,e]: {public_key}")
+        print(f"private_key [d,p,q]: {private_key}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
+        if method == 'encrypt':
+            public_key1 = rsa.PublicKey(public_key[0], public_key[1])
+            cipher_text = RSAencrypt(plain_text, public_key1)
+
+        if method == 'decrypt':
+            n = private_key[1]*private_key[2]
+            private_key1 = rsa.PrivateKey(n,0,private_key[0],private_key[1],private_key[2])
+            plain_text = RSAdecrypt(cipher_text, private_key1)
+
+        data_obj = dataRSATest(plain_text, cipher_text, public_key, private_key)
+        serializer_class = dataRSASerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
