@@ -2,38 +2,45 @@ import numpy as np
 from sympy import Matrix
 from sympy.matrices.common import NonInvertibleMatrixError
 from .util import str2int, int2str
+from PIL import Image
 
 
-def encrypt_image(img_arr: np.ndarray, key: np.ndarray):
+def encrypt_image_hill(plain_img_file, key: list[list] | np.ndarray):
     """
-    Encrypts an image `img_arr` in the form of a numpy NDarray with a invertible matrix `key`
+    Encrypts an image `img_arr` in the form of a numpy NDarray with an invertible matrix `key`
     modulo 256 using the Hill cipher.
 
     Returns the encrypted image array of the same shape.
     """
-    return encrypt(img_arr.flatten(), key, 256).astype(np.uint8).reshape(*img_arr.shape)
+    
+    plain_image = Image.open(plain_img_file)
+    plain_img_arr = np.asarray(plain_image)
+
+    return encrypt(plain_img_arr.flatten(), key, 256).astype(np.uint8).reshape(*plain_img_arr.shape)
 
 
-def decrypt_image(img_arr: np.ndarray, key):
+def decrypt_image_hill(cipher_img_file, key):
     """
     Decrypts an image `img_arr` in the form of a numpy NDarray with a invertible matrix `key`
     modulo 256 using the Hill cipher.
 
     Returns the original image array.
     """
-    return decrypt(img_arr.flatten(), key, 256).astype(np.uint8).reshape(*img_arr.shape)
+    cipher_image = Image.open(cipher_img_file)
+    cipher_img_arr = np.asarray(cipher_image)
+    
+    return decrypt(cipher_img_arr.flatten(), key, 256).astype(np.uint8).reshape(*cipher_img_arr.shape)
 
 
-def encrypt_text(plain_text: str, key) -> str:
+def encrypt_text_hill(plain_text: str, key) -> str:
     """
     Encrypts a text `plain_text` given the matrix `key` with the Hill cipher.
     """
     data = str2int(plain_text)
-
     return int2str(list(encrypt(data, key, 26))).upper()
 
 
-def decrypt_text(cipher_text: str, key) -> str:
+def decrypt_text_hill(cipher_text: str, key) -> str:
     """
     Decrypts a cipher text `cipher_text` given the matrix `key` with the Hill cipher.
     """
@@ -42,8 +49,7 @@ def decrypt_text(cipher_text: str, key) -> str:
 
 
 def encrypt(
-        data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int
-) -> np.ndarray:
+        data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int) -> np.ndarray:
     """
     Encrypts the numerical data `data` with the matrix key `key` modulo `mod`
     using the Hill cipher.
@@ -71,8 +77,7 @@ def encrypt(
 
 
 def decrypt(
-        data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int
-) -> np.ndarray:
+        data: list[int] | np.ndarray, key: list[list] | np.ndarray, mod: int) -> np.ndarray:
     """
     Decrypts the numerical data `data` with the matrix key `key` modulo `mod`
     using the Hill cipher
@@ -98,7 +103,7 @@ def decrypt(
 
 def attack(cipher_text, plain_text, m: int) -> list[list]:
     """
-    Función para que retorna la llave del cripto sistema Hill
+    Función para qué retorna la llave del cripto sistema Hill
     """
 
     cipher_text, plain_text = str2int(cipher_text.lower()), str2int(plain_text)

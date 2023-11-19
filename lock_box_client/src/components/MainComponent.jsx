@@ -18,6 +18,17 @@ import {VigenereEncrypt} from "../pages/pagesvigenere/vigenereencrypt.jsx";
 import {VigenereDecrypt} from "../pages/pagesvigenere/vigeneredecrypt.jsx";
 import {VigenereAttack} from "../pages/pagesvigenere/vigenereattack.jsx";
 import Home from "./HomeComponent.jsx";
+import {HillEncrypt} from "../pages/pageshill/hillencrypt.jsx";
+import {HillDecrypt} from "../pages/pageshill/hilldecrypt.jsx";
+import {TdesEncrypt} from "../pages/pagestdes/tdesencrypt.jsx";
+import {TdesDecrypt} from "../pages/pagestdes/tdesdecrypt.jsx";
+import {AesEncrypt} from "../pages/pagesaes/aesencrypt.jsx";
+import {AesDecrypt} from "../pages/pagesaes/aesdecrypt.jsx";
+import {RabinEncrypt} from "../pages/pagesrabin/rabinencrypt.jsx";
+import {RabinDecrypt} from "../pages/pagesrabin/rabindecrypt.jsx";
+import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
+import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
+
 
 class Main extends Component {
 
@@ -47,6 +58,21 @@ class Main extends Component {
                         <Route path="/vigenere/encrypt" element={<VigenereEncrypt/>}/>
                         <Route path="/vigenere/decrypt" element={<VigenereDecrypt/>}/>
                         <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
+                        {/*Pages Hill*/}
+                        <Route path="/hill/encrypt" element={<HillEncrypt/>}/>
+                        <Route path="/hill/decrypt" element={<HillDecrypt/>}/>
+                        {/*Pages Hill Image*/}
+                        <Route path="/hillImg/encrypt" element={<HillImgEncrypt/>}/>
+                        <Route path="/hillImg/decrypt" element={<HillImgDecrypt/>}/>
+                        {/*Pages Tdes*/}
+                        <Route path={"/tdes/encrypt"} element={<TdesEncrypt/>}/>
+                        <Route path={"/tdes/decrypt"} element={<TdesDecrypt/>}/>
+                        {/*Pages AES*/}
+                        <Route path={"/aes/encrypt"} element={<AesEncrypt/>}/>
+                        <Route path={"/aes/decrypt"} element={<AesDecrypt/>}/>
+                        {/*Pages Rabin*/}
+                        <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
+                        <Route path={"/rabin/decrypt"} element={<RabinDecrypt/>}/>
                     </Routes>
                 </div>
         )

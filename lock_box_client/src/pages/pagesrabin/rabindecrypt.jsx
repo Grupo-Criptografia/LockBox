@@ -1,32 +1,28 @@
-/* eslint-disable react/no-unescaped-entities */
 import {useEffect, useState} from "react";
-import {createPermutation} from '../../api/lockbox.api.js'
+import {createRabin, getShift} from '../../api/lockbox.api.js'
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 
-export function PermutationDecrypt() {
+export function RabinDecrypt() {
 
     const [data, setData] = useState({
         plain_text: "",
         cipher_text: "",
-        k: "",
+        n: 0,
+        p: 0,
+        q: 0
     })
 
     useEffect(() => {
         console.log(data)
     }, [data]);
 
+
     const onSubmitHandler = async (data) => {
         data.method = "decrypt"
-        console.log(data)
         try {
-            const response = await createPermutation(data)
-            const k_string = response.k.join(", ")
-            setData({
-                plain_text: response.plain_text,
-                cipher_text: response.cipher_text,
-                k: k_string
-            })
+            const response = await createRabin(data)
+            setData(response)
         } catch (error) {
             console.log('Error: ', error)
         }
@@ -38,10 +34,9 @@ export function PermutationDecrypt() {
 
             <div className="container w-full px-5 py-16 mx-auto">
                 {/* Guia de uso formulario */}
-
                 <div className="text-center w-full mb-10">
                     <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                        User Guide for Permutation Decryption
+                        User Guide for Shift Encryption
                     </h1>
                     <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Shift Cipher
                         Encryption Tool. This tool allows you to encrypt plain text using a Shift cipher, where each
@@ -73,7 +68,7 @@ export function PermutationDecrypt() {
                                         choose k = 3, the letter 'a' will be encrypted as 'd','b' as 'e', and so on</p>
                                 </div>
                             </div>
-                            <div className="flex col-span-2 md:col-span-1 pb-6">
+                            <div className="flex col-span-1 pb-6">
                                 <div className="flex-grow pl-4">
                                     <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
                                         3. Encrypt the Text:
@@ -110,7 +105,6 @@ export function PermutationDecrypt() {
                 </div>
 
                 {/* Formulario y resultado */}
-
                 <div className="flex flex-col md:flex-row w-full mx-auto">
                     <div className="md:w-1/2 w-full flex justify-center h-auto">
                         <div
@@ -121,26 +115,15 @@ export function PermutationDecrypt() {
                             <Formik
                                 initialValues={{
                                     cipher_text: '',
-                                    k: ''
+                                    p: '',
+                                    q: ''
                                 }}
 
                                 validationSchema={Yup.object({
                                     cipher_text: Yup.string()
-                                        .uppercase()
-                                        .strict()
-                                        .required("Plain text is required"),
-                                    k: Yup.string()
-                                        .required("Key is required")
-                                        .test("Key valida", "El tamaño de la lista no particiona el texto plano", function (value) {
-                                            const {cipher_text} = this.parent;
-                                            const keysArray = value.split(",").map((key) => Number(key.trim()));
-                                            return cipher_text.length % keysArray.length === 0;
-                                        })
-                                        .test("Key valida", "No se deben repetir números", function (value) {
-                                            const keysArray = value.split(",").map((key) => Number(key.trim()));
-                                            const uniqueKeys = new Set(keysArray);
-                                            return uniqueKeys.size === keysArray.length
-                                        })
+                                        .required("Cipher text is required"),
+                                    p: Yup.number().required("Key p is required"),
+                                    q: Yup.number().required("Key q is required")
                                 })}
 
                                 onSubmit={(values, {resetForm}) => {
@@ -153,20 +136,28 @@ export function PermutationDecrypt() {
                                 <Form className="w-3/4">
                                     <div className="grid grid-cols-1 gap-1 mt-4">
                                         <div>
-                                            <label className="font-medium">Cipher Text</label>
-                                            <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
+                                            <label className="font-medium">Cipher text</label>
+                                            <Field placeholder="Enter plain text" as="textarea" name="cipher_text"
                                                    className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="cipher_text"/>
+                                                              name="plain_text"/>
                                             </div>
                                         </div>
                                         <div className="mt-3">
-                                            <label className="font-medium">Key</label>
-                                            <Field placeholder="Enter key" type="text" name="k"
+                                            <label className="font-medium">Key p</label>
+                                            <Field placeholder="Enter key p" as="textarea" name="p"
                                                    className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy" name="k"/>
+                                                <ErrorMessage className="font-normal text-xs text-poppy" name="p"/>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <label className="font-medium">Key q</label>
+                                            <Field placeholder="Enter key q" as="textarea" name="q"
+                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                            <div className="text-red-600 text-xs font-semibold">
+                                                <ErrorMessage className="font-normal text-xs text-poppy" name="q"/>
                                             </div>
                                         </div>
                                     </div>
@@ -181,6 +172,7 @@ export function PermutationDecrypt() {
                             </Formik>
                         </div>
                     </div>
+
                     <div
                         className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
                         <div className="flex flex-col pl-12 w-full bg-ivory">
@@ -190,14 +182,19 @@ export function PermutationDecrypt() {
 
                             {data?.plain_text ?
                                 <div>
+
+
+                                    <p className="mt-2 text-xl">
+                                        Posible plain text: {data.plain_text}
+                                    </p>
+                                    <p className="mt-2 text-xl">
+                                        Key p: {data.p}
+                                    </p>
+                                    <p className="mt-2 text-xl">
+                                        Key q: {data.q}
+                                    </p>
                                     <p className="mt-2 text-xl">
                                         Cipher text: {data.cipher_text}
-                                    </p>
-                                    <p className="mt-2 text-xl">
-                                        Key: {data.k}
-                                    </p>
-                                    <p className="mt-2 text-xl">
-                                        Plain text: {data.plain_text}
                                     </p>
                                 </div>
                                 :

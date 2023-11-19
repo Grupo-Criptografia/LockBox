@@ -1,10 +1,10 @@
 from .util import pad_image_arr, unpad_image_arr
 from Crypto.Cipher import AES
 import numpy as np
+from PIL import Image
 
 
-def encrypt_image(plain_img_arr, *args, **kwargs):
-
+def encrypt_image_aes(plain_img_file, *args, **kwargs):
     modes = {
         "ECB": AES.MODE_ECB,
         "CBC": AES.MODE_CBC,
@@ -12,6 +12,9 @@ def encrypt_image(plain_img_arr, *args, **kwargs):
         "CFB": AES.MODE_CFB,
         "CTR": AES.MODE_CTR,
     }
+
+    plain_image = Image.open(plain_img_file)
+    plain_img_arr = np.asarray(plain_image)
 
     args = (args[0], modes[args[1]])
 
@@ -29,8 +32,7 @@ def encrypt_image(plain_img_arr, *args, **kwargs):
     return cipher_img_arr
 
 
-def decrypt_image(cipher_img_arr, *args, **kwargs):
-
+def decrypt_image_aes(cipher_image_file, *args, **kwargs):
     modes = {
         "ECB": AES.MODE_ECB,
         "CBC": AES.MODE_CBC,
@@ -38,6 +40,9 @@ def decrypt_image(cipher_img_arr, *args, **kwargs):
         "CFB": AES.MODE_CFB,
         "CTR": AES.MODE_CTR,
     }
+
+    cipher_image = Image.open(cipher_image_file)
+    cipher_img_arr = np.asarray(cipher_image)
 
     args = (args[0], modes[args[1]])
 
