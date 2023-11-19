@@ -1,7 +1,5 @@
 from functools import wraps
 from PIL import Image
-from io import BytesIO
-import base64
 
 from .crypto_algorithms.util import convert_img_base64, convert_pil_image_to_base64
 
@@ -299,17 +297,17 @@ class rabinView(APIView):
         method = request.data.get('method')
 
         print(f"plain_text: {plain_text}")
-
         print(f"n: {n}")
         print(f"p,q: {p, q}")
         print(f"cipher_text: {cipher_text}")
         print(f"method: {method}")
 
         if method == 'encrypt':
-            cipher_text = encrypt_rabin(plain_text, n)
+            plain_text = plain_text.replace(" ", "").lower()
+            cipher_text = encrypt_rabin(plain_text, int(n))
 
         if method == 'decrypt':
-            plain_text = decrypt_rabin(plain_text, p, q)
+            plain_text = decrypt_rabin(cipher_text, int(p), int(q))
 
         data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)

@@ -93,7 +93,7 @@ def str2bytes(x):
 
 def prime_3mod4():
     while True:
-        p, q = number.getPrime(1024), number.getPrime(1024)
+        p, q = number.getPrime(128), number.getPrime(128)
         if p % 4 == 3 and q % 4 == 3:
             return p, q
 
@@ -102,9 +102,10 @@ if __name__ == "__main__":
 
     p, q = prime_3mod4()
     n = p * q
-    
+
     print(p)
     print(q)
+    print(n)
 
     plain_text = "z"
     c = 1

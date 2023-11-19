@@ -23,6 +23,7 @@ import {TdesEncrypt} from "../pages/pagestdes/tdesencrypt.jsx";
 import {TdesDecrypt} from "../pages/pagestdes/tdesdecrypt.jsx";
 import {AesEncrypt} from "../pages/pagesaes/aesencrypt.jsx";
 import {AesDecrypt} from "../pages/pagesaes/aesdecrypt.jsx";
+import {RabinEncrypt} from "../pages/pagesrabin/rabinencrypt.jsx";
 
 
 class Main extends Component {
@@ -64,6 +65,8 @@ class Main extends Component {
                         {/*Pages AES*/}
                         <Route path={"/aes/encrypt"} element={<AesEncrypt/>}/>
                         <Route path={"/aes/decrypt"} element={<AesDecrypt/>}/>
+                        {/*Pages Rabin*/}
+                        <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
                     </Routes>
                 </div>
             </div>
