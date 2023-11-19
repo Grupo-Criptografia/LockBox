@@ -1,25 +1,37 @@
+import {Link, Outlet, Route, Routes} from "react-router-dom";
+import {ShiftEncrypt} from "./shiftencrypt.jsx";
 
-export function HomeShift(){
+export function HomeShift() {
 
     {/* Retorna la vista */}
     return (
-        <section class="text-gray-600 body-font">
-            <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-                <div class="text-center lg:w-2/3 w-full">
-                    <div class="flex justify-center py-10 font-semibold text-black" >
-                        <button className="bg-brownish1 w-1/3 h-16 justify-items-center">
-                            <span className="btm-nav-label jufti">Encrypt</span>
-                        </button>
-                        <button className="active bg-ivory w-1/3 h-16 justify-items-center">
+        <section className="text-charcoal w-4/5 bg-white body-font">
+            <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+                <div className="text-center lg:w-2/3 w-full">
+                    <div className="flex justify-items-center py-10 font-semibold text-black divide-x-1">
+                        <Link to="encrypt"
+                              className="flex justify-center items-center rounded-l-md bg-color3 w-1/3 h-16">
+                            <span className="btm-nav-label">Encrypt</span>
+                        </Link>
+                        <Link className="bg-color1 w-1/3 h-16 flex justify-center items-center" to="decrypt">
                             <span className="btm-nav-label">Decrypt</span>
-                        </button>
-                        <button className="bg-teal-200 w-1/3 h-16 justify-items-center">
+                        </Link>
+                        <Link className="rounded-r-md bg-color4 w-1/3 h-16 flex justify-center items-center"
+                              to="attack">
                             <span className="btm-nav-label">Attack</span>
-                        </button>
+                        </Link>
                     </div>
-                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Microdosing synth tattooed vexillologist</h1>
-                <p class="mb-8 leading-relaxed">Meggings kinfolk echo park stumptown DIY, kale chips beard jianbing tousled. Chambray dreamcatcher trust fund, kitsch vice godard disrupt ramps hexagon mustache umami snackwave tilde chillwave ugh. Pour-over meditation PBR&B pickled ennui celiac mlkshk freegan photo booth af fingerstache pitchfork.</p>
+                    <div>
+                        <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Crypto System
+                            Shift</h1>
+                        <p className="mb-8 leading-relaxed">The Shift Cryptosystem, also known as the Caesar Cipher, is
+                            one
+                            of
+                            the simplest and most widely known encryption techniques. Its history dates back to Julius
+                            Caesar, who used it in his private correspondence</p>
+                    </div>
                 </div>
+                <Outlet/>
             </div>
         </section>
     )

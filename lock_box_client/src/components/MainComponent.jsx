@@ -28,52 +28,56 @@ import {RabinEncrypt} from "../pages/pagesrabin/rabinencrypt.jsx";
 import {RabinDecrypt} from "../pages/pagesrabin/rabindecrypt.jsx";
 import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
 import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
-import { HomeShift } from "../pages/pagesshift/homeshift.jsx";
+import {HomeShift} from "../pages/pagesshift/homeshift.jsx";
 
 
 class Main extends Component {
 
     render() {
         return (
-                <div className="flex flex-row-2">
-                    <Menu2/>
-                    <Routes>
-                        <Route path="*" element={<Navigate to="/" replace/>}/>
-                        <Route path="/" element={<Home/>}/>
-                        {/*Pages Shift*/}
-                        <Route path="/home/shift" element={<HomeShift/>}/>
-                        {/*Pages Substitution*/}
-                        <Route path="/subs/encrypt" element={<SubsEncrypt/>}/>
-                        <Route path="/subs/decrypt" element={<SubsDecrypt/>}/>
-                        <Route path="/subs/attack" element={<SubsAttack/>}/>
-                        {/*Pages Affine*/}
-                        <Route path="/affine/encrypt" element={<AffineEncrypt/>}/>
-                        <Route path="/affine/decrypt" element={<AffineDecrypt/>}/>
-                        <Route path="/affine/attack" element={<AffineAttack/>}/>
-                        {/*Pages Permutation*/}
-                        <Route path="/permutation/encrypt" element={<PermutationEncrypt/>}/>
-                        <Route path="/permutation/decrypt" element={<PermutationDecrypt/>}/>
-                        {/*Pages Permutation*/}
-                        <Route path="/vigenere/encrypt" element={<VigenereEncrypt/>}/>
-                        <Route path="/vigenere/decrypt" element={<VigenereDecrypt/>}/>
-                        <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
-                        {/*Pages Hill*/}
-                        <Route path="/hill/encrypt" element={<HillEncrypt/>}/>
-                        <Route path="/hill/decrypt" element={<HillDecrypt/>}/>
-                        {/*Pages Hill Image*/}
-                        <Route path="/hillImg/encrypt" element={<HillImgEncrypt/>}/>
-                        <Route path="/hillImg/decrypt" element={<HillImgDecrypt/>}/>
-                        {/*Pages Tdes*/}
-                        <Route path={"/tdes/encrypt"} element={<TdesEncrypt/>}/>
-                        <Route path={"/tdes/decrypt"} element={<TdesDecrypt/>}/>
-                        {/*Pages AES*/}
-                        <Route path={"/aes/encrypt"} element={<AesEncrypt/>}/>
-                        <Route path={"/aes/decrypt"} element={<AesDecrypt/>}/>
-                        {/*Pages Rabin*/}
-                        <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
-                        <Route path={"/rabin/decrypt"} element={<RabinDecrypt/>}/>
-                    </Routes>
-                </div>
+            <div className="flex flex-row-2">
+                <Menu2/>
+                <Routes>
+                    <Route path="*" element={<Navigate to="/" replace/>}/>
+                    <Route path="/" element={<Home/>}/>
+                    {/*Pages Shift*/}
+                    <Route path="/home/shift" element={<HomeShift/>}>
+                        <Route path="encrypt" element={<ShiftEncrypt/>}/>
+                        <Route path="decrypt" element={<ShiftDecrypt/>}/>
+                        <Route path="attack" element={<ShiftAttack/>}/>
+                    </Route>
+                    {/*Pages Substitution*/}
+                    <Route path="/subs/encrypt" element={<SubsEncrypt/>}/>
+                    <Route path="/subs/decrypt" element={<SubsDecrypt/>}/>
+                    <Route path="/subs/attack" element={<SubsAttack/>}/>
+                    {/*Pages Affine*/}
+                    <Route path="/affine/encrypt" element={<AffineEncrypt/>}/>
+                    <Route path="/affine/decrypt" element={<AffineDecrypt/>}/>
+                    <Route path="/affine/attack" element={<AffineAttack/>}/>
+                    {/*Pages Permutation*/}
+                    <Route path="/permutation/encrypt" element={<PermutationEncrypt/>}/>
+                    <Route path="/permutation/decrypt" element={<PermutationDecrypt/>}/>
+                    {/*Pages Permutation*/}
+                    <Route path="/vigenere/encrypt" element={<VigenereEncrypt/>}/>
+                    <Route path="/vigenere/decrypt" element={<VigenereDecrypt/>}/>
+                    <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
+                    {/*Pages Hill*/}
+                    <Route path="/hill/encrypt" element={<HillEncrypt/>}/>
+                    <Route path="/hill/decrypt" element={<HillDecrypt/>}/>
+                    {/*Pages Hill Image*/}
+                    <Route path="/hillImg/encrypt" element={<HillImgEncrypt/>}/>
+                    <Route path="/hillImg/decrypt" element={<HillImgDecrypt/>}/>
+                    {/*Pages Tdes*/}
+                    <Route path={"/tdes/encrypt"} element={<TdesEncrypt/>}/>
+                    <Route path={"/tdes/decrypt"} element={<TdesDecrypt/>}/>
+                    {/*Pages AES*/}
+                    <Route path={"/aes/encrypt"} element={<AesEncrypt/>}/>
+                    <Route path={"/aes/decrypt"} element={<AesDecrypt/>}/>
+                    {/*Pages Rabin*/}
+                    <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
+                    <Route path={"/rabin/decrypt"} element={<RabinDecrypt/>}/>
+                </Routes>
+            </div>
         )
     }
 
