@@ -29,6 +29,7 @@ import {RabinDecrypt} from "../pages/pagesrabin/rabindecrypt.jsx";
 import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
 import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
 import {HomeShift} from "../pages/pagesshift/homeshift.jsx";
+import {HomeVigenere} from "../pages/pagesvigenere/homevigenere.jsx";
 
 
 class Main extends Component {
@@ -57,10 +58,12 @@ class Main extends Component {
                     {/*Pages Permutation*/}
                     <Route path="/permutation/encrypt" element={<PermutationEncrypt/>}/>
                     <Route path="/permutation/decrypt" element={<PermutationDecrypt/>}/>
-                    {/*Pages Permutation*/}
-                    <Route path="/vigenere/encrypt" element={<VigenereEncrypt/>}/>
-                    <Route path="/vigenere/decrypt" element={<VigenereDecrypt/>}/>
-                    <Route path="/vigenere/attack" element={<VigenereAttack/>}/>
+                    {/*Pages Vigenere*/}
+                    <Route path="/home/vigenere" element={<HomeVigenere/>}>
+                        <Route path="encrypt" element={<VigenereEncrypt/>}/>
+                        <Route path="decrypt" element={<VigenereDecrypt/>}/>
+                        <Route path="attack" element={<VigenereAttack/>}/>
+                    </Route>
                     {/*Pages Hill*/}
                     <Route path="/hill/encrypt" element={<HillEncrypt/>}/>
                     <Route path="/hill/decrypt" element={<HillDecrypt/>}/>
