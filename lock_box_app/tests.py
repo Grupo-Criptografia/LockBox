@@ -55,3 +55,11 @@ class dataHillTextTest:
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
+
+class dataElGamalTest:
+    def __init__(self, plain_text:str, cipher_text, public_key: tuple, private_key: tuple):
+        self.plain_text = plain_text
+        self.cipher_text = cipher_text
+        self.public_key = public_key
+        self.private_key = private_key
+        

@@ -66,6 +66,12 @@ class dataHillImgSerializer(serializers.Serializer):
     cipher_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
     k = serializers.CharField()
     method = serializers.CharField()
+    
+class ElGamalSerializer(serializers.Serializer):
+    plain_text = serializers.CharField(max_length=200)
+    cipher_text = serializers.CharField()
+    public_key = serializers.ListField()
+    private_key = serializers.ListField()
 
 class TdesSerializer(serializers.Serializer):
     plain_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)

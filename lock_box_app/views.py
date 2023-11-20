@@ -22,13 +22,14 @@ from .crypto_algorithms.permutation import encryptPermutation, decryptPermutatio
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
+from .crypto_algorithms.elgamal import encryptElGamal, decryptElGamal, generate_keys
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, dataRabinSerializer, TdesSerializer, AesSerializer
-from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTextTest,
+    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer , dataRabinSerializer, TdesSerializer, AesSerializer
+from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTextTest, dataElGamalTest,
                     dataRabinTest)
 
 
@@ -246,7 +247,7 @@ class hillTextView(APIView):
         data_obj = dataHillTextTest(plain_text, cipher_text, k)
         serializer_class = dataHillTextSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-#TODO
+    
 class hillImgView(APIView):
     #Para recibir archivos
     parser_classes= (MultiPartParser,)
@@ -284,6 +285,32 @@ class hillImgView(APIView):
         } 
         
         return Response(response, status=status.HTTP_200_OK)
+    
+class elGamalView(APIView):
+    @handle_exceptions
+    def post(self, request):
+        
+        plain_text = request.data.get('plain_text')
+        cipher_text = request.data.get('cipher_text')
+        public_key = request.data.get('public_key')
+        private_key = request.data.get('private_key')
+        method = request.data.get('method')
+        
+        print(f"plain_text: {plain_text}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"public_key: {public_key}")
+        print(f"private_key: {private_key}")
+        print(f"method: {method}")
+        
+        if method == 'encrypt':
+            cipher_text = encryptElGamal(str(public_key), plain_text)
+        if method == 'decrypt':
+            plain_text = decryptElGamal(str(private_key), cipher_text)
+        
+        data_obj = dataElGamalTest(plain_text, cipher_text, public_key, private_key)
+        serializer_class = ElGamalSerializer(data_obj)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
+        
 class tdesView(APIView):
     parser_classes = (MultiPartParser,)
 
