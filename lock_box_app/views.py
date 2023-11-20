@@ -2,6 +2,7 @@ from functools import wraps
 from PIL import Image
 import numpy as np
 import ast
+import rsa.pkcs1
 
 from .crypto_algorithms.util import convert_img_base64, convert_pil_image_to_base64
 
@@ -18,16 +19,18 @@ from .crypto_algorithms.permutation import encryptPermutation, decryptPermutatio
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
+from .crypto_algorithms.elgamal import encryptElGamal, decryptElGamal, generate_keys
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
+from .crypto_algorithms.RSA import RSAdecrypt, RSAencrypt
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, dataRabinSerializer, TdesSerializer, \
-    AesSerializer
+    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer, dataRabinSerializer, \
+    TdesSerializer, AesSerializer, dataRSASerializer
 from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest,
-                    dataHillTextTest,
-                    dataRabinTest)
+                    dataHillTextTest, dataElGamalTest,
+                    dataRabinTest, dataRSATest)
 
 
 # Decorador personalizado para manejar excepciones
@@ -201,19 +204,11 @@ class hillTextView(APIView):
         cipher_text = request.data.get('cipher_text')
         method = request.data.get('method')
 
-        print(f"plain_text: {plain_text}")
-        print(f"k: {k}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         if method == 'encrypt':
             cipher_text = encrypt_text_hill(plain_text, k)
 
         if method == 'decrypt':
             plain_text = decrypt_text_hill(cipher_text, k)
-
-        print(f"plain_text: {plain_text}")
-        print(f"cipher_text: {cipher_text}")
 
         data_obj = dataHillTextTest(plain_text, cipher_text, k)
         serializer_class = dataHillTextSerializer(data_obj)
@@ -257,6 +252,32 @@ class hillImgView(APIView):
         }
 
         return Response(response, status=status.HTTP_200_OK)
+
+
+class elGamalView(APIView):
+    @handle_exceptions
+    def post(self, request):
+
+        plain_text = request.data.get('plain_text')
+        cipher_text = request.data.get('cipher_text')
+        public_key = request.data.get('public_key')
+        private_key = request.data.get('private_key')
+        method = request.data.get('method')
+
+        print(f"plain_text: {plain_text}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"public_key: {public_key}")
+        print(f"private_key: {private_key}")
+        print(f"method: {method}")
+
+        if method == 'encrypt':
+            cipher_text = encryptElGamal(str(public_key), plain_text)
+        if method == 'decrypt':
+            plain_text = decryptElGamal(str(private_key), cipher_text)
+
+        data_obj = dataElGamalTest(plain_text, cipher_text, public_key, private_key)
+        serializer_class = ElGamalSerializer(data_obj)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
 class tdesView(APIView):
@@ -337,6 +358,33 @@ class rabinView(APIView):
 
         data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+
+class RSAView(APIView):
+    @handle_exceptions
+    def post(self, request):
+
+        plain_text = request.data.get('plain_text')
+        cipher_text = request.data.get('cipher_text')
+        public_key = request.data.get('public_key')
+        private_key = request.data.get('private_key')
+        method = request.data.get('method')
+
+        print(f"plain_text: {plain_text}")
+        print(f"public_key (n,e): {public_key}")
+        print(f"private_key (d,p,q): {private_key}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
+        if method == 'encrypt':
+            cipher_text = RSAencrypt(plain_text, public_key)
+
+        if method == 'decrypt':
+            plain_text = RSAdecrypt(cipher_text, private_key)
+
+        data_obj = dataRSATest(plain_text, cipher_text, public_key, private_key)
+        serializer_class = dataRSASerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
