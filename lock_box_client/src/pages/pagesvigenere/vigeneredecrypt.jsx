@@ -59,7 +59,7 @@ export function VigenereDecrypt() {
                             <div className="flex col-span-2 md:col-span-1 pb-6">
                                 <div className="flex-grow pl-4">
                                     <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
-                                        2. Enter the Encryption Key (k):
+                                        2. Enter the Decryption Key (k):
                                     </h2>
                                     <p className="leading-relaxed">Enter the key that was used to encrypt the original
                                         message. The key should be a word or a sequence of words without spaces.</p>

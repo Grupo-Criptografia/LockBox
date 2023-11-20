@@ -69,7 +69,11 @@ class Home extends Component {
                         </p>
                     </div>
                 </div>
-                
+                <div className="md:flex flex-row h-20 w-auto ">
+                    <div className="h-auto w-1/3 bg-color2 border-black border-3"></div>
+                    <div className="h-auto w-1/3 bg-color1 border-black border-3"></div>
+                    <div className="h-auto w-1/3 bg-color4 border-black border-3"></div>
+                </div>           
             </div>
         )
     }

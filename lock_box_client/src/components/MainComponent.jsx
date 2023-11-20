@@ -30,6 +30,9 @@ import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
 import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
 import {HomeShift} from "../pages/pagesshift/homeshift.jsx";
 import {HomeVigenere} from "../pages/pagesvigenere/homevigenere.jsx";
+import {HomeHill} from "../pages/pageshill/homehill.jsx";
+import {HomeTdes} from "../pages/pagestdes/hometdes.jsx";
+import {HomeAes} from "../pages/pagesaes/homeaes.jsx";
 
 
 class Main extends Component {
@@ -42,7 +45,7 @@ class Main extends Component {
                     <Route path="*" element={<Navigate to="/" replace/>}/>
                     <Route path="/" element={<Home/>}/>
                     {/*Pages Shift*/}
-                    <Route path="/home/shift" element={<HomeShift/>}>
+                    <Route path="/shift" element={<HomeShift/>}>
                         <Route path="encrypt" element={<ShiftEncrypt/>}/>
                         <Route path="decrypt" element={<ShiftDecrypt/>}/>
                         <Route path="attack" element={<ShiftAttack/>}/>
@@ -59,23 +62,28 @@ class Main extends Component {
                     <Route path="/permutation/encrypt" element={<PermutationEncrypt/>}/>
                     <Route path="/permutation/decrypt" element={<PermutationDecrypt/>}/>
                     {/*Pages Vigenere*/}
-                    <Route path="/home/vigenere" element={<HomeVigenere/>}>
+                    <Route path="/vigenere" element={<HomeVigenere/>}>
                         <Route path="encrypt" element={<VigenereEncrypt/>}/>
                         <Route path="decrypt" element={<VigenereDecrypt/>}/>
                         <Route path="attack" element={<VigenereAttack/>}/>
                     </Route>
                     {/*Pages Hill*/}
-                    <Route path="/hill/encrypt" element={<HillEncrypt/>}/>
-                    <Route path="/hill/decrypt" element={<HillDecrypt/>}/>
-                    {/*Pages Hill Image*/}
-                    <Route path="/hillImg/encrypt" element={<HillImgEncrypt/>}/>
-                    <Route path="/hillImg/decrypt" element={<HillImgDecrypt/>}/>
+                    <Route path="/hill" element={<HomeHill/>}>
+                        <Route path="encrypttext" element={<HillEncrypt/>}/>
+                        <Route path="decrypttext" element={<HillDecrypt/>}/>
+                        <Route path="encryptimg" element={<HillImgEncrypt/>}/>
+                        <Route path="decryptimg" element={<HillImgDecrypt/>}/>
+                    </Route>
                     {/*Pages Tdes*/}
-                    <Route path={"/tdes/encrypt"} element={<TdesEncrypt/>}/>
-                    <Route path={"/tdes/decrypt"} element={<TdesDecrypt/>}/>
+                    <Route path="/tdes" element={<HomeTdes/>}>
+                        <Route path={"encrypt"} element={<TdesEncrypt/>}/>
+                        <Route path={"decrypt"} element={<TdesDecrypt/>}/>
+                    </Route>
                     {/*Pages AES*/}
-                    <Route path={"/aes/encrypt"} element={<AesEncrypt/>}/>
-                    <Route path={"/aes/decrypt"} element={<AesDecrypt/>}/>
+                    <Route path="/aes" element={<HomeAes/>}>
+                        <Route path={"encrypt"} element={<AesEncrypt/>}/>
+                        <Route path={"decrypt"} element={<AesDecrypt/>}/>
+                    </Route>
                     {/*Pages Rabin*/}
                     <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
                     <Route path={"/rabin/decrypt"} element={<RabinDecrypt/>}/>
