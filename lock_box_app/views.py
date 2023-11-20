@@ -402,19 +402,16 @@ class RSAView(APIView):
         method = request.data.get('method')
 
         print(f"plain_text: {plain_text}")
-        print(f"public_key [n,e]: {public_key}")
-        print(f"private_key [d,p,q]: {private_key}")
+        print(f"public_key (n,e): {public_key}")
+        print(f"private_key (d,p,q): {private_key}")
         print(f"cipher_text: {cipher_text}")
         print(f"method: {method}")
 
         if method == 'encrypt':
-            public_key1 = rsa.PublicKey(public_key[0], public_key[1])
-            cipher_text = RSAencrypt(plain_text, public_key1)
+            cipher_text = RSAencrypt(plain_text, public_key)
 
         if method == 'decrypt':
-            n = private_key[1]*private_key[2]
-            private_key1 = rsa.PrivateKey(n,0,private_key[0],private_key[1],private_key[2])
-            plain_text = RSAdecrypt(cipher_text, private_key1)
+            plain_text = RSAdecrypt(cipher_text, private_key)
 
         data_obj = dataRSATest(plain_text, cipher_text, public_key, private_key)
         serializer_class = dataRSASerializer(data_obj)

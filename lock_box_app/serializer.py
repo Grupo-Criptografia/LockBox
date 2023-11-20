@@ -56,8 +56,8 @@ class dataRabinSerializer(serializers.Serializer):
 class dataRSASerializer(serializers.Serializer):
     plain_text = serializers.CharField(max_length=200)
     cipher_text = serializers.CharField(max_length=200)
-    public_key = serializers.ListField()
-    private_key = serializers.ListField()
+    public_key = serializers.CharField()
+    private_key = serializers.CharField()
 
 #Validador para Hill, hay dos funciones, para texto e imagen
 class dataHillTextSerializer(serializers.Serializer):

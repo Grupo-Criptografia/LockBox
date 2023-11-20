@@ -50,7 +50,7 @@ class dataRabinTest:
         self.q = q
         
 class dataRSATest:
-    def __init__(self, plain_text: str, cipher_text: str, public_key: list[int], private_key: list[int]):
+    def __init__(self, plain_text: str, cipher_text: str, public_key: str, private_key: str):
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.public_key = public_key
