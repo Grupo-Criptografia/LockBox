@@ -27,6 +27,8 @@ import {RabinEncrypt} from "../pages/pagesrabin/rabinencrypt.jsx";
 import {RabinDecrypt} from "../pages/pagesrabin/rabindecrypt.jsx";
 import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
 import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
+import {RsaEncrypt} from "../pages/pagesrsa/rsaencrypt.jsx";
+import {RsaDecrypt} from "../pages/pagesrsa/rsadecrypt.jsx";
 
 
 class Main extends Component {
@@ -74,6 +76,9 @@ class Main extends Component {
                         {/*Pages Rabin*/}
                         <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
                         <Route path={"/rabin/decrypt"} element={<RabinDecrypt/>}/>
+                        {/*Pages RSA*/}
+                        <Route path={"/rsa/encrypt"} element={<RsaEncrypt/>}/>
+                        <Route path={"/rsa/decrypt"} element={<RsaDecrypt/>}/>
                     </Routes>
                 </div>
             </div>

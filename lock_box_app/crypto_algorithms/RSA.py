@@ -1,10 +1,9 @@
 import rsa.pkcs1
-from sympy.ntheory.factor_ import totient
 import base64
 
 
 def getKeyPair():
-    (publicKey, privateKey) = rsa.newkeys(512)
+    (publicKey, privateKey) = rsa.newkeys(64)
     return publicKey, privateKey
 
 
@@ -45,3 +44,10 @@ def RSAdecrypt(cipher_text: str, str_key: str) -> str:
         return plain
     except:
         return False
+
+
+if __name__ == "__main__":
+    p, q = getKeyPair()
+
+    print(p)
+    print(q)

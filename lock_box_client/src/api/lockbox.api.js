@@ -31,3 +31,4 @@ export const createHillImg = (data) => sendRequest("hillImg/", data, 'multipart/
 export const createTdes = (data) => sendRequest("TDES/", data, 'multipart/form-data');
 export const createAES = (data) => sendRequest("AES/", data, 'multipart/form-data');
 export const createRabin = (data) => sendRequest("rabin/", data);
+export const createRsa = (data) => sendRequest("RSA/", data);
