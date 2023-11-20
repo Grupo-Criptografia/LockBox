@@ -36,71 +36,75 @@ export function VigenereDecrypt() {
 
             <div className="container w-full px-5 py-16 mx-auto">
                 {/* Guia de uso formulario */}
-
-                <div className="text-center w-full mb-10">
-                    <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                        User Guide for Vigenere Decryption
-                    </h1>
-                </div>
-                <div className="container px-5 mx-auto flex flex-wrap">
-                    <div className="flex flex-wrap justify-center w-full">
-                        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-2 gap-1 md:w-3/4 md:pr-10 md:py-6">
-                            <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
-                                <div className="flex-grow pl-4">
-                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                        1. Enter the Decrypted Text:
-                                    </h2>
-                                    <p className="leading-relaxed">
-                                        In the first field of the form, enter the cipher text that you want to decrypt.
-                                        This can be a message or a phrase.
-                                    </p>
+                <div>
+                    <div className="text-center w-full mb-10">
+                        <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
+                            User Guide for Vigenere Decryption
+                        </h1>
+                    </div>
+                    <div className="container px-5 mx-auto flex flex-wrap">
+                        <div className="flex flex-wrap justify-center w-full">
+                            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-2 gap-1 md:w-3/4 md:pr-10 md:py-6">
+                                <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            1. Enter the Decrypted Text:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            In the first field of the form, enter the cipher text that you want to
+                                            decrypt.
+                                            This can be a message or a phrase.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex col-span-2 md:col-span-1 pb-6">
-                                <div className="flex-grow pl-4">
-                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
-                                        2. Enter the Decryption Key (k):
-                                    </h2>
-                                    <p className="leading-relaxed">Enter the key that was used to encrypt the original
-                                        message. The key should be a word or a sequence of words without spaces.</p>
+                                <div className="flex col-span-2 md:col-span-1 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
+                                            2. Enter the Decryption Key (k):
+                                        </h2>
+                                        <p className="leading-relaxed">Enter the key that was used to encrypt the
+                                            original
+                                            message. The key should be a word or a sequence of words without spaces.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex col-span-2 md:col-span-1 pb-6">
-                                <div className="flex-grow pl-4">
-                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                        3. Decrypt the Text:
-                                    </h2>
-                                    <p className="leading-relaxed">
-                                        Once you've entered the cipher text and the encryption key, click the
-                                        "Decrypt" button.
-                                    </p>
+                                <div className="flex col-span-2 md:col-span-1 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            3. Decrypt the Text:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            Once you've entered the cipher text and the encryption key, click the
+                                            "Decrypt" button.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex md:col-span-1 pb-6">
-                                <div className="flex-grow pl-4">
-                                    <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                        4. Obtain the results:
-                                    </h2>
-                                    <p className="leading-relaxed">
-                                        On the side of the form, you will see the results: your cipher text, the
-                                        decryption key used, and the plain text.
-                                    </p>
+                                <div className="flex md:col-span-1 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            4. Obtain the results:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            On the side of the form, you will see the results: your cipher text, the
+                                            decryption key used, and the plain text.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex col-span-2 pb-6">
-                                <div className="flex flex-col pl-4">
-                                    <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
-                                    <p className="leading-relaxed">
-                                        If you are unsure of the key, the tool won't be able to correctly decrypt the
-                                        message. In such cases, contact the person who sent you the encrypted message
-                                        for the correct key.
-                                    </p>
+                                <div className="flex col-span-2 pb-6">
+                                    <div className="flex flex-col pl-4">
+                                        <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
+                                        <p className="leading-relaxed">
+                                            If you are unsure of the key, the tool won't be able to correctly decrypt
+                                            the
+                                            message. In such cases, contact the person who sent you the encrypted
+                                            message
+                                            for the correct key.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 {/* Formulario y resultado */}
 
                 <div className="flex flex-col md:flex-row w-full mx-auto">

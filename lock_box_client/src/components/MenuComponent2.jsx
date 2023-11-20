@@ -44,11 +44,11 @@ class Menu2 extends Component {
                     </li>
 
                     <li>
-                        {/*Establecemos el menu desplegable para los cifrados de clave publica*/}
+                        {/*Establecemos el menu desplegable para los cifrados de clave pública*/}
                         <details>
                             <summary className="font-semibold text-black dark:text-white">Public key ciphers</summary>
                             <ul>
-                                <li><a className="font-semibold text-black dark:text-white">RSA cipher</a></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="rsa">RSA cipher</Link></li>
                                 <li><a className="font-semibold text-black dark:text-white">Rabin cipher</a></li>
                                 <li><a className="font-semibold text-black dark:text-white">El Gamal cipher</a></li>
                             </ul>
