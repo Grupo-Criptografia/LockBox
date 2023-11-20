@@ -31,6 +31,7 @@ import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
 import {HomeShift} from "../pages/pagesshift/homeshift.jsx";
 import {HomeVigenere} from "../pages/pagesvigenere/homevigenere.jsx";
 import {HomeHill} from "../pages/pageshill/homehill.jsx";
+import {HomeTdes} from "../pages/pagestdes/hometdes.jsx";
 
 
 class Main extends Component {
@@ -72,12 +73,11 @@ class Main extends Component {
                         <Route path="encryptimg" element={<HillImgEncrypt/>}/>
                         <Route path="decryptimg" element={<HillImgDecrypt/>}/>
                     </Route>
-                    {/*Pages Hill Image*/}
-                    <Route path="/hillImg/encrypt" element={<HillImgEncrypt/>}/>
-                    <Route path="/hillImg/decrypt" element={<HillImgDecrypt/>}/>
                     {/*Pages Tdes*/}
-                    <Route path={"/tdes/encrypt"} element={<TdesEncrypt/>}/>
-                    <Route path={"/tdes/decrypt"} element={<TdesDecrypt/>}/>
+                    <Route path="/tdes" element={<HomeTdes/>}>
+                        <Route path={"encrypt"} element={<TdesEncrypt/>}/>
+                        <Route path={"decrypt"} element={<TdesDecrypt/>}/>
+                    </Route>
                     {/*Pages AES*/}
                     <Route path={"/aes/encrypt"} element={<AesEncrypt/>}/>
                     <Route path={"/aes/decrypt"} element={<AesDecrypt/>}/>

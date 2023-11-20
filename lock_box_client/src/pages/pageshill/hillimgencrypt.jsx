@@ -201,7 +201,6 @@ export function HillImgEncrypt() {
 
                                 onSubmit={(values, {resetForm}) => {
                                     onSubmitHandler(values).then(() => {
-                                        console.log(values)
                                         resetForm();
                                     }).catch(error => {
                                         console.error("Error en el envio", error);
