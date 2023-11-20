@@ -29,6 +29,8 @@ import {HillImgEncrypt} from "../pages/pageshill/hillimgencrypt.jsx";
 import {HillImgDecrypt} from "../pages/pageshill/hillimgdecrypt.jsx";
 import {RsaEncrypt} from "../pages/pagesrsa/rsaencrypt.jsx";
 import {RsaDecrypt} from "../pages/pagesrsa/rsadecrypt.jsx";
+import {ElgamalEncrypt} from "../pages/pageselgamal/elgamalencrypt.jsx";
+import {ElgamalDecrypt} from "../pages/pageselgamal/elgamaldecrypt.jsx";
 
 
 class Main extends Component {
@@ -79,6 +81,9 @@ class Main extends Component {
                         {/*Pages RSA*/}
                         <Route path={"/rsa/encrypt"} element={<RsaEncrypt/>}/>
                         <Route path={"/rsa/decrypt"} element={<RsaDecrypt/>}/>
+                        {/*Pages RSA*/}
+                        <Route path={"/elgamal/encrypt"} element={<ElgamalEncrypt/>}/>
+                        <Route path={"/elgamal/decrypt"} element={<ElgamalDecrypt/>}/>
                     </Routes>
                 </div>
             </div>
