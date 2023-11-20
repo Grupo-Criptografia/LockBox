@@ -33,6 +33,10 @@ import {HomeVigenere} from "../pages/pagesvigenere/homevigenere.jsx";
 import {HomeHill} from "../pages/pageshill/homehill.jsx";
 import {HomeTdes} from "../pages/pagestdes/hometdes.jsx";
 import {HomeAes} from "../pages/pagesaes/homeaes.jsx";
+import {RsaEncrypt} from "../pages/pagesrsa/rsaencrypt.jsx";
+import {RsaDecrypt} from "../pages/pagesrsa/rsadecrypt.jsx";
+import {ElgamalEncrypt} from "../pages/pageselgamal/elgamalencrypt.jsx";
+import {ElgamalDecrypt} from "../pages/pageselgamal/elgamaldecrypt.jsx";
 
 
 class Main extends Component {

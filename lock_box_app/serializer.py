@@ -1,13 +1,6 @@
 from rest_framework import serializers
 
 
-# class dataShiftSerializer(serializers.Serializer):
-#     plain_text = serializers.CharField(max_length=200)
-#     cipher_text = serializers.CharField(max_length=200)
-#     k = serializers.IntegerField(max_value=0, min_value=25)
-#     list_plain_text = serializers.ListField()
-# HACK
-
 class dataShiftSerializer(serializers.Serializer):
     plain_text = serializers.CharField(max_length=200)
     cipher_text = serializers.CharField(max_length=200)
@@ -55,6 +48,13 @@ class dataRabinSerializer(serializers.Serializer):
     q = serializers.IntegerField()
 
 
+class dataRSASerializer(serializers.Serializer):
+    plain_text = serializers.CharField(max_length=200)
+    cipher_text = serializers.CharField(max_length=200)
+    public_key = serializers.CharField()
+    private_key = serializers.CharField()
+
+
 # Validador para Hill, hay dos funciones, para texto e imagen
 class dataHillTextSerializer(serializers.Serializer):
     plain_text = serializers.CharField(max_length=200)
@@ -69,6 +69,13 @@ class dataHillImgSerializer(serializers.Serializer):
     cipher_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
     k = serializers.CharField()
     method = serializers.CharField()
+
+
+class ElGamalSerializer(serializers.Serializer):
+    plain_text = serializers.CharField(max_length=200)
+    cipher_text = serializers.CharField()
+    public_key = serializers.ListField()
+    private_key = serializers.ListField()
 
 
 class TdesSerializer(serializers.Serializer):
