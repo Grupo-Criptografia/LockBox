@@ -48,7 +48,7 @@ export function VigenereEncrypt() {
                                 <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            1. Enter the Encrypted Text:
+                                            1. Enter the Plain Text:
                                         </h2>
                                         <p className="leading-relaxed">
                                             In the first field of the form, enter the plain text that you want to

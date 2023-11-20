@@ -167,7 +167,7 @@ export function RsaDecrypt() {
                         className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
                         <div className="flex flex-col pl-12 w-full">
                             {data?.plain_text ?
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="w-full max-w-sm bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>
@@ -184,13 +184,13 @@ export function RsaDecrypt() {
                                             </li>
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md">
-                                                    Plain text: {data.plain_text}</p>
+                                                    Posible text: {data.plain_text}</p>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 :
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="w-full max-w-sm bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>

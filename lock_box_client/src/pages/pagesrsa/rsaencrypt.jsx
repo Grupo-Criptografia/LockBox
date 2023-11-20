@@ -40,7 +40,7 @@ export function RsaEncrypt() {
                                 <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            1. Enter the Encrypted Text:
+                                            1. Enter the Plain Text:
                                         </h2>
                                         <p className="leading-relaxed">
                                             In the first field of the form, enter the plain text that you want to
@@ -110,7 +110,7 @@ export function RsaEncrypt() {
                         <div
                             className="flex flex-col bg-color1 text-charcoal w-3/4 rounded-lg shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
-                                Form Encrypt
+                                Form Decrypt
                             </h1>
                             <Formik
                                 initialValues={{

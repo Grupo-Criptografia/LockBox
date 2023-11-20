@@ -48,9 +48,12 @@ class Menu2 extends Component {
                         <details>
                             <summary className="font-semibold text-black dark:text-white">Public key ciphers</summary>
                             <ul>
-                                <li><Link className="font-semibold text-black dark:text-white" to="rsa">RSA cipher</Link></li>
-                                <li><a className="font-semibold text-black dark:text-white">Rabin cipher</a></li>
-                                <li><a className="font-semibold text-black dark:text-white">El Gamal cipher</a></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="rsa">RSA
+                                    cipher</Link></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="rabin">Rabin
+                                    cipher</Link></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="elgamal">El Gamal
+                                    cipher</Link></li>
                             </ul>
                         </details>
                     </li>
