@@ -39,6 +39,7 @@ import {ElgamalEncrypt} from "../pages/pageselgamal/elgamalencrypt.jsx";
 import {ElgamalDecrypt} from "../pages/pageselgamal/elgamaldecrypt.jsx";
 import {HomeRsa} from "../pages/pagesrsa/homersa.jsx";
 import {HomeRabin} from "../pages/pagesrabin/homerabin.jsx";
+import {HomeElGamal} from "../pages/pageselgamal/homeelgamal.jsx";
 
 
 class Main extends Component {
@@ -95,12 +96,15 @@ class Main extends Component {
                         <Route path={"encrypt"} element={<RsaEncrypt/>}/>
                         <Route path={"decrypt"} element={<RsaDecrypt/>}/>
                     </Route>
-
-
                     {/*Pages Rabin*/}
                     <Route path="/rabin" element={<HomeRabin/>}>
                         <Route path={"encrypt"} element={<RabinEncrypt/>}/>
                         <Route path={"decrypt"} element={<RabinDecrypt/>}/>
+                    </Route>
+                    {/*Pages Elgamal*/}
+                    <Route path="/elgamal" element={<HomeElGamal/>}>
+                        <Route path={"encrypt"} element={<ElgamalEncrypt/>}/>
+                        <Route path={"decrypt"} element={<ElgamalDecrypt/>}/>
                     </Route>
                 </Routes>
             </div>
