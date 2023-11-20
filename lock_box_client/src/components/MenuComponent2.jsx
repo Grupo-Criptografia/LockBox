@@ -35,9 +35,10 @@ class Menu2 extends Component {
                         <details>
                             <summary className="font-semibold text-black dark:text-white">Blocks ciphers</summary>
                             <ul>
-                                <li><a className="font-semibold text-black dark:text-white">SDES cipher</a></li>
-                                <li><Link className="font-semibold text-black dark:text-white" to="tdes">TDES cipher</Link></li>
-                                <li><a className="font-semibold text-black dark:text-white">AES cipher</a></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="tdes">TDES
+                                    cipher</Link></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="aes">AES
+                                    cipher</Link></li>
                             </ul>
                         </details>
                     </li>
@@ -50,8 +51,6 @@ class Menu2 extends Component {
                                 <li><a className="font-semibold text-black dark:text-white">RSA cipher</a></li>
                                 <li><a className="font-semibold text-black dark:text-white">Rabin cipher</a></li>
                                 <li><a className="font-semibold text-black dark:text-white">El Gamal cipher</a></li>
-                                <li><a className="font-semibold text-black dark:text-white">Menezes-Vaston cipher</a>
-                                </li>
                             </ul>
                         </details>
                     </li>

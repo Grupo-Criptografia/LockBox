@@ -201,11 +201,6 @@ class hillTextView(APIView):
         cipher_text = request.data.get('cipher_text')
         method = request.data.get('method')
 
-        print(f"plain_text: {plain_text}")
-        print(f"k: {k}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         if method == 'encrypt':
             cipher_text = encrypt_text_hill(plain_text, k)
 
@@ -265,8 +260,6 @@ class tdesView(APIView):
     @handle_exceptions
     def post(self, request, *args, **kwargs):
         tdesSerializer = TdesSerializer(data=request.data)
-
-        print(f"Request: {request.data}")
 
         if tdesSerializer.is_valid():
             plain_img = request.data['plain_img']

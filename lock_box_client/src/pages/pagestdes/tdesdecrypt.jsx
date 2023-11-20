@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import {createTdes} from "../../api/lockbox.api.js";
+import * as Yup from "yup";
 
 export function TdesDecrypt() {
 
@@ -39,7 +40,7 @@ export function TdesDecrypt() {
                 <div>
                     <div className="text-center w-full mb-10">
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                            User Guide for Tdes Decryption
+                            User Guide for TDES Decryption
                         </h1>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
@@ -81,11 +82,11 @@ export function TdesDecrypt() {
                                 <div className="flex col-span-1 pb-6">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            4. Encrypt the Image:
+                                            4. Decrypt the Image:
                                         </h2>
                                         <p className="leading-relaxed">
                                             Once you've entered the image and the encryption key, click the
-                                            "Encrypt" button.
+                                            "Decrypt" button.
                                         </p>
                                     </div>
                                 </div>
@@ -120,13 +121,22 @@ export function TdesDecrypt() {
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
                                 Form Decrypt Image
                             </h1>
-                            <Formik initialValues={initialValues} onSubmit={(values, {resetForm}) => {
-                                onSubmit(values).then(() => {
-                                    resetForm();
-                                }).catch(error => {
-                                    console.error("Error en el envio", error);
-                                })
-                            }}>
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={Yup.object({
+                                    k: Yup.string()
+                                        .required("Key is required")
+                                        .test("Valid key", "The key must not be whitespace.", function (value) {
+                                            return value.split(" ").join("").length === value.length;
+                                        })
+                                })}
+                                onSubmit={(values, {resetForm}) => {
+                                    onSubmit(values).then(() => {
+                                        resetForm();
+                                    }).catch(error => {
+                                        console.error("Error en el envio", error);
+                                    })
+                                }}>
                                 {({setFieldValue}) => (
                                     <Form className="w-3/4">
                                         <div className="grid grid-cols-1 gap-1 mt-4">

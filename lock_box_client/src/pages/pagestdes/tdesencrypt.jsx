@@ -50,7 +50,7 @@ export function TdesEncrypt() {
                 <div>
                     <div className="text-center w-full mb-10">
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                            User Guide for Tdes Encryption
+                            User Guide for TDES Encryption
                         </h1>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">

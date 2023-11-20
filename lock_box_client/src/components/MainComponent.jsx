@@ -32,6 +32,7 @@ import {HomeShift} from "../pages/pagesshift/homeshift.jsx";
 import {HomeVigenere} from "../pages/pagesvigenere/homevigenere.jsx";
 import {HomeHill} from "../pages/pageshill/homehill.jsx";
 import {HomeTdes} from "../pages/pagestdes/hometdes.jsx";
+import {HomeAes} from "../pages/pagesaes/homeaes.jsx";
 
 
 class Main extends Component {
@@ -79,8 +80,10 @@ class Main extends Component {
                         <Route path={"decrypt"} element={<TdesDecrypt/>}/>
                     </Route>
                     {/*Pages AES*/}
-                    <Route path={"/aes/encrypt"} element={<AesEncrypt/>}/>
-                    <Route path={"/aes/decrypt"} element={<AesDecrypt/>}/>
+                    <Route path="/aes" element={<HomeAes/>}>
+                        <Route path={"encrypt"} element={<AesEncrypt/>}/>
+                        <Route path={"decrypt"} element={<AesDecrypt/>}/>
+                    </Route>
                     {/*Pages Rabin*/}
                     <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
                     <Route path={"/rabin/decrypt"} element={<RabinDecrypt/>}/>
