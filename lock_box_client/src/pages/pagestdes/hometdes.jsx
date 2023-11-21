@@ -19,7 +19,7 @@ export function HomeTdes() {
                         </Link></div>
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-6 font-medium text-gray-900">Crypto System
-                            Tdes</h1>
+                            TDES</h1>
                         <p className="mb-4 leading-relaxed">Triple Data Encryption Standard (TDES), also known as Triple
                             DES, 3DES, or TDEA (Triple Data Encryption Algorithm), is an advanced form of the Data
                             Encryption Standard (DES), a symmetric-key block cipher.</p>
