@@ -408,10 +408,15 @@ class RSAView(APIView):
         print(f"method: {method}")
 
         if method == 'encrypt':
-            cipher_text = RSAencrypt(plain_text, public_key)
+            key_array = [int(x) for x in public_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
+            pu_key = rsa.PublicKey(key_array[0], key_array[1])
+            cipher_text = RSAencrypt(plain_text, pu_key)
 
         if method == 'decrypt':
-            plain_text = RSAdecrypt(cipher_text, private_key)
+            key_array = [int(x) for x in private_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
+            n = key_array[1]*key_array[2]
+            pr_key = rsa.PrivateKey(n,0,key_array[0], key_array[1], key_array[2])
+            plain_text = RSAdecrypt(cipher_text, pr_key)
 
         data_obj = dataRSATest(plain_text, cipher_text, public_key, private_key)
         serializer_class = dataRSASerializer(data_obj)
