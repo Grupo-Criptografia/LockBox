@@ -33,6 +33,12 @@ import {HomeVigenere} from "../pages/pagesvigenere/homevigenere.jsx";
 import {HomeHill} from "../pages/pageshill/homehill.jsx";
 import {HomeTdes} from "../pages/pagestdes/hometdes.jsx";
 import {HomeAes} from "../pages/pagesaes/homeaes.jsx";
+import {RsaEncrypt} from "../pages/pagesrsa/rsaencrypt.jsx";
+import {RsaDecrypt} from "../pages/pagesrsa/rsadecrypt.jsx";
+import {ElgamalEncrypt} from "../pages/pageselgamal/elgamalencrypt.jsx";
+import {ElgamalDecrypt} from "../pages/pageselgamal/elgamaldecrypt.jsx";
+import {HomeRsa} from "../pages/pagesrsa/homersa.jsx";
+import {HomeRabin} from "../pages/pagesrabin/homerabin.jsx";
 
 
 class Main extends Component {
@@ -84,9 +90,18 @@ class Main extends Component {
                         <Route path={"encrypt"} element={<AesEncrypt/>}/>
                         <Route path={"decrypt"} element={<AesDecrypt/>}/>
                     </Route>
+                    {/*Pages RSA*/}
+                    <Route path="/rsa" element={<HomeRsa/>}>
+                        <Route path={"encrypt"} element={<RsaEncrypt/>}/>
+                        <Route path={"decrypt"} element={<RsaDecrypt/>}/>
+                    </Route>
+
+
                     {/*Pages Rabin*/}
-                    <Route path={"/rabin/encrypt"} element={<RabinEncrypt/>}/>
-                    <Route path={"/rabin/decrypt"} element={<RabinDecrypt/>}/>
+                    <Route path="/rabin" element={<HomeRabin/>}>
+                        <Route path={"encrypt"} element={<RabinEncrypt/>}/>
+                        <Route path={"decrypt"} element={<RabinDecrypt/>}/>
+                    </Route>
                 </Routes>
             </div>
         )

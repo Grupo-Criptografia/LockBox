@@ -1,85 +1,155 @@
-from tinyec import registry
-from Crypto.Cipher import AES
-import hashlib, secrets, binascii
-import tinyec.ec as ec
+import numpy as np
+import math
+
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
-# Code from: https://cryptobook.nakov.com/asymmetric-key-ciphers/ecc-encryption-decryption
-
-def encrypt_AES_GCM(msg, secretKey):
-    aesCipher = AES.new(secretKey, AES.MODE_GCM)
-    ciphertext, authTag = aesCipher.encrypt_and_digest(msg)
-    return ciphertext, aesCipher.nonce, authTag
-
-
-def decrypt_AES_GCM(ciphertext, nonce, authTag, secretKey):
-    aesCipher = AES.new(secretKey, AES.MODE_GCM, nonce)
-    plaintext = aesCipher.decrypt_and_verify(ciphertext, authTag)
-    return plaintext
+# Test de primalidad
+def is_prime(n):
+    if n % 2 == 0 and n > 2:
+        return False
+    return all(n % i for i in range(3, int(math.sqrt(n)) + 1, 2))
 
 
-def ecc_point_to_256_bit_key(point):
-    sha = hashlib.sha256(int.to_bytes(point.x, 32, 'big'))
-    sha.update(int.to_bytes(point.y, 32, 'big'))
-    return sha.digest()
+# Criba de Eratostenes (generar primos)
+def primes_sieve2(limit):
+    a = [True] * limit
+    a[0] = a[1] = False
+
+    for (i, isprime) in enumerate(a):
+        if isprime:
+            yield i
+            for n in range(i * i, limit, i):  # Marcar factores no primos
+                a[n] = False
 
 
-curve = registry.get_curve('brainpoolP256r1')
+# Encontrar los factores primos (para encontrar las raices primitivas)
+def primeFactors(n):
+    if type(n) != int:
+        print("Wrong argument!")
+        return
+    if n <= 1:
+        print("Wrong argument!")
+        return
+    if is_prime(n):  # no tiene factores primos
+        return None
+    factors = []
+    while n % 2 == 0:  # if n is even
+        n = n // 2
+        if 2 not in factors:
+            factors.append(2)
+    # now n is odd
+    for i in range(3, int(math.sqrt(n)) + 2, 2):
+        while n % i == 0:
+            if i not in factors:
+                factors.append(i)
+            n = n // i
+    if n > 2:
+        if n not in factors:
+            factors.append(n)
+    return factors
 
 
-def encrypt_ECC(msg, pubKey):
-    ciphertextPrivKey = secrets.randbelow(curve.field.n)
-    sharedECCKey = ciphertextPrivKey * pubKey
-    secretKey = ecc_point_to_256_bit_key(sharedECCKey)
-    ciphertext, nonce, authTag = encrypt_AES_GCM(msg, secretKey)
-    ciphertextPubKey = ciphertextPrivKey * curve.g
-    return ciphertext, nonce, authTag, ciphertextPubKey
+# Encontrar las raices primitivas (explicacion adentro)
+def primitiveRoot(n, allRoots=False):
+    if type(n) != int or n <= 1:
+        return
+    if is_prime(n):
+        s = n - 1  # phi function
+        factors = primeFactors(s)
+        powers = [(s // f) for f in factors]  # powers for testing
+        roots = []  # list of primitive roots
+        while (True):
+            g = np.random.randint(2, n - 1)
+            primitiveRoot = True
+            for p in powers:
+                if pow(g, p, n) == 1:
+                    primitiveRoot = False
+                    break
+            if primitiveRoot:
+                if not allRoots:  # if we want only 1 primitive root
+                    return g
+                roots.append(g)
+                break  # we found smallest primitive root
+        return roots
 
 
-def decrypt_ECC(encryptedMsg, privKey):
-    privKey = int(privKey)
-    encryptedMsg = [hex(int(x, 16)) for x in
-                    encryptedMsg.replace('[', '').replace(']', '').replace(' ', '').replace("'", "").split(',')]
-    # (ciphertext, nonce, authTag, ciphertextPubKey) = encryptedMsg
-    ciphertext = bytes.fromhex(encryptedMsg[0][2:])
-    nonce = bytes.fromhex(encryptedMsg[1][2:])
-    authTag = bytes.fromhex(encryptedMsg[2][2:])
-    ciphertextPubKey = ec.Point(curve=curve, x=int(encryptedMsg[3], 16), y=int(encryptedMsg[4], 16))
-    sharedECCKey = privKey * ciphertextPubKey
-    secretKey = ecc_point_to_256_bit_key(sharedECCKey)
-    plaintext = decrypt_AES_GCM(ciphertext, nonce, authTag, secretKey)
-    return plaintext
+# generar llave publica y privada
+def generate_keys():
+    a = [x for x in primes_sieve2(2 ** 25)]
+    p = a[int(len(a) / 2) + np.random.randint(int(len(a) / 4))]
+    g = primitiveRoot(p)
+    x = np.random.randint(1, (p - 1) // 2)
+    h = pow(g, x, p)
+
+    return (p, g, h), (p, g, x)
 
 
-def get_priv_key():
-    return secrets.randbelow(curve.field.n)
+# string -> array de codigos ASCII
+def encode(plain_text):
+    return list(filter((' ').__ne__, [ord(x) for x in ''.join([i for i in plain_text if i.isalpha()]).lower()]))
 
 
-def get_curve():
-    return registry.get_curve('brainpoolP256r1')
+# array de codigos ASCII -> string
+def decode(ciphered_text):
+    return ''.join(ciphered_text)
 
 
-def get_obj(encryptedMsg):
-    return {
-        'ciphertext': encryptedMsg[0].hex(),
-        'nonce': encryptedMsg[1].hex(),
-        'authTag': encryptedMsg[2].hex(),
-        'ciphertextPubKey_x': hex(encryptedMsg[3].x),
-        'ciphertextPubKey_y': hex(encryptedMsg[3].y)
-    }
+# Elgamal para cada letra, retorna array de parejas
+def encryptElGamal(public_key, sPlaintext):
+    public_key = [int(x) for x in public_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
+    text_array = encode(sPlaintext)
+
+    # cipher_pairs list will hold pairs (c, d) corresponding to each integer in text_array
+    cipher_pairs = []
+    # i is an integer in z
+    for i in text_array:
+        # pick random y from (0, p-1) inclusive
+        y = np.random.randint(0, public_key[0])
+        # c = g^y mod p
+        c = pow(public_key[1], y, public_key[0])
+        # d = ih^y mod p
+        d = (i * pow(public_key[2], y, public_key[0])) % public_key[0]
+        # add the pair to the cipher pairs list
+        cipher_pairs.append((c, d))
+    return cipher_pairs
+
+
+# Desencripta cada pareja y rearma el string
+def decryptElGamal(private_key, cipher):
+    cipher = [[int(y) for y in x if y != ''] for x in
+              [x.replace('[', '').replace('(', '').replace(' ', '').split(',') for x in cipher.split(')')[:-1]]]
+    private_key = [int(x) for x in private_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
+    # decrpyts each pair and adds the decrypted integer to list of plaintext integers
+    plaintext = []
+    for i in range(0, len(cipher)):
+        # c = first number in pair
+        c = int(cipher[i][0])
+        # d = second number in pair
+        d = int(cipher[i][1])
+
+        # s = c^x mod p
+        s = pow(c, private_key[0] - 1 - private_key[2], private_key[0])
+        # plaintext integer = ds^-1 mod p
+        plain = s * d % private_key[0]
+        # add plain to list of plaintext integers
+        plaintext.append(plain)
+
+    decryptedText = decode([chr(x) for x in plaintext])
+
+    return decryptedText
 
 
 if __name__ == "__main__":
-    # msg = b'Text to be encrypted by ECC public key and decrypted by its corresponding ECC private key'
-    msg = bytes('星を出ていくのに、王子さまは渡り鳥の旅を利用したのだと思う', 'utf-16')
-    print("original msg:", msg)
-    privKey = get_priv_key()
-    pubKey = privKey * get_curve().g
-
-    encryptedMsg = encrypt_ECC(msg, pubKey)
-
-    print("cipher_text", encryptedMsg[0].hex())
-    encryptedMsgObj = get_obj(encryptedMsg)
-
-    decryptedMsg = decrypt_ECC(str(list(encryptedMsgObj.values())), str(privKey))
-    print("decrypted msg:", decryptedMsg.decode("utf-16"))
+    text = 'Hola mundo'
+    pub_key, priv_key = generate_keys()
+    print(f'Public key: P:{pub_key[0]}, G:{pub_key[1]}, H:{pub_key[2]},')
+    print(type(pub_key))
+    print(type(priv_key))
+    print(f'Public key: P:{priv_key[0]}, G:{priv_key[1]}, X:{priv_key[2]},')
+    ciphered = encryptElGamal(str(pub_key), text)
+    print(str(ciphered))
+    # print(decryptElGamal(str(priv_key), str(ciphered)))
+    print(decryptElGamal(str(priv_key), str(ciphered)))

@@ -1,20 +1,11 @@
 import {useEffect, useState} from "react";
-import {createRabin, getShift} from '../../api/lockbox.api.js'
-import {useForm} from "react-hook-form";
+import {createRsa} from '../../api/lockbox.api.js'
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {toast, ToastContainer} from "react-toastify";
 
-export function RabinEncrypt() {
+export function RsaEncrypt() {
 
-    const [data, setData] = useState({
-        plain_text: "",
-        cipher_text: "",
-        n: 0,
-        p: 0,
-        q: 0,
-        method: "encrypt"
-    })
+    const [data, setData] = useState(null)
 
     useEffect(() => {
         console.log(data)
@@ -24,7 +15,7 @@ export function RabinEncrypt() {
     const onSubmitHandler = async (data) => {
         data.method = "encrypt"
         try {
-            const response = await createRabin(data)
+            const response = await createRsa(data)
             setData(response)
         } catch (error) {
             console.log('Error: ', error)
@@ -40,7 +31,7 @@ export function RabinEncrypt() {
                 <div>
                     <div className="text-center w-full mb-10">
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                            User Guide for Rabin Encryption
+                            User Guide for RSA Encryption
                         </h1>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
@@ -63,12 +54,12 @@ export function RabinEncrypt() {
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
                                             2. Enter the Encryption Key (k):
                                         </h2>
-                                        <p className="leading-relaxed">In the second field, input your Rabin public key.
-                                            Unlike RSA, the Rabin public key typically consists of a single large
-                                            number, which is a product of two prime numbers (n = p * q).</p>
-                                        <p className="leading-relaxed pt-2">Remember, the public key in Rabin encryption
-                                            is used for encryption purposes and can be safely shared without
-                                            compromising the encrypted data's security.</p>
+                                        <p className="leading-relaxed">In the second field, input your RSA public key.
+                                            This key is typically a long string of characters and includes two numbers:
+                                            the modulus (n) and the public exponent (e).</p>
+                                        <p className="leading-relaxed pt-2">Remember, the public key is used for
+                                            encryption and can be shared safely without compromising the security of the
+                                            encrypted data.</p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-2 md:col-span-1 pb-6">
@@ -77,7 +68,7 @@ export function RabinEncrypt() {
                                             3. Encrypt the Text:
                                         </h2>
                                         <p className="leading-relaxed">
-                                            Once you've entered the plain text and the key n, click the
+                                            Once you've entered the plain text and the public key, click the
                                             "Encrypt" button.
                                         </p>
                                     </div>
@@ -89,7 +80,7 @@ export function RabinEncrypt() {
                                         </h2>
                                         <p className="leading-relaxed">
                                             On the side of the form, you will see the results: your plain text, the
-                                            key n used, and the cipher text.
+                                            public key used, and the cipher text.
                                         </p>
                                     </div>
                                 </div>
@@ -97,15 +88,14 @@ export function RabinEncrypt() {
                                     <div className="flex flex-col pl-4">
                                         <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
                                         <p className="leading-relaxed">
-                                            Rabin decryption can be more complex than RSA. Decryption may yield multiple
-                                            possible messages, and additional methods are needed to determine the
-                                            correct original message.
+                                            It's crucial to keep your private key secure at all times, as it's used for
+                                            decryption. Anyone with access to your private key could potentially decrypt
+                                            your confidential messages.
                                         </p>
                                         <p className="leading-relaxed">
-                                            Like RSA, Rabin is not typically used for encrypting large amounts of data
-                                            due to its computational intensity. It is often used to encrypt keys for
-                                            symmetric encryption algorithms, which are then used to encrypt larger data
-                                            sets.
+                                            RSA is typically not used to encrypt large amounts of data due to its
+                                            computational intensity. For larger data, RSA is often used to encrypt a
+                                            symmetric key, which is then used to encrypt the data.
                                         </p>
                                     </div>
                                 </div>
@@ -120,19 +110,20 @@ export function RabinEncrypt() {
                         <div
                             className="flex flex-col bg-color1 text-charcoal w-3/4 rounded-lg shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
-                                Form Encrypt
+                                Form Decrypt
                             </h1>
                             <Formik
                                 initialValues={{
                                     plain_text: '',
-                                    n: ''
+                                    public_key: ''
                                 }}
 
                                 validationSchema={Yup.object({
                                     plain_text: Yup.string()
-                                        .max(41, "The length of plain text mus be than less of 41 characters")
                                         .required("Plain text is required"),
-                                    n: Yup.number().required("Key is required")
+                                    public_key: Yup.string()
+                                        .required("Public key is required")
+                                        .matches(/^\(\d+,\s*\d+\)$/, "Public key must be in the format (number, number)"),
                                 })}
 
                                 onSubmit={(values, {resetForm}) => {
@@ -149,16 +140,17 @@ export function RabinEncrypt() {
                                             <Field placeholder="Enter plain text" as="textarea" name="plain_text"
                                                    className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs"
+                                                <ErrorMessage className="font-normal text-xs text-poppy"
                                                               name="plain_text"/>
                                             </div>
                                         </div>
                                         <div className="mt-3">
-                                            <label className="font-medium">Key n</label>
-                                            <Field placeholder="Enter key" as="textarea" name="n"
+                                            <label className="font-medium">Public Key</label>
+                                            <Field placeholder="Enter key" as="textarea" name="public_key"
                                                    className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs" name="n"/>
+                                                <ErrorMessage className="font-normal text-xs text-poppy"
+                                                              name="public_key"/>
                                             </div>
                                         </div>
                                     </div>
@@ -173,6 +165,7 @@ export function RabinEncrypt() {
                             </Formik>
                         </div>
                     </div>
+
                     <div
                         className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
                         <div className="flex flex-col pl-12 w-full">
@@ -190,7 +183,7 @@ export function RabinEncrypt() {
                                             </li>
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md">
-                                                    Key n: {data.n}</p>
+                                                    Public Key: {data.public_key}</p>
                                             </li>
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md">

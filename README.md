@@ -11,14 +11,14 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="lock_box_client/src/assets/img/logo.png" alt="Logo" width="110" height="110">
   </a>
 
 <h3 align="center">Lock-Box</h3>
 
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-  </p>
+  <p align="center"><b>
+    Start your encryption adventure right now and go beyond theory!
+  </b></p>
 </div>
 
 
