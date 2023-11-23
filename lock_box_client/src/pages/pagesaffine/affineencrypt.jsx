@@ -25,13 +25,13 @@ export function AffineEncrypt() {
 
 
     return (
-        <div className="w-full h-screen bg-white flex flex-col items-center justify-center">
-            <div className="container w-full px-5 py-16 mx-auto"></div>
+        <div className="flex flex-col bg-white w-full text-charcoal body-font">
+            <div className="container w-full h-auto py-10 px-5 mx-auto"></div>
                 {/* Guia de uso formulario */}
                 <div>
                     <div className="text-center w-full mb-10">
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                            User Guide for Vigenere Encryption
+                            User Guide for the Affine Encryption
                         </h1>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
@@ -54,13 +54,10 @@ export function AffineEncrypt() {
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
                                             2. Enter the Encryption Key (k):
                                         </h2>
-                                        <p className="leading-relaxed">In the second field, enter the encryption key.
-                                            This key should be a word or phrase without spaces.</p>
-                                        <p className="leading-relaxed pt-2">The encryption key is crucial as it
-                                            determines the sequence of Caesar ciphers used in the encryption process.
-                                            For example, if your key is 'KEY', the first letter of your text will be
-                                            encrypted using a shift based on 'K', the second letter with 'E', and so on,
-                                            repeating throughout the text.</p>
+                                        <p className="leading-relaxed">the Affine cipher utilizes two numerical keys,'a' and 'b.' 
+                                        These keys determine the specific mathematical transformation applied to each letter during encryption.</p>
+                                        <p className="leading-relaxed pt-2">The encryption key is crucial. For the 'a' and 'b' key enter a numerical value ensure that it is coprime with the size of the alphabet,
+                                         typically 26 for English text. </p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-2 md:col-span-1 pb-6">
@@ -102,7 +99,7 @@ export function AffineEncrypt() {
                 </div>
 
             {/*Lo siguiente define el bloque para el encriptado */}
-            <section className="text-charcoal w-full body-font">
+            <section className="text-charcoal w-full h-auto body-font">
                 <div
                     className="flex flex-col w-3/4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
                     <div className="md:flex md:w-1/2 md:items-center bg-charcoal">

@@ -11,8 +11,8 @@ class Home extends Component {
                 </div>
 
                 <div className="px-6 py-10 w-auto bg-white ">
-                    <h2 className="text-5xl text-center font-bold text-black">LOCK BOX</h2>
-                    <h3 className="text-2xl text-center font-semibold text-black">
+                    <h2 className="text-5xl text-center font-bold py-2 text-gray-900">LOCK BOX</h2>
+                    <h3 className="text-2xl text-center font-semibold text-gray-900">
                         Start your encryption adventure right now and go beyond theory!
                     </h3>
                     <div className="px-7 py-6 bg-white text-justify">
@@ -22,9 +22,9 @@ class Home extends Component {
                             in the practice of encryption and decryption. With an intuitive interface and without the
                             needing prior knowledge, you will be able to: </p>
 
-                        <ul className="px-10">
+                        <ul className="px-10 py-5">
                             <li>
-                                <p className="mt-4 text-lg text-black whitespace-pre-line lg:text-base flex">
+                                <p className="mt-4 text-lg text-gray-900 whitespace-pre-line lg:text-base flex">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          viewBox="0 0 20 20"
                                          fill="currentColor" className="w-5 h-5 mr-1">
@@ -38,7 +38,7 @@ class Home extends Component {
                                 </p>
                             </li>
                             <li>
-                                <p className="mt-4 text-lg text-black whitespace-pre-line lg:text-base flex">
+                                <p className="mt-4 text-lg text-gray-900 whitespace-pre-line lg:text-base flex">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          viewBox="0 0 20 20"
                                          fill="currentColor" className="w-5 h-5 mr-1">
@@ -52,7 +52,7 @@ class Home extends Component {
                                 </p>
                             </li>
                             <li>
-                                <p className="mt-4 text-lg text-black whitespace-pre-line lg:text-base flex">
+                                <p className="mt-4 text-lg text-gray-900 whitespace-pre-line lg:text-base flex">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          viewBox="0 0 20 20"
                                          fill="currentColor" className="w-5 h-5 mr-1">
@@ -66,9 +66,37 @@ class Home extends Component {
                                 </p>
                             </li>
                         </ul>
+                        <p className="text-charcoal text-lg py-5"> Let's embark on a tour of the incredible features that empower you to encrypt messages with classical, block, and public key ciphers.</p>
+                        <ul className="px-7 text-lg">
+                            <li><p className="text-charcoal text-lg py-2">
+                            <b className="text-gray-900">Classical Ciphers:</b> Explore the elegance of classical ciphers such as the Caesar cipher, Vigenère cipher, and more. Dive into the history of cryptography and experience the timeless techniques used to safeguard messages.
+                            </p></li>
+                            <li><p className="text-charcoal text-lg py-2">
+                            <b className="text-gray-900">Block Ciphers:</b> Discover the power of block ciphers, including TDES, and AES. Witness how these modern algorithms break down messages into blocks, adding an extra layer of security to your data.
+                            </p></li>
+                            <li><p className="text-charcoal text-lg py-2">
+                            <b className="text-gray-900">Public Key Ciphers:</b> Uncover the magic of public key cryptography with ciphers like RSA, Rabin and El Gamal. Delve into the fascinating world where keys come in pairs, and encryption and decryption involve distinct but interconnected processes.
+                            </p></li>
+                        </ul>
                         <p className="mt-4 text-lg text-charcoal whitespace-pre-line">
                             No hassle, no hidden processes, just you and crypto in action.
                         </p>
+
+                        <p className="text-gary-900 font-bold text-2xl py-3">How it works: </p>
+                        <ul className="px-7 text-lg">
+                            <li><p className="text-charcoal text-lg py-1">
+                            <b className="text-gray-900">Choose Your Cipher:</b> Select from a variety of ciphers based on your preferences and security needs.
+                            </p></li>
+                            <li><p className="text-charcoal text-lg py-1">
+                            <b className="text-gray-900">Enter Your Text:</b> Input the text you want to encrypt. It could be a secret message, a note to a friend, or anything you wish to keep confidential.
+                            </p></li>
+                            <li><p className="text-charcoal text-lg py-1">
+                            <b className="text-gray-900">Customize Your Settings:</b> Tailor the encryption process with customizable settings, ensuring your message is protected in the way you desire.
+                            </p></li>
+                            <li><p className="text-charcoal text-lg py-1">
+                            <b className="text-gray-900">Get Your Encrypted Text:</b> Receive the encrypted version of your text, ready to be shared securely.
+                            </p></li>
+                        </ul>
                     </div>
                 </div>
 
