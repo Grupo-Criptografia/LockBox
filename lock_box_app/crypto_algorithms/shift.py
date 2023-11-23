@@ -20,7 +20,7 @@
 #     return [decryptShift(chipher_text, k) for k in range(26)]
 
 
-#HACK
+# HACK
 def encryptShift(text, key):
     plain_text = ""
     for character in text:
@@ -37,10 +37,12 @@ def encryptShift(text, key):
             plain_text += character
     return plain_text
 
+
 def decryptShift(text, key):
     # La descifrado es simplemente cifrar con una clave negativa
     cipher_text = encryptShift(text, -key)
     return cipher_text
+
 
 def attackShift(chipher_text: str):
     """Returns a dictionary of all 26 possible (decryption, key) pairs"""

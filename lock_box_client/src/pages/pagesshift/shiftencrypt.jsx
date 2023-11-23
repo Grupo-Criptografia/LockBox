@@ -1,9 +1,7 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getShift} from '../../api/lockbox.api.js'
-import {useForm} from "react-hook-form";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {toast, ToastContainer} from "react-toastify";
 
 export function ShiftEncrypt() {
 
@@ -19,6 +17,10 @@ export function ShiftEncrypt() {
         console.log(data)
     }, [data]);
 
+
+    const generateShiftKey = async () => {
+        return Math.floor(Math.random() * 126) + 1;
+    }
 
     const onSubmitHandler = async (data) => {
         data.method = "encrypt"
@@ -53,7 +55,7 @@ export function ShiftEncrypt() {
                                 <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            1. Enter the Encrypted Text:
+                                            1. Enter the Plain Text:
                                         </h2>
                                         <p className="leading-relaxed">
                                             In the first field of the form, enter the plain text that you want to
@@ -68,10 +70,8 @@ export function ShiftEncrypt() {
                                             2. Enter the Encryption Key (k):
                                         </h2>
                                         <p className="leading-relaxed">In the second field, enter the encryption key (k)
-                                            from the range of 1 to 26. This key determines the number of positions each
-                                            letter will be shifted in the alphabet during encryption.For example, if you
-                                            choose k = 3, the letter 'a' will be encrypted as 'd','b' as 'e', and so
-                                            on</p>
+                                            from the range of 1 to 126. This key determines the number of positions each
+                                            letter will be shifted in the ASCII during encryption.</p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-1 pb-6">
@@ -130,8 +130,8 @@ export function ShiftEncrypt() {
                                     plain_text: Yup.string()
                                         .required("Plain text is required"),
                                     k: Yup.number()
-                                        .min(0, "The min number of key is 0")
-                                        .max(25, "The max number key is 25")
+                                        .min(1, "The min number of key is 1")
+                                        .max(126, "The max number key is 126")
                                         .required("Key is required")
                                 })}
 
@@ -142,66 +142,90 @@ export function ShiftEncrypt() {
                                         console.error("Error en el envio", error);
                                     })
                                 }}>
-                                <Form className="w-3/4">
-                                    <div className="grid grid-cols-1 gap-1 mt-4">
-                                        <div>
-                                            <label className="font-medium">Plain text</label>
-                                            <Field placeholder="Enter plain text" as="textarea" name="plain_text"
-                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
-                                            <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="plain_text"/>
+                                {({setFieldValue}) => (
+                                    <Form className="w-3/4">
+                                        <div className="grid grid-cols-1 gap-1 mt-4">
+                                            <div>
+                                                <label className="font-medium">Plain text</label>
+                                                <Field placeholder="Enter plain text" as="textarea" name="plain_text"
+                                                       className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                                <div className="text-red-600 text-xs font-semibold">
+                                                    <ErrorMessage className="font-normal text-xs text-poppy"
+                                                                  name="plain_text"/>
+                                                </div>
+                                            </div>
+                                            <div className="mt-3">
+                                                <label className="font-medium">Key</label>
+                                                <Field placeholder="Enter key" type="number" name="k"
+                                                       className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                                <button type="button"
+                                                        className="px-8 py-2.5 mt-2 leading-5 text-ivory bg-charcoal rounded-md"
+                                                        onClick={async () => {
+                                                            const key = await generateShiftKey();
+                                                            setFieldValue('k', key);
+                                                        }}
+                                                >
+                                                    Generate Key
+                                                </button>
+                                                <div className="text-red-600 text-xs font-semibold">
+                                                    <ErrorMessage className="font-normal text-xs" name="k"/>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="mt-3">
-                                            <label className="font-medium">Key</label>
-                                            <Field placeholder="Enter key" type="number" name="k"
-                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
-                                            <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs" name="k"/>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div className="flex justify-end mt-6">
-                                        <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-color3 rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
-                                            Encrypt
-                                        </button>
-                                    </div>
-                                </Form>
+                                        <div className="flex justify-end mt-6">
+                                            <button type="submit"
+                                                    className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
+                                                Encrypt
+                                            </button>
+                                        </div>
+                                    </Form>
+                                )}
                             </Formik>
                         </div>
                     </div>
 
                     <div
-                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-color3 flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full bg-white">
-                            <h2 className="text-2xl font-semibold">
-                                Information Data
-                            </h2>
-
+                        className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
+                        <div className="flex flex-col pl-12 w-full">
                             {data?.cipher_text ?
-                                <div>
-                                    <p className="mt-2 text-xl">
-                                        Plain text: {data.plain_text}
-                                    </p>
-                                    <p className="mt-2 text-xl">
-                                        Key: {data.k}
-                                    </p>
-                                    <p className="mt-2 text-xl">
-                                        Cipher text: {data.cipher_text}
-                                    </p>
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
+
+                                    <div className="px-6 py-4">
+                                        <ul className="ml-5">
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Plain text: {data.plain_text}</p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Key: {data.k}</p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Cipher text: {data.cipher_text}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 :
-                                <p
-                                    className="mt-2 text-xl">
-                                    Please enter a plaint text and key for show a cipher text.
-                                </p>
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
 
+                                    <div className="px-6 py-4">
+                                        <p className="py-2 text-charcoal">Please enter data in the form to obtain
+                                            results!</p>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
