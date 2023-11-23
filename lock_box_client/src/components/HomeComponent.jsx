@@ -1,5 +1,4 @@
 import {Component} from "react";
-import img_int from '../assets/img/img_int2.jpg'
 
 class Home extends Component {
     render() {
