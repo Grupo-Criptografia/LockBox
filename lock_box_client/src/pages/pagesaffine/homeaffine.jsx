@@ -17,20 +17,17 @@ export function HomeAffine() {
                               to="decrypt">
                             <span className="btm-nav-label">Decrypt</span>
                         </Link>
+                        <Link className="bg-color1 rounded-r-md w-1/2 h-16 flex justify-center items-center"
+                              to="decrypt">
+                            <span className="btm-nav-label">Attack</span>
+                        </Link>
                     </div>
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Crypto System
                             Affine</h1>
-                        <p className="mb-8 leading-relaxed">The Vigenère Crypto-system is a method of encrypting
-                            alphabetic text through a simple form of poly alphabetic substitution, which is a
-                            significant step forward from simpler crypto-systems like the Caesar cipher. It was widely
-                            regarded as unbreakable for many years and is named after Blaise de Vigenère, although it
-                            was first described by Giovan Battista Bellaso.</p>
+                        <p className="mb-8 leading-relaxed">aqui va la descripcion</p>
                         <p className="mb-2 leading-relaxed">
-                            On this page you will find two tools to encrypt and decrypt using the Vigenère cipher, an
-                            alphabetic text encryption method that uses a series of interlocking Caesar ciphers based on
-                            the letters of a keyword. You can access them through the encrypt and decrypt buttons, where
-                            we explain how to use this tool effectively.
+                            lo que encontraras en esta pagina 
                         </p>
                     </div>
                 </div>
