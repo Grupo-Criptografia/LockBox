@@ -19,7 +19,7 @@ export function HomeAes() {
                         </Link></div>
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-6 font-medium text-gray-900">Crypto System
-                            Tdes</h1>
+                            AES</h1>
                         <p className="mb-4 leading-relaxed">The Advanced Encryption Standard (AES) is a widely used
                             encryption algorithm, established as an encryption standard by the U.S. National Institute
                             of Standards and Technology (NIST) in 2001. AES is a symmetric key encryption algorithm,

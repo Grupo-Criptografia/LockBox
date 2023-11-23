@@ -7,10 +7,8 @@ def getKeyPair():
     return publicKey, privateKey
 
 
-def RSAencrypt(plain_text: str, str_key: str) -> str:
+def RSAencrypt(plain_text: str, key) -> str:
     try:
-        key_array = [int(x) for x in str_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
-        key = rsa.PublicKey(key_array[0], key_array[1])
         plain_text = plain_text.encode('ascii')
         en2 = []
         en = ""
@@ -27,11 +25,9 @@ def RSAencrypt(plain_text: str, str_key: str) -> str:
         return False
 
 
-def RSAdecrypt(cipher_text: str, str_key: str) -> str:
+def RSAdecrypt(cipher_text: str, key) -> str:
     try:
         plain = ""
-        key_array = [int(x) for x in str_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
-        key = rsa.PrivateKey(key_array[0], key_array[1], key_array[2], key_array[3], key_array[4])
         keyLength = rsa.common.byte_size(key.n)
         lenBytes = len(RSAencrypt("a", key))
         bytesEnc = [base64.b64decode(cipher_text[i:i + lenBytes].encode('ascii')) for i in
@@ -44,10 +40,3 @@ def RSAdecrypt(cipher_text: str, str_key: str) -> str:
         return plain
     except:
         return False
-
-
-if __name__ == "__main__":
-    p, q = getKeyPair()
-
-    print(p)
-    print(q)
