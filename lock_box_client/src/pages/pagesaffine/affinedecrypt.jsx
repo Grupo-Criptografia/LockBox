@@ -25,6 +25,7 @@ export function AffineDecrypt() {
 
 
     return (
+    <section className=" flex flex-col bg-white w-full text-charcoal body-font">
         <div className="flex flex-col bg-white w-full text-charcoal body-font">
             <div className="container w-full h-auto py-10 px-5 mx-auto"></div>
                 {/* Guia de uso formulario */}
@@ -100,32 +101,15 @@ export function AffineDecrypt() {
                         </div>
                     </div>
                 </div>
-            <section className="text-charcoal w-full body-font">
-                <div
-                    className="flex flex-col w-3/4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
-                    <div className="md:flex md:w-1/2 md:items-center bg-charcoal">
-                        <div className="px-4 py-4 ml-8">
-
-                            <h2 className="text-2xl font-semibold text-ivory md:text-ivory"> Information Data
-                            </h2>
-
-                            <p className="mt-2 text-base text-ivory md:text-ivory">
-                                Cipher text: {data.cipher_text}
-                            </p>
-
-                            <p className="mt-2 text-base text-ivory md:text-ivory">
-                                Key: {data.k}
-                            </p>
-
-                            {data.plain_text !== "" && (
-                                <p
-                                    className="mt-2 text-base text-ivory md:text-ivory">
-                                    Plain text : {data.plain_text} </p>
-                            )}
-
-                        </div>
-                    </div>
-                    <div className="flex md:w-1/2 items-center justify-center pb-6 md:py-0">
+            
+            {/*creacion formulario e insertado de datos */}
+            <div className="flex flex-col md:flex-row w-full mx-auto">
+                <div className="md:w-1/2 w-full flex justify-center h-auto">                        
+                    <div
+                    className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                    <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
+                        Form Decrypt
+                    </h1>
                         <Formik
                             initialValues={
                                 {
@@ -167,87 +151,93 @@ export function AffineDecrypt() {
                                 })
                             }}>
 
-                            <Form className="w-5/6">
-                                <div className="flex flex-col px-6 py-6 my-5 overflow-hidden rounded-lg">
-                                    <div className="relative flex items-center">
-                                        <div className="flex w-full flex-col">
-                                            <div>
-                                            <span className="absolute">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                     fill="currentColor"
-                                                     className="w-6 h-6 mx-3 my-3 text-charcoal">
-                                                    <path
-                                                        d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z"/>
-                                                </svg>
-                                            </span>
-                                                <Field type="text" name="cipher_text"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter cipher text"/>
-                                            </div>
-                                            <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="cipher_text"/>
-                                            </div>
+                        <Form className="w-3/4">
+                                <div className="grid grid-cols-1 gap-1 mt-4">
+                                    <div>
+                                    <label className="font-medium">Cipher text</label>
+                                        <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
+                                            className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                        <div className="text-red-600 text-xs font-semibold">
+                                            <ErrorMessage className="font-normal text-xs text-poppy"
+                                                name="cipher_text"/>
                                         </div>
                                     </div>
-                                    <div className="mt-4 flex">
-                                        <span className="absolute mt-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                 fill="currentColor"
-                                                 className="w-6 h-6 mx-3 text-charcoal">
-                                                <path fillRule="evenodd"
-                                                      d="M8 7a5 5 0 113.61 4.804l-1.903 1.903A1 1 0 019 14H8v1a1 1 0 01-1 1H6v1a1 1 0 01-1 1H3a1 1 0 01-1-1v-2a1 1 0 01.293-.707L8.196 8.39A5.002 5.002 0 018 7zm5-3a.75.75 0 000 1.5A1.5 1.5 0 0114.5 7 .75.75 0 0016 7a3 3 0 00-3-3z"
-                                                      clipRule="evenodd"/>
-                                            </svg>
-                                        </span>
-                                        <div className="flex w-full flex-col">
-                                            <div>
-                                                <Field type="number" name="a"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter key a"/>
-                                            </div>
+                                    <div className="mt-3">
+                                        <label className="font-medium">Key a</label>
+                                        <Field placeholder="Enter key" type="number" name="a"
+                                            className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className=" font-normal text-xs text-red-500"
-                                                              name="a"/>
+                                                <ErrorMessage className="font-normal text-xs" name="k a"/>
                                             </div>
-                                        </div>
                                     </div>
-
-                                    <div className="mt-4 flex">
-                                        <span className="absolute mt-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                 fill="currentColor"
-                                                 className="w-6 h-6 mx-3 text-charcoal">
-                                                <path fillRule="evenodd"
-                                                      d="M8 7a5 5 0 113.61 4.804l-1.903 1.903A1 1 0 019 14H8v1a1 1 0 01-1 1H6v1a1 1 0 01-1 1H3a1 1 0 01-1-1v-2a1 1 0 01.293-.707L8.196 8.39A5.002 5.002 0 018 7zm5-3a.75.75 0 000 1.5A1.5 1.5 0 0114.5 7 .75.75 0 0016 7a3 3 0 00-3-3z"
-                                                      clipRule="evenodd"/>
-                                            </svg>
-                                        </span>
-                                        <div className="flex w-full flex-col">
-                                            <div>
-                                                <Field type="number" name="b"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter key b"/>
-                                            </div>
+                                    <div className="mt-3">
+                                        <label className="font-medium">Key b</label>
+                                        <Field placeholder="Enter key" type="number" name="b"
+                                            className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className=" font-normal text-xs text-red-500"
-                                                              name="b"/>
+                                                <ErrorMessage className="font-normal text-xs" name="k b"/>
                                             </div>
-                                        </div>
                                     </div>
-
-                                    <div className="flex w-full justify-end mt-4">
-                                        <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">Decrypt
-                                        </button>
-                                    </div>
+                                </div>
+                                <div className="flex justify-end mt-6">
+                                    <button type="submit"
+                                        className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
+                                        Encrypt
+                                    </button>
                                 </div>
                             </Form>
                         </Formik>
                     </div>
                 </div>
+                {/* Casilla que bota el resultado */}
+                <div
+                        className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
+                        <div className="flex flex-col pl-12 w-full">
+                            {data?.cipher_text ?
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
 
-            </section>
-        </div>
-    )
+                                    <div className="px-6 py-4">
+                                        <ul className="ml-5">
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Plain text: {data.plain_text}</p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    key a: {data.k[0]}
+                                                </p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    key b: {data.k[1]}
+                                                </p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Cipher text: {data.cipher_text}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                :
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
+
+                                    <div className="px-6 py-4">
+                                        <p className="py-2 text-charcoal">Please enter data in the form to obtain
+                                            results!</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+)
 }
