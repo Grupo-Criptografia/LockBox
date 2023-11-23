@@ -33,6 +33,10 @@ export function AffineEncrypt() {
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
                             User Guide for the Affine Encryption
                         </h1>
+                        <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">
+                        Welcome to Lock Box Affine Encryption Tool. This tool allows you to encrypt
+                        messages. In this guide, we will explain how to use it to explore all possible ways of encryption.
+                        </p>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
                         <div className="flex flex-wrap justify-center w-full">
