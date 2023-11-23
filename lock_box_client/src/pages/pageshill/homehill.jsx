@@ -13,20 +13,20 @@ export function HomeHill() {
                               className="flex justify-center items-center rounded-l-md bg-color3 w-1/4 h-16">
                             <span className="btm-nav-label">Encrypt Text</span>
                         </Link>
-                        <Link className="bg-color4 w-1/4 h-16 flex justify-center items-center"
+                        <Link className="bg-color1 w-1/4 h-16 flex justify-center items-center"
                               to="decrypttext">
                             <span className="btm-nav-label">Decrypt Text</span>
                         </Link>
                         <Link to="encryptimg"
-                              className="flex justify-center items-center bg-color3 w-1/4 h-16">
+                              className="flex justify-center items-center bg-color4 w-1/4 h-16">
                             <span className="btm-nav-label">Encrypt Image</span>
                         </Link>
-                        <Link className="bg-color4 rounded-r-md w-1/4 h-16 flex justify-center items-center"
+                        <Link className="bg-color3 rounded-r-md w-1/4 h-16 flex justify-center items-center"
                               to="decryptimg">
                             <span className="btm-nav-label">Decrypt Image</span>
                         </Link>
                     </div>
-                    <div>
+                    <div className="text-center">
                         <h1 className="title-font sm:text-4xl text-3xl mb-6 font-medium text-gray-900">Crypto System
                             Hill</h1>
                         <p className="mb-4 leading-relaxed">The Hill cipher is a classic cryptographic algorithm that

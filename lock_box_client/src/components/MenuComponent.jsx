@@ -25,7 +25,7 @@ class Menu extends Component {
                                 <li><Link className="font-semibold text-black dark:text-white" to="/hill">Hill
                                     cipher</Link></li>
                                 {/*Consideramos el cifrado y el analisis de frecuencia*/}
-                                <li><a className="font-semibold text-black dark:text-white">Substitution cipher</a>
+                                <li><Link className="font-semibold text-black dark:text-white" to="/substitution">Substitution cipher</Link>
                                 </li>
                             </ul>
                         </details>
