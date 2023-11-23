@@ -25,7 +25,83 @@ export function AffineEncrypt() {
 
 
     return (
-        <div className="w-full h-screen bg-ivory flex flex-col items-center justify-center">
+        <div className="w-full h-screen bg-white flex flex-col items-center justify-center">
+            <div className="container w-full px-5 py-16 mx-auto"></div>
+                {/* Guia de uso formulario */}
+                <div>
+                    <div className="text-center w-full mb-10">
+                        <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
+                            User Guide for Vigenere Encryption
+                        </h1>
+                    </div>
+                    <div className="container px-5 mx-auto flex flex-wrap">
+                        <div className="flex flex-wrap justify-center w-full">
+                            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-2 gap-1 md:w-3/4 md:pr-10 md:py-6">
+                                <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            1. Enter the Plain Text:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            In the first field of the form, enter the plain text that you want to
+                                            encrypt.
+                                            This can be a message or a phrase.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex col-span-2 md:col-span-1 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
+                                            2. Enter the Encryption Key (k):
+                                        </h2>
+                                        <p className="leading-relaxed">In the second field, enter the encryption key.
+                                            This key should be a word or phrase without spaces.</p>
+                                        <p className="leading-relaxed pt-2">The encryption key is crucial as it
+                                            determines the sequence of Caesar ciphers used in the encryption process.
+                                            For example, if your key is 'KEY', the first letter of your text will be
+                                            encrypted using a shift based on 'K', the second letter with 'E', and so on,
+                                            repeating throughout the text.</p>
+                                    </div>
+                                </div>
+                                <div className="flex col-span-2 md:col-span-1 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            3. Encrypt the Text:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            Once you've entered the plain text and the encryption key, click the
+                                            "Encrypt" button.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex md:col-span-1 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            4. Obtain the results:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            On the side of the form, you will see the results: your plain text, the
+                                            encryption key used, and the cipher text.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex col-span-2 pb-6">
+                                    <div className="flex flex-col pl-4">
+                                        <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
+                                        <p className="leading-relaxed">
+                                            It's important to use the correct key. If an incorrect key is used or if the
+                                            ciphertext was encrypted using a different method, the decryption will not
+                                            yield
+                                            the original plain text.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {/*Lo siguiente define el bloque para el encriptado */}
             <section className="text-charcoal w-full body-font">
                 <div
                     className="flex flex-col w-3/4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">

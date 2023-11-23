@@ -13,11 +13,11 @@ export function HomeAffine() {
                               className="flex justify-center items-center rounded-l-md bg-color3 w-1/2 h-16">
                             <span className="btm-nav-label">Encrypt</span>
                         </Link>
-                        <Link className="bg-color4 rounded-r-md w-1/2 h-16 flex justify-center items-center"
+                        <Link className="bg-color1 w-1/2 h-16 flex justify-center items-center"
                               to="decrypt">
                             <span className="btm-nav-label">Decrypt</span>
                         </Link>
-                        <Link className="bg-color1 rounded-r-md w-1/2 h-16 flex justify-center items-center"
+                        <Link className="bg-color4 rounded-r-md w-1/2 h-16 flex justify-center items-center"
                               to="decrypt">
                             <span className="btm-nav-label">Attack</span>
                         </Link>
@@ -25,9 +25,18 @@ export function HomeAffine() {
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Crypto System
                             Affine</h1>
-                        <p className="mb-8 leading-relaxed">aqui va la descripcion</p>
+                        <p className="mb-8 leading-relaxed">
+                            The Affine cipher is a type of substitution cipher where each letter is transformed using a simple
+                            mathematical function. It uses the formula E(x) = (a(x) + b) mod m , where a and b are key values.
+                            The choice of a and b determines the encryption. While it adds complexity compared to
+                            basic substitution ciphers, its security relies on keeping the key values secret. Although 
+                            historically used, it has vulnerabilities, and its usage in modern cryptography is limited.
+                        </p>
                         <p className="mb-2 leading-relaxed">
-                            lo que encontraras en esta pagina 
+                            Operates on individual letters, making it suitable for encrypting messages 
+                            composed solely of letters, while leaving non-letter characters unchanged. While it's a historical 
+                            cipher with known vulnerabilities, it serves as an illustrative example of the principles behind more
+                            complex encryption techniques.
                         </p>
                     </div>
                 </div>
