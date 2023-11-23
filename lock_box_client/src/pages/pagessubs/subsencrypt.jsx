@@ -41,13 +41,12 @@ export function SubsEncrypt() {
                 <div>
                     <div className="text-center w-full mb-10">
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                            User Guide for Shift Encryption
+                            User Guide for Substitution Encryption
                         </h1>
-                        <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Shift Cipher
-                            Encryption Tool. This tool allows you to encrypt plain text using a Shift cipher, where each
-                            letter in the text is shifted by a fixed number of positions (the key). Below, we explain
-                            how to
-                            use it effectively.</p>
+                        <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">Welcome to the Substitution
+                            Cipher Encryption Tool. This tool enables you to encrypt plain text using a substitution
+                            cipher, where each letter in the text is replaced with another letter from a scrambled
+                            alphabet (the key). Here's how to use it effectively:</p>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
                         <div className="flex flex-wrap justify-center w-full">
@@ -69,9 +68,11 @@ export function SubsEncrypt() {
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
                                             2. Enter the Encryption Key (k):
                                         </h2>
-                                        <p className="leading-relaxed">In the second field, enter the encryption key (k)
-                                            from the range of 1 to 126. This key determines the number of positions each
-                                            letter will be shifted in the ASCII during encryption.</p>
+                                        <p className="leading-relaxed">In the second field, enter your encryption key.
+                                            This key is a permutation of the 26-letter alphabet. Each letter in the
+                                            alphabet is replaced by another letter; for instance, 'A' might be replaced
+                                            by 'M', 'B' by 'Z', and so on. Ensure that every letter is used once and
+                                            only once in your key</p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-1 pb-6">
@@ -100,10 +101,9 @@ export function SubsEncrypt() {
                                     <div className="flex flex-col pl-4">
                                         <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
                                         <p className="leading-relaxed">
-                                            Shift cipher decryption is a straightforward process, but it's important to
-                                            use
-                                            the correct key. If you suspect the ciphertext uses a different encryption
-                                            method or an incorrect key, decryption may not yield the desired result.
+                                            To decrypt the text, the recipient must use the same substitution key.
+                                            Decryption involves replacing each letter of the ciphertext with the
+                                            corresponding letter from the original alphabet.
                                         </p>
                                     </div>
                                 </div>
