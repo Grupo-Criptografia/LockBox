@@ -225,7 +225,6 @@ export function ShiftEncrypt() {
                             }
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>

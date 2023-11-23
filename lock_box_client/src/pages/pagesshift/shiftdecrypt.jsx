@@ -24,7 +24,8 @@ export function ShiftDecrypt() {
     }
 
     return (
-        <section className=" flex flex-col bg-white w-full text-charcoal body-font">
+        <section className=" flex flex-col bg-white h-full w-full text-charcoal body-font">
+            {/* Guia de uso formulario */}
             <div className="container w-full px-5 py-16 mx-auto">
                 {/* Guia de uso formulario */}
                 <div>
@@ -85,16 +86,15 @@ export function ShiftDecrypt() {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex col-span-2 pb-6">
-                                    <div className="flex flex-col pl-4">
-                                        <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
-                                        <p className="leading-relaxed">
-                                            Keep in mind that Caesar cipher encryption is relatively simple and may not
-                                            provide strong security for sensitive information. Consider using more
-                                            advanced
-                                            encryption methods for highly secure communication.
-                                        </p>
-                                    </div>
+                            </div>
+                            <div className="flex col-span-2 pb-6">
+                                <div className="flex flex-col pl-4">
+                                    <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
+                                    <p className="leading-relaxed">
+                                        Keep in mind that Caesar cipher encryption is relatively simple and may not
+                                        provide strong security for sensitive information. Consider using more advanced
+                                        encryption methods for highly secure communication.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@ export function ShiftDecrypt() {
                 <div className="flex flex-col md:flex-row w-full mx-auto">
                     <div className="md:w-1/2 w-full flex justify-center">
                         <div
-                            className="flex flex-col bg-color1 text-charcoal w-3/4 rounded-lg shadow-lg items-center justify-center py-5">
+                            className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
                                 Form Encrypt
                             </h1>
@@ -155,7 +155,7 @@ export function ShiftDecrypt() {
 
                                     <div className="flex justify-end mt-6">
                                         <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
+                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-color3 rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
                                             Decrypt
                                         </button>
                                     </div>
@@ -166,7 +166,7 @@ export function ShiftDecrypt() {
                     <div
                         className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
                         <div className="flex flex-col pl-12 w-full">
-                            {data?.cipher_text ?
+                            {data?.plain_text ?
                                 <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
@@ -175,16 +175,16 @@ export function ShiftDecrypt() {
                                     <div className="px-6 py-4">
                                         <ul className="ml-5">
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md leading-relaxed">
-                                                    Plain text: {data.plain_text}</p>
+                                                <p className="mt-2 text-md">
+                                                    Cipher text: {data.cipher_text}</p>
                                             </li>
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md">
                                                     Key: {data.k}</p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md leading-relaxed">
-                                                    Cipher text: {data.cipher_text}</p>
+                                                <p className="mt-2 text-md">
+                                                    Plain text: {data.plain_text}</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -207,6 +207,4 @@ export function ShiftDecrypt() {
             </div>
         </section>
     )
-
-
 }
