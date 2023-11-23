@@ -45,6 +45,7 @@ import {ElgamalDecrypt} from "../pages/pageselgamal/elgamaldecrypt.jsx";
 import {HomeRsa} from "../pages/pagesrsa/homersa.jsx";
 import {HomeRabin} from "../pages/pagesrabin/homerabin.jsx";
 import {HomeElGamal} from "../pages/pageselgamal/homeelgamal.jsx";
+import {HomeSubstitution} from "../pages/pagessubs/homesubs.jsx";
 
 
 class Main extends Component {
@@ -62,11 +63,13 @@ class Main extends Component {
                         <Route path="decrypt" element={<ShiftDecrypt/>}/>
                         <Route path="attack" element={<ShiftAttack/>}/>
                     </Route>
-                    
+
                     {/*Pages Substitution*/}
-                    <Route path="/subs/encrypt" element={<SubsEncrypt/>}/>
-                    <Route path="/subs/decrypt" element={<SubsDecrypt/>}/>
-                    <Route path="/subs/attack" element={<SubsAttack/>}/>
+                    <Route path="/substitution" element={<HomeSubstitution/>}>
+                        <Route path="encrypt" element={<SubsEncrypt/>}/>
+                        <Route path="decrypt" element={<SubsDecrypt/>}/>
+                        <Route path="attack" element={<SubsAttack/>}/>
+                    </Route>
 
                     {/*Pages Affine*/}
                     <Route path="/affine" element={<HomeAffine/>}>
