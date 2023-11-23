@@ -24,7 +24,7 @@ export function ShiftDecrypt() {
     }
 
     return (
-        <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
+        <section className=" flex flex-col bg-white h-full w-full text-charcoal body-font">
             {/* Guia de uso formulario */}
 
             <div className="container w-full px-5 py-16 mx-auto">
@@ -86,7 +86,7 @@ export function ShiftDecrypt() {
                             </div>
                             <div className="flex col-span-2 pb-6">
                                 <div className="flex flex-col pl-4">
-                                    <h2 className="font-medium title-font text-base text-poppy mb-1 tracking-wider">Note</h2>
+                                    <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
                                     <p className="leading-relaxed">
                                         Keep in mind that Caesar cipher encryption is relatively simple and may not
                                         provide strong security for sensitive information. Consider using more advanced
@@ -103,7 +103,7 @@ export function ShiftDecrypt() {
                 <div className="flex flex-col md:flex-row w-full mx-auto">
                     <div className="md:w-1/2 w-full flex justify-center h-auto">
                         <div
-                            className="flex flex-col bg-white text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                            className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
                                 Form Decrypt
                             </h1>
@@ -153,7 +153,7 @@ export function ShiftDecrypt() {
 
                                     <div className="flex justify-end mt-6">
                                         <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
+                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-color3 rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
                                             Decrypt
                                         </button>
                                     </div>
@@ -162,31 +162,42 @@ export function ShiftDecrypt() {
                         </div>
                     </div>
                     <div
-                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full bg-ivory">
-                            <h2 className="text-2xl font-semibold">
-                                Information Data
-                            </h2>
-
+                        className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
+                        <div className="flex flex-col pl-12 w-full">
                             {data?.plain_text ?
-                                <div>
-                                    <p className="mt-2 text-xl">
-                                        Cipher text: {data.cipher_text}
-                                    </p>
-                                    <p className="mt-2 text-xl">
-                                        Key: {data.k}
-                                    </p>
-                                    <p
-                                        className="mt-2 text-xl">
-                                        Plain text: {data.plain_text}
-                                    </p>
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
+
+                                    <div className="px-6 py-4">
+                                        <ul className="ml-5">
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Cipher text: {data.cipher_text}</p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Key: {data.k}</p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Plain text: {data.plain_text}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 :
-                                <p
-                                    className="mt-2 text-xl">
-                                    Please enter a cipher text and key for show a plain text.
-                                </p>
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
 
+                                    <div className="px-6 py-4">
+                                        <p className="py-2 text-charcoal">Please enter data in the form to obtain
+                                            results!</p>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>

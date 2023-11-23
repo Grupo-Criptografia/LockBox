@@ -149,7 +149,7 @@ export function ShiftEncrypt() {
                                             <Field placeholder="Enter plain text" as="textarea" name="plain_text"
                                                    className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy"
+                                                <ErrorMessage className="font-normal text-xs"
                                                               name="plain_text"/>
                                             </div>
                                         </div>
@@ -175,35 +175,47 @@ export function ShiftEncrypt() {
                     </div>
 
                     <div
-                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-color3 flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full bg-white">
-                            <h2 className="text-2xl font-semibold">
-                                Information Data
-                            </h2>
-
+                        className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
+                        <div className="flex flex-col pl-12 w-full">
                             {data?.cipher_text ?
-                                <div>
-                                    <p className="mt-2 text-xl">
-                                        Plain text: {data.plain_text}
-                                    </p>
-                                    <p className="mt-2 text-xl">
-                                        Key: {data.k}
-                                    </p>
-                                    <p className="mt-2 text-xl">
-                                        Cipher text: {data.cipher_text}
-                                    </p>
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
+
+                                    <div className="px-6 py-4">
+                                        <ul className="ml-5">
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Plain text: {data.plain_text}</p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Key: {data.k}</p>
+                                            </li>
+                                            <li className="list-disc">
+                                                <p className="mt-2 text-md">
+                                                    Cipher text: {data.cipher_text}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 :
-                                <p
-                                    className="mt-2 text-xl">
-                                    Please enter a plaint text and key for show a cipher text.
-                                </p>
+                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                    <div className="flex items-center px-6 py-3 bg-color3">
+                                        <h2 className="text-xl font-semibold text-white">Results</h2>
+                                    </div>
 
+                                    <div className="px-6 py-4">
+                                        <p className="py-2 text-charcoal">Please enter data in the form to obtain
+                                            results!</p>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>
-                </div>
             </div>
-        </section>
+        </div>
+    </section>
     )
 }
