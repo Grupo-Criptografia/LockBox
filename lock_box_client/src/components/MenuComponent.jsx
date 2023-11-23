@@ -8,7 +8,7 @@ class Menu extends Component {
                 <img src="./src/assets/img/lockbox_logo-2.png" className="w-auto h-auto" alt="logo"/>
 
                 <ul className="menu  min-h-screen py-8 px-0">
-                    <li><Link class="font-semibold text-black dark:text-white" to="/">Home</Link></li>
+                    <li><Link className="font-semibold text-black dark:text-white" to="/">Home</Link></li>
                     <li>
                         {/*Establecemos el menu desplegable para los cifrados clasicos*/}
                         <details open>
@@ -16,7 +16,7 @@ class Menu extends Component {
                             <ul>
                                 <li><Link class="font-semibold text-black dark:text-white" to="/shift">Shift
                                     cipher</Link></li>
-                                <li><a className="font-semibold text-black dark:text-white">Affine cipher</a></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="/affine">Affine cipher</Link></li>
                                 {/*Consideramos que el cifrado Vigenere es cifrado y analisis */}
                                 <li><Link className="font-semibold text-black dark:text-white" to="/vigenere">Vigenère
                                     cipher</Link></li>
