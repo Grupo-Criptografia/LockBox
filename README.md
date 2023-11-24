@@ -201,7 +201,7 @@ Project Link: [https://github.com/Grupo-Criptografia/LockBox](https://github.com
 
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 
-[product-screenshot]: /lock_box_client/public/screnshootpage.png
+[lock_box-screenshot]: /lock_box_client/public/screnshootpage.png
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 
