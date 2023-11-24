@@ -11,14 +11,14 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="lock_box_client/src/assets/img/logo.png" alt="Logo" width="110" height="110">
   </a>
 
 <h3 align="center">Lock-Box</h3>
 
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-  </p>
+  <p align="center"><b>
+    Start your encryption adventure right now and go beyond theory!
+  </b></p>
 </div>
 
 
@@ -148,7 +148,7 @@ Make sure you have the following requirements installed on your system:
    python -m pip install --upgrade setuptools
    ```
 8. To check that the installation was successful run the following commands:
-   *  Open a terminal in the project's root directory and run:
+   *  Open a terminal in the **project's root directory** and run:
    ```sh
    # On Unix or MacOS systems
    python3 manage.py runserver

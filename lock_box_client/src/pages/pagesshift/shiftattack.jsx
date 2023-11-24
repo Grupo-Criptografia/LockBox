@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getShift} from "../../api/lockbox.api.js";
@@ -12,7 +13,7 @@ export function ShiftAttack() {
     });
 
     const listRender = data.list_plain_text.map((plain_text, index) => (
-        <p className="text-base text-charcoal" key={index}>{index + 1}. {plain_text}</p>
+        <p className=" text-center text-base text-charcoal" key={index}>{index + 1}. {plain_text}</p>
     ));
 
     async function onSubmitHandler(values) {
@@ -26,7 +27,7 @@ export function ShiftAttack() {
     }
 
     return (
-        <section className=" flex flex-col bg-ivory h-full w-full text-charcoal body-font">
+        <section className=" flex flex-col bg-white h-full w-full text-charcoal body-font">
 
             <div className="container w-full px-5 py-16 mx-auto">
                 {/* Guia de uso formulario */}
@@ -37,7 +38,7 @@ export function ShiftAttack() {
                     <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">
                         Welcome to Lock Box Shift Decryption Attack Tool. This tool allows you to decrypt
                         messages that have been encrypted using a Caesar cipher. In this guide, we will explain how
-                        to use it to explore all 26 possible shifts and reveal the decrypted text.
+                        to use it to explore all 94 possible shifts and reveal the decrypted text.
                     </p>
                 </div>
                 <div className="container px-5 mx-auto flex flex-wrap">
@@ -78,7 +79,7 @@ export function ShiftAttack() {
                             </div>
                             <div className="flex col-span-2 pb-6">
                                 <div className="flex flex-col pl-4">
-                                    <h2 className="font-medium title-font text-base text-poppy mb-1 tracking-wider">Note</h2>
+                                    <h2 className="font-medium title-font text-base text-color2 mb-1 tracking-wider">Note</h2>
                                     <p className="leading-relaxed">
                                         Please remember that this attack assumes that the text has been encrypted
                                         using a Shift Cipher. It may not be effective if another encryption method
@@ -91,10 +92,10 @@ export function ShiftAttack() {
                 </div>
 
                 {/* Formulario y resultado */}
-                <div className="flex flex-col md:flex-row w-full mx-auto">
-                    <div className="md:w-1/2 w-full flex justify-center h-auto">
+                <div className="flex flex-col w-full justify-center items-center mx-auto">
+                    <div className="w-2/3 flex justify-center h-auto">
                         <div
-                            className="flex flex-col bg-white text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                            className="flex flex-col bg-color1 text-charcoal h-auto md:w-3/4 overflow-hidden rounded-lg shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
                                 Form Attack
                             </h1>
@@ -105,7 +106,7 @@ export function ShiftAttack() {
 
                                 validationSchema={Yup.object({
                                     cipher_text: Yup.string()
-                                        .required("Plain text is required"),
+                                        .required("Cipher text is required"),
                                 })}
 
                                 onSubmit={(values, {resetForm}) => {
@@ -115,14 +116,14 @@ export function ShiftAttack() {
                                         console.error("Error en el envio", error);
                                     })
                                 }}>
-                                <Form className="w-3/4">
+                                <Form className="w-10/12">
                                     <div className="grid grid-cols-1 gap-1 mt-4">
                                         <div>
                                             <label className="font-medium">Cipher text</label>
                                             <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
-                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-40 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy"
+                                                <ErrorMessage className="font-normal text-xs "
                                                               name="cipher_text"/>
                                             </div>
                                         </div>
@@ -130,7 +131,7 @@ export function ShiftAttack() {
 
                                     <div className="flex justify-end mt-6">
                                         <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
+                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-color3 rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
                                             Attack
                                         </button>
                                     </div>
@@ -139,23 +140,29 @@ export function ShiftAttack() {
                         </div>
                     </div>
                     <div
-                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full bg-ivory">
-                            <h2 className="text-2xl font-semibold">
-                                List Plain Text
-                            </h2>
+                        className="w-full mt-10 md:border-l flex justify-center items-center">
+                        {data.list_plain_text?.length ?
+                            <div className="w-3/5 overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="flex items-center px-6 py-3 bg-color3">
+                                    <h2 className="text-xl font-semibold text-white">Results</h2>
+                                </div>
 
-                            {data.list_plain_text?.length ?
                                 <div className="grid grid-cols-3 gap-3 mb-1 ml-1 mr-1 p-2">
                                     {listRender}
                                 </div>
-                                :
-                                <p
-                                    className="mt-2 text-xl">
-                                    Please enter a cipher text to show a list of possible plain text.
-                                </p>
-                            }
-                        </div>
+                            </div>
+                            :
+                            <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="flex items-center px-6 py-3 bg-color3">
+                                    <h2 className="text-xl font-semibold text-white">Results</h2>
+                                </div>
+
+                                <div className="px-6 py-4">
+                                    <p className="py-2 text-charcoal">Please enter a cipher text to show a list of
+                                        possible plain text.</p>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

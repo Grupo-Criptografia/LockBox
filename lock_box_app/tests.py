@@ -39,3 +39,35 @@ class dataSDESTest:
         self.plain_text = plain_text
         self.cipher_text = cipher_text
         self.k = k
+
+
+class dataRabinTest:
+    def __init__(self, plain_text: str, cipher_text: str, n: int, p: int, q: int):
+        self.plain_text = plain_text
+        self.cipher_text = cipher_text
+        self.n = n
+        self.p = p
+        self.q = q
+
+
+class dataRSATest:
+    def __init__(self, plain_text: str, cipher_text: str, public_key: str, private_key: str):
+        self.plain_text = plain_text
+        self.cipher_text = cipher_text
+        self.public_key = public_key
+        self.private_key = private_key
+
+
+class dataHillTextTest:
+    def __init__(self, plain_text: str, cipher_text: str, k: list[list]):
+        self.plain_text = plain_text
+        self.cipher_text = cipher_text
+        self.k = k
+
+
+class dataElGamalTest:
+    def __init__(self, plain_text: str, cipher_text, public_key: tuple, private_key: tuple):
+        self.plain_text = plain_text
+        self.cipher_text = cipher_text
+        self.public_key = public_key
+        self.private_key = private_key

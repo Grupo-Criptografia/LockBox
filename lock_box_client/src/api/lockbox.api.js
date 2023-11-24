@@ -1,13 +1,17 @@
 import axios from "axios";
 
-const cryptoApi = axios.create({
+const lockBoxApi = axios.create({
     baseURL: "http://localhost:8000/api/"
 })
 
-const sendRequest = (endpoint, data) => {
-    return cryptoApi.post(endpoint, data)
+const sendRequest = (endpoint, data, contentType = 'application/json') => {
+    console.log("SendRequest:", data);
+    return lockBoxApi.post(endpoint, data, {
+        headers: {
+            'Content-Type': contentType // Establecer el tipo de contenido como 'multipart/form-data' para cargar archivos
+        }
+    })
         .then(response => {
-            console.log("Api: ", data);
             console.log("Response from server:", response.data);
             return response.data;
         })
@@ -22,3 +26,11 @@ export const createSubstitution = (data) => sendRequest("substitution/", data);
 export const createAffine = (data) => sendRequest("affine/", data);
 export const createPermutation = (data) => sendRequest("permutation/", data);
 export const createVigenere = (data) => sendRequest("vigenere/", data);
+export const createHill = (data) => sendRequest("hillText/", data);
+export const createHillImg = (data) => sendRequest("hillImg/", data, 'multipart/form-data')
+export const createTdes = (data) => sendRequest("TDES/", data, 'multipart/form-data');
+export const createAES = (data) => sendRequest("AES/", data, 'multipart/form-data');
+export const createRabin = (data) => sendRequest("rabin/", data);
+export const createRsa = (data) => sendRequest("RSA/", data);
+export const createElgamal = (data) => sendRequest("elgamal/", data);
+export const createSignature = (data) => sendRequest("digsignature/", data);

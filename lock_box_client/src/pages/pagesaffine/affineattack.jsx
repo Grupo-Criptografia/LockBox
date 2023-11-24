@@ -24,33 +24,85 @@ export function AffineAttack() {
 
 
     return (
-        <div className="w-full h-screen bg-ivory flex flex-col items-center justify-center">
-            <section className="text-charcoal w-full body-font">
-                <div
-                    className="flex flex-col w-3/4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-50">
-                    <div className="md:flex md:w-1/2 md:items-center bg-charcoal">
-                        <div className="px-4 py-4 ml-8">
-
-                            <h2 className="text-2xl font-semibold text-ivory md:text-ivory"> Information Data
-                            </h2>
-
-                            <p className="mt-2 text-base text-ivory md:text-ivory">
-                                Cipher text: {data.cipher_text}
-                            </p>
-
-                            <p className="mt-2 text-base text-ivory md:text-ivory">
-                                Key: {data.k}
-                            </p>
-
-                            {data.plain_text !== "" && (
-                                <p
-                                    className="mt-2 text-base text-ivory md:text-ivory">
-                                    Plain text : {data.plain_text} </p>
-                            )}
-
+        <section className=" flex flex-col bg-white w-full text-charcoal body-font">
+            <div className="flex flex-col bg-white w-full text-charcoal body-font">
+                <div className="container w-full h-auto py-10 px-5 mx-auto"></div>
+                {/* Guia de uso formulario */}
+                <div>
+                    <div className="text-center w-full mb-10">
+                        <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
+                            User Guide for the Affine Attack
+                        </h1>
+                        <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">
+                            Welcome to Lock Box Affine Attack Tool. This tool allows you to Attack
+                            messages that have been encrypted using the Affine cipher and a frecuency analysis is done.
+                            In this guide, we will explain how to use it.
+                        </p>
+                    </div>
+                    <div className="container px-5 mx-auto flex flex-wrap">
+                        <div className="flex flex-wrap justify-center w-full">
+                            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-2 gap-1 md:w-3/4 md:pr-10 md:py-6">
+                                <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            1. Enter the Plain Text:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            In the first field of the form, enter the cipher text that you want to
+                                            attack.
+                                            This can be a message or a phrase.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex col-span-2 md:col-span-1 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
+                                            2. Initiate attack:
+                                        </h2>
+                                        <p className="leading-relaxed">the decryption key for the Affine cipher involves
+                                            two numerical keys, denoted as 'a' and 'b.'
+                                            These keys are integral to reversing the encryption transformation and
+                                            revealing the original message.</p>
+                                        <p className="leading-relaxed pt-2">For the key 'a' and 'b' this should be the
+                                            multiplicative modular inverse of the 'a' and 'b' values used during
+                                            encryption. </p>
+                                    </div>
+                                </div>
+                                <div className="flex col-span-2 pb-6">
+                                    <div className="flex-grow pl-4">
+                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
+                                            3. Encrypted Text:
+                                        </h2>
+                                        <p className="leading-relaxed">
+                                            Once you've entered the Attack button it will be shown on the side the
+                                            cipher text, plain text and the key found during the attack.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex col-span-2 pb-6">
+                                    <div className="flex flex-col pl-4">
+                                        <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
+                                        <p className="leading-relaxed">
+                                            Please remember that this attack assumes that the text has been encrypted
+                                            using a Affine Cipher. It may not be effective if another encryption method
+                                            is used or if the language of the message is unknown.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex md:w-1/2 items-center justify-center pb-6 md:py-0">
+                </div>
+            </div>
+
+            {/*creacion formulario e insertado de datos */}
+            <div className="flex flex-col md:flex-row w-full mx-auto">
+                <div className="md:w-1/2 w-full flex justify-center h-auto">
+                    <div
+                        className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                        <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
+                            Form Attack
+                        </h1>
                         <Formik
                             initialValues={
                                 {
@@ -73,42 +125,77 @@ export function AffineAttack() {
                                 })
                             }}>
 
-                            <Form className="w-5/6">
-                                <div className="flex flex-col px-6 py-6 my-5 overflow-hidden rounded-lg">
-                                    <div className="relative flex items-center">
-                                        <div className="flex w-full flex-col">
-                                            <div>
-                                            <span className="absolute">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                     fill="currentColor"
-                                                     className="w-6 h-6 mx-3 my-3 text-charcoal">
-                                                    <path
-                                                        d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z"/>
-                                                </svg>
-                                            </span>
-                                                <Field as="textarea" name="cipher_text"
-                                                       className="block w-full py-3 text-charcoal bg-white border rounded-lg px-11 focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                                       placeholder="Enter cipher text"/>
-                                            </div>
-                                            <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="cipher_text"/>
-                                            </div>
+                            <Form className="w-10/12">
+                                <div className="grid grid-cols-1 gap-1 mt-4">
+                                    <div>
+                                        <label className="font-medium">Cipher text</label>
+                                        <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
+                                               className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-40 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                        <div className="text-red-600 text-xs font-semibold">
+                                            <ErrorMessage className="font-normal text-xs text-poppy"
+                                                          name="cipher_text"/>
                                         </div>
                                     </div>
-
-                                    <div className="flex w-full justify-end mt-4">
-                                        <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-poppy rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">Decrypt
-                                        </button>
-                                    </div>
+                                </div>
+                                <div className="flex justify-end mt-6">
+                                    <button type="submit"
+                                            className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
+                                        Attack
+                                    </button>
                                 </div>
                             </Form>
                         </Formik>
                     </div>
                 </div>
+                {/* Casilla que bota el resultado */}
+                <div
+                    className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
+                    <div className="flex flex-col w-11/12">
+                        {data?.cipher_text ?
+                            <div className="overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="flex items-center px-6 py-3 bg-color3">
+                                    <h2 className="text-xl font-semibold text-white">Results</h2>
+                                </div>
 
-            </section>
-        </div>
+                                <div className="px-6 py-4">
+                                    <ul className="ml-5">
+                                        <li className="list-disc">
+                                            <p className="mt-2 text-md break-all">
+                                                <span className="font-bold">Cipher text:</span> {data.cipher_text}</p>
+                                        </li>
+                                        <li className="list-disc">
+                                            <p className="mt-2 text-md break-all">
+                                                <span className="font-bold">key a:</span> {data.k[0]}
+                                            </p>
+                                        </li>
+                                        <li className="list-disc">
+                                            <p className="mt-2 text-md break-all">
+                                                <span className="font-bold">key b:</span> {data.k[1]}
+                                            </p>
+                                        </li>
+                                        <li className="list-disc">
+                                            <p className="mt-2 text-md break-all">
+                                                <span className="font-bold">Plain text:</span>{data.plain_text}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            :
+                            <div className="overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="flex items-center px-6 py-3 bg-color3">
+                                    <h2 className="text-xl font-semibold text-white">Results</h2>
+                                </div>
+
+                                <div className="px-6 py-4">
+                                    <p className="py-2 text-charcoal">Please enter data in the form to obtain
+                                        results!</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </section>
     )
 }

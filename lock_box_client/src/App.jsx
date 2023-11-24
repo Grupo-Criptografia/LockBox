@@ -1,6 +1,5 @@
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {ShiftEncrypt} from "./pages/pagesshift/shiftencrypt.jsx";
-import Header from "./components/HeaderComponent.jsx";
 import Menu from "./components/MenuComponent.jsx";
 import {ShiftDecrypt} from "./pages/pagesshift/shiftdecrypt.jsx";
 import {ShiftAttack} from "./pages/pagesshift/shiftattack.jsx";
