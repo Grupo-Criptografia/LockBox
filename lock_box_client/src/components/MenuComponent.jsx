@@ -6,20 +6,20 @@ class Menu extends Component {
         return (
             <aside className="flex flex-col w-1/5 px-4 py-8 bg-white border-r rtl:border-r-0 rtl:border-l">
                 <img src="/lockbox_logo-2.png" alt="logo"/>
-                <ul className="menu bg-white h-screen py-8 px-0">
-                    <li><Link class="font-semibold text-black dark:text-white" to="/">Home</Link></li>
+                <ul className="menu bg-white text-base h-screen py-8 px-0">
+                    <li><Link class="font-semibold text-black" to="/">Home</Link></li>
                     <li>
                         {/*Establecemos el menu desplegable para los cifrados clasicos*/}
                         <details>
-                            <summary className="font-semibold text-black dark:text-white">Classic ciphers</summary>
+                            <summary className="font-semibold text-black">Classic ciphers</summary>
                             <ul>
-                                <li><Link class="font-semibold text-black dark:text-white" to="/shift">Shift
+                                <li><Link class="font-semibold text-black" to="/shift">Shift
                                     cipher</Link></li>
-                                <li><Link className="font-semibold text-black dark:text-white" to="/affine">Affine cipher</Link></li>
+                                <li><Link className="font-semibold text-black" to="/affine">Affine cipher</Link></li>
                                 {/*Consideramos que el cifrado Vigenere es cifrado y analisis */}
-                                <li><Link className="font-semibold text-black dark:text-white" to="/vigenere">Vigenère
+                                <li><Link className="font-semibold text-black" to="/vigenere">Vigenère
                                     cipher</Link></li>
-                                <li><Link className="font-semibold text-black dark:text-white" to="/permutation">Permutation
+                                <li><Link className="font-semibold text-black" to="/permutation">Permutation
                                     cipher</Link>
                                 </li>
                                 {/*Debe haber cifrado de texto e imagen */}

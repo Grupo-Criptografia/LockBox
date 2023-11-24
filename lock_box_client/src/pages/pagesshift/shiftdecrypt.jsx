@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getShift} from "../../api/lockbox.api.js";
 import * as Yup from 'yup';
@@ -86,15 +86,16 @@ export function ShiftDecrypt() {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="flex col-span-2 pb-6">
-                                <div className="flex flex-col pl-4">
-                                    <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
-                                    <p className="leading-relaxed">
-                                        Keep in mind that Caesar cipher encryption is relatively simple and may not
-                                        provide strong security for sensitive information. Consider using more advanced
-                                        encryption methods for highly secure communication.
-                                    </p>
+                                <div className="flex col-span-2 pb-6">
+                                    <div className="flex flex-col pl-4">
+                                        <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
+                                        <p className="leading-relaxed">
+                                            Keep in mind that Caesar cipher encryption is relatively simple and may not
+                                            provide strong security for sensitive information. Consider using more
+                                            advanced
+                                            encryption methods for highly secure communication.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +127,6 @@ export function ShiftDecrypt() {
 
                                 onSubmit={(values, {resetForm}) => {
                                     onSubmitHandler(values).then(() => {
-                                        notify();
                                         resetForm();
                                     }).catch(error => {
                                         console.error("Error en el envio", error);
@@ -155,7 +155,7 @@ export function ShiftDecrypt() {
 
                                     <div className="flex justify-end mt-6">
                                         <button type="submit"
-                                                className="px-8 py-2.5 leading-5 text-ivory transition-colors duration-300 transform bg-color3 rounded-md hover:bg-charcoal focus:outline-none focus:bg-charcoal">
+                                                className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
                                             Decrypt
                                         </button>
                                     </div>

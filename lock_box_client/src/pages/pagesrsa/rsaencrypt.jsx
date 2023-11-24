@@ -178,15 +178,15 @@ export function RsaEncrypt() {
                                     <div className="px-6 py-4">
                                         <ul className="ml-5">
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
+                                                <p className="mt-2 text-md break-all">
                                                     Plain text: {data.plain_text}</p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
+                                                <p className="mt-2 text-md break-all">
                                                     Public Key: {data.public_key}</p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
+                                                <p className="mt-2 text-md break-all">
                                                     Cipher text: {data.cipher_text}</p>
                                             </li>
                                         </ul>

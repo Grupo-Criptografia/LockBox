@@ -119,7 +119,7 @@ export function RsaDecrypt() {
                                         .required("Plain text is required"),
                                     private_key: Yup.string()
                                         .required("Private key is required")
-                                        .matches(/^\(\d+,\s*\d+,\s*\d+,\s*\d+,\s*\d+\)$/, "Private key must be a tuple of 5 elements")
+                                        .matches(/^\(\d+,\s*\d+,\s*\d+\)$/, "Private key must be a tuple of 5 elements")
                                 })}
 
                                 onSubmit={(values, {resetForm}) => {
@@ -175,16 +175,16 @@ export function RsaDecrypt() {
                                     <div className="px-6 py-4">
                                         <ul className="ml-5">
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
+                                                <p className="mt-2 text-md break-all">
                                                     Cipher text: {data.cipher_text}</p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Key: {data.k}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    Key: {data.private_key}</p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Posible text: {data.plain_text}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    Plain text: {data.plain_text}</p>
                                             </li>
                                         </ul>
                                     </div>

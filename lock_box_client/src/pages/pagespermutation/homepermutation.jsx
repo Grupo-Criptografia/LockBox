@@ -20,7 +20,7 @@ export function HomePermutation() {
                     </div>
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Crypto System
-                            Shift</h1>
+                            Permutation</h1>
                         <p className="mb-8 leading-relaxed">Permutation cryptosystems, a fundamental approach in the
                             realm of cryptography that plays a pivotal role in securing digital communications. Our
                             exploration is centered on how permutation, or the rearrangement of elements, can transform

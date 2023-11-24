@@ -26,8 +26,8 @@ export function AffineEncrypt() {
 
     return (
         <section className=" flex flex-col bg-white w-full text-charcoal body-font">
-        <div className="flex flex-col bg-white w-full text-charcoal body-font">
-            <div className="container w-full h-auto py-10 px-5 mx-auto"></div>
+            <div className="flex flex-col bg-white w-full text-charcoal body-font">
+                <div className="container w-full h-auto py-10 px-5 mx-auto"></div>
                 {/* Guia de uso formulario */}
                 <div>
                     <div className="text-center w-full mb-10">
@@ -35,8 +35,9 @@ export function AffineEncrypt() {
                             User Guide for the Affine Encryption
                         </h1>
                         <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">
-                        Welcome to Lock Box Affine Encryption Tool. This tool allows you to encrypt
-                        messages. In this guide, we will explain how to use it to explore all possible ways of encryption.
+                            Welcome to Lock Box Affine Encryption Tool. This tool allows you to encrypt
+                            messages. In this guide, we will explain how to use it to explore all possible ways of
+                            encryption.
                         </p>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
@@ -59,10 +60,14 @@ export function AffineEncrypt() {
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
                                             2. Enter the Encryption Key (k):
                                         </h2>
-                                        <p className="leading-relaxed">the Affine cipher utilizes two numerical keys,'a' and 'b.' 
-                                        These keys determine the specific mathematical transformation applied to each letter during encryption.</p>
-                                        <p className="leading-relaxed pt-2">The encryption key is crucial. For the 'a' and 'b' key enter a numerical value ensure that it is coprime with the size of the alphabet,
-                                         typically 26 for English text. </p>
+                                        <p className="leading-relaxed">the Affine cipher utilizes two numerical keys,'a'
+                                            and 'b.'
+                                            These keys determine the specific mathematical transformation applied to
+                                            each letter during encryption.</p>
+                                        <p className="leading-relaxed pt-2">The encryption key is crucial. For the 'a'
+                                            and 'b' key enter a numerical value ensure that it is coprime with the size
+                                            of the alphabet,
+                                            typically 26 for English text. </p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-2 md:col-span-1 pb-6">
@@ -101,94 +106,94 @@ export function AffineEncrypt() {
                     </div>
                 </div>
 
-            {/*Lo siguiente define el bloque para el encriptado */}
-            <div className="flex flex-col md:flex-row w-full mx-auto">
-                <div className="md:w-1/2 w-full flex justify-center h-auto">                        
-                <div
-                    className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
-                    <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
-                        Form Encrypt
-                    </h1>
-                <Formik
-                            initialValues={
-                                {
-                                    plain_text: '',
-                                    a: '',
-                                    b: ''
+                {/*Lo siguiente define el bloque para el encriptado */}
+                <div className="flex flex-col md:flex-row w-full mx-auto">
+                    <div className="md:w-1/2 w-full flex justify-center h-auto">
+                        <div
+                            className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
+                            <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
+                                Form Encrypt
+                            </h1>
+                            <Formik
+                                initialValues={
+                                    {
+                                        plain_text: '',
+                                        a: '',
+                                        b: ''
+                                    }
                                 }
-                            }
 
-                            validationSchema={Yup.object({
-                                plain_text: Yup.string()
-                                    .required("Plain text is required"),
-                                a: Yup.number()
-                                    .required("Key a is required")
-                                    .test("inverse_mod_26", "Key 'a' is not an inverse mod 26", function (value) {
-                                        if (value < 0 || value >= 26) {
-                                            return true;
-                                        }
-
-                                        for (let i = 0; i < 26; i++) {
-                                            if ((value * i) % 26 === 1) {
+                                validationSchema={Yup.object({
+                                    plain_text: Yup.string()
+                                        .required("Plain text is required"),
+                                    a: Yup.number()
+                                        .required("Key a is required")
+                                        .test("inverse_mod_26", "Key 'a' is not an inverse mod 26", function (value) {
+                                            if (value < 0 || value >= 26) {
                                                 return true;
                                             }
-                                        }
 
-                                        return false
-                                    }),
-                                b: Yup.number()
-                                    .required("Key b is required")
-                            })}
+                                            for (let i = 0; i < 26; i++) {
+                                                if ((value * i) % 26 === 1) {
+                                                    return true;
+                                                }
+                                            }
 
-                            onSubmit={(values, {resetForm}) => {
-                                onSubmitHandler(values).then(() => {
-                                    resetForm();
-                                }).catch(error => {
-                                    console.error("Error en el envio", error);
-                                })
-                            }}>
+                                            return false
+                                        }),
+                                    b: Yup.number()
+                                        .required("Key b is required")
+                                })}
 
-                        <Form className="w-3/4">
-                            <div className="grid grid-cols-1 gap-1 mt-4">
-                                <div>
-                                <label className="font-medium">Plain text</label>
-                                    <Field placeholder="Enter plain text" as="textarea" name="plain_text"
-                                        className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
-                                    <div className="text-red-600 text-xs font-semibold">
-                                        <ErrorMessage className="font-normal text-xs text-poppy"
-                                            name="plain_text"/>
+                                onSubmit={(values, {resetForm}) => {
+                                    onSubmitHandler(values).then(() => {
+                                        resetForm();
+                                    }).catch(error => {
+                                        console.error("Error en el envio", error);
+                                    })
+                                }}>
+
+                                <Form className="w-3/4">
+                                    <div className="grid grid-cols-1 gap-1 mt-4">
+                                        <div>
+                                            <label className="font-medium">Plain text</label>
+                                            <Field placeholder="Enter plain text" as="textarea" name="plain_text"
+                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                            <div className="text-red-600 text-xs font-semibold">
+                                                <ErrorMessage className="font-normal text-xs text-poppy"
+                                                              name="plain_text"/>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <label className="font-medium">Key a</label>
+                                            <Field placeholder="Enter key" type="number" name="a"
+                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                            <div className="text-red-600 text-xs font-semibold">
+                                                <ErrorMessage className="font-normal text-xs" name="a"/>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <label className="font-medium">Key b</label>
+                                            <Field placeholder="Enter key" type="number" name="b"
+                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                            <div className="text-red-600 text-xs font-semibold">
+                                                <ErrorMessage className="font-normal text-xs" name="b"/>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="mt-3">
-                                    <label className="font-medium">Key a</label>
-                                    <Field placeholder="Enter key" type="number" name="a"
-                                        className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
-                                        <div className="text-red-600 text-xs font-semibold">
-                                            <ErrorMessage className="font-normal text-xs" name="k a"/>
-                                        </div>
-                                </div>
-                                <div className="mt-3">
-                                    <label className="font-medium">Key b</label>
-                                    <Field placeholder="Enter key" type="number" name="b"
-                                        className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
-                                        <div className="text-red-600 text-xs font-semibold">
-                                            <ErrorMessage className="font-normal text-xs" name="k b"/>
-                                        </div>
-                                </div>
-                            </div>
-                            <div className="flex justify-end mt-6">
-                                <button type="submit"
-                                    className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
-                                    Encrypt
-                                </button>
-                            </div>
-                        </Form>
-                        </Formik>
+                                    <div className="flex justify-end mt-6">
+                                        <button type="submit"
+                                                className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
+                                            Encrypt
+                                        </button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
                     </div>
-                </div>
 
-                {/* Casilla que bota el resultado */}
-                <div
+                    {/* Casilla que bota el resultado */}
+                    <div
                         className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
                         <div className="flex flex-col pl-12 w-full">
                             {data?.cipher_text ?

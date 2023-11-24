@@ -13,7 +13,7 @@ export function ShiftAttack() {
     });
 
     const listRender = data.list_plain_text.map((plain_text, index) => (
-        <p className="text-base text-charcoal" key={index}>{index + 1}. {plain_text}</p>
+        <p className=" text-center text-base text-charcoal" key={index}>{index + 1}. {plain_text}</p>
     ));
 
     async function onSubmitHandler(values) {
@@ -38,7 +38,7 @@ export function ShiftAttack() {
                     <p className="text-base leading-relaxed xl:w-2/4 md:w-3/4 mx-auto">
                         Welcome to Lock Box Shift Decryption Attack Tool. This tool allows you to decrypt
                         messages that have been encrypted using a Caesar cipher. In this guide, we will explain how
-                        to use it to explore all 26 possible shifts and reveal the decrypted text.
+                        to use it to explore all 94 possible shifts and reveal the decrypted text.
                     </p>
                 </div>
                 <div className="container px-5 mx-auto flex flex-wrap">
@@ -92,10 +92,10 @@ export function ShiftAttack() {
                 </div>
 
                 {/* Formulario y resultado */}
-                <div className="flex flex-col md:flex-row w-full mx-auto">
-                    <div className="md:w-1/2 w-full flex justify-center h-auto">
+                <div className="flex flex-col w-full justify-center items-center mx-auto">
+                    <div className="w-2/3 flex justify-center h-auto">
                         <div
-                            className="flex flex-col bg-color1 text-charcoal w-3/4 h-auto md:w-3/4 overflow-hidden rounded-lg shadow-lg items-center justify-center py-5">
+                            className="flex flex-col bg-color1 text-charcoal h-auto md:w-3/4 overflow-hidden rounded-lg shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
                                 Form Attack
                             </h1>
@@ -116,12 +116,12 @@ export function ShiftAttack() {
                                         console.error("Error en el envio", error);
                                     })
                                 }}>
-                                <Form className="w-3/4">
+                                <Form className="w-10/12">
                                     <div className="grid grid-cols-1 gap-1 mt-4">
                                         <div>
                                             <label className="font-medium">Cipher text</label>
                                             <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
-                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-40 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
                                                 <ErrorMessage className="font-normal text-xs "
                                                               name="cipher_text"/>
@@ -140,9 +140,9 @@ export function ShiftAttack() {
                         </div>
                     </div>
                     <div
-                        className="md:w-1/2 w-full md:mt-0 mt-5 md:border-l md:border-charcoal flex justify-center items-center">
+                        className="w-full mt-10 md:border-l flex justify-center items-center">
                             {data.list_plain_text?.length ?
-                            <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                            <div className="w-3/5 overflow-hidden bg-white rounded-lg shadow-lg">
                                 <div className="flex items-center px-6 py-3 bg-color3">
                                     <h2 className="text-xl font-semibold text-white">Results</h2>
                                 </div>
