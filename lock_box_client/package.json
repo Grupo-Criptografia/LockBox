@@ -10,13 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "axios": "^1.6.0",
-=======
     "axios": "^1.5.0",
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.0",
->>>>>>> 68f1a30c4aabd077c70e7594e124e092f6a60f94
     "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
