@@ -15,7 +15,7 @@ class Menu extends Component {
                             <ul>
                                 <li><Link class="font-semibold text-black dark:text-white" to="/shift">Shift
                                     cipher</Link></li>
-                                <li><a className="font-semibold text-black dark:text-white">Affine cipher</a></li>
+                                <li><Link className="font-semibold text-black dark:text-white" to="/affine">Affine cipher</Link></li>
                                 {/*Consideramos que el cifrado Vigenere es cifrado y analisis */}
                                 <li><Link className="font-semibold text-black dark:text-white" to="/vigenere">Vigenère
                                     cipher</Link></li>

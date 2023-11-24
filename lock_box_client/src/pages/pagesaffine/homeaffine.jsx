@@ -18,7 +18,7 @@ export function HomeAffine() {
                             <span className="btm-nav-label">Decrypt</span>
                         </Link>
                         <Link className="bg-color4 rounded-r-md w-1/2 h-16 flex justify-center items-center"
-                              to="decrypt">
+                              to="attack">
                             <span className="btm-nav-label">Attack</span>
                         </Link>
                     </div>

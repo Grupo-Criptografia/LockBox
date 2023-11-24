@@ -33,7 +33,7 @@ export function VigenereEncrypt() {
 
 
     return (
-        <section className=" flex flex-col bg-white w-full text-charcoal body-font">
+        <section className="flex flex-col bg-white w-full text-charcoal body-font">
             <div className="container w-full px-5 py-16 mx-auto">
                 {/* Guia de uso formulario */}
                 <div>
