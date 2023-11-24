@@ -217,7 +217,7 @@ export function HillImgDecrypt() {
                                         setFieldValue('k', createInitialMatrix(matrixSize));
                                     }, [matrixSize, setFieldValue]);
                                     return (
-                                        <Form className="w-3/4">
+                                        <Form className="w-10/12">
                                             <div className="grid grid-cols-1 gap-1 mt-4">
                                                 <div>
                                                     <label className="font-medium">Image</label>
@@ -280,9 +280,9 @@ export function HillImgDecrypt() {
                     </div>
                     <div
                         className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full">
+                        <div className="flex flex-col w-10/12">
                             {data?.plain_img ?
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>
@@ -291,7 +291,8 @@ export function HillImgDecrypt() {
                                         <ul className="ml-5">
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md">
-                                                    Key: {data.k.map((row, index) => (
+                                                    <span
+                                                        className="font-bold">Key:</span> {data.k.map((row, index) => (
                                                     <p key={index}>[{row.map((value, index) => (
                                                         <span className="mx-2" key={index}>{value}</span>
                                                     ))}]</p>
@@ -299,14 +300,14 @@ export function HillImgDecrypt() {
                                             </li>
 
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">Cipher Image: </p>
+                                                <p className="mt-2 text-md font-bold">Cipher Image: </p>
                                                 <img src={`data:image/png;base64,${data.cipher_img}`}
                                                      alt="Decrypted Image"
                                                      className="max-w-full max-h-60"/>
                                             </li>
 
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">Plain Image:</p>
+                                                <p className="mt-2 text-md font-bold">Plain Image:</p>
                                                 <img src={`data:image/png;base64,${data.plain_img}`}
                                                      alt="Encrypted Image"
                                                      className="max-w-full max-h-60"/>
@@ -316,7 +317,7 @@ export function HillImgDecrypt() {
                                     </div>
                                 </div>
                                 :
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>

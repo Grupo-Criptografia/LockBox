@@ -13,20 +13,20 @@ class Menu extends Component {
                         <details>
                             <summary className="font-semibold text-black">Classic ciphers</summary>
                             <ul>
-                                <li><Link class="font-semibold text-black" to="/shift">Shift
+                                <li><Link class="font-semibold text-black" to="shift">Shift
                                     cipher</Link></li>
-                                <li><Link className="font-semibold text-black" to="/affine">Affine cipher</Link></li>
+                                <li><Link className="font-semibold text-black" to="affine">Affine cipher</Link></li>
                                 {/*Consideramos que el cifrado Vigenere es cifrado y analisis */}
-                                <li><Link className="font-semibold text-black" to="/vigenere">Vigenère
+                                <li><Link className="font-semibold text-black" to="vigenere">Vigenère
                                     cipher</Link></li>
-                                <li><Link className="font-semibold text-black" to="/permutation">Permutation
+                                <li><Link className="font-semibold text-black" to="permutation">Permutation
                                     cipher</Link>
                                 </li>
                                 {/*Debe haber cifrado de texto e imagen */}
-                                <li><Link className="font-semibold text-black dark:text-white" to="/hill">Hill
+                                <li><Link className="font-semibold text-black dark:text-white" to="hill">Hill
                                     cipher</Link></li>
                                 {/*Consideramos el cifrado y el analisis de frecuencia*/}
-                                <li><Link className="font-semibold text-black dark:text-white" to="/substitution">Substitution
+                                <li><Link className="font-semibold text-black dark:text-white" to="substitution">Substitution
                                     cipher</Link>
                                 </li>
                             </ul>
@@ -56,12 +56,13 @@ class Menu extends Component {
                                     cipher</Link></li>
                                 <li><Link className="font-semibold text-black dark:text-white" to="rabin">Rabin
                                     cipher</Link></li>
-                                <li><Link className="font-semibold text-black dark:text-white" to="elgamal">El Gamal
+                                <li><Link className="font-semibold text-black dark:text-white" to="elgamal">ElGamal
                                     cipher</Link></li>
                             </ul>
                         </details>
                     </li>
-                    <li><a className="font-semibold text-black dark:text-white">Digital signature</a></li>
+                    <li><Link className="font-semibold text-black dark:text-white" to="digsignature">Digital
+                        Signature</Link></li>
                 </ul>
             </aside>
         )

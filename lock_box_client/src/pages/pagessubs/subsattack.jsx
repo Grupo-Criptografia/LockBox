@@ -1,6 +1,7 @@
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import React, {useState} from "react";
 import {createSubstitution,} from "../../api/lockbox.api.js";
+import * as Yup from "yup";
 
 export function SubsAttack() {
 
@@ -146,14 +147,26 @@ export function SubsAttack() {
                         Form Attack
                     </h1>
                     <div className="flex items-center justify-center md:py-4 w-full">
-                        <Formik initialValues={{
-                            cipher_attack: ''
-                        }} onSubmit={onSubmitHandler}>
+                        <Formik
+                            initialValues={{
+                                cipher_attack: ''
+                            }}
+
+                            validationSchema={Yup.object({
+                                cipher_text: Yup.string()
+                                    .required("Cipher text is requerid.")
+                            })}
+
+                            onSubmit={onSubmitHandler}>
                             <Form className="w-10/12">
                                 <div className="grid grid-cols-1 gap-1 mt-4">
                                     <div>
                                         <Field placeholder="Cipher text" as="textarea" name="cipher_text"
                                                className="block uppercase w-full placeholder-gray-400/70 rounded-lg border border-gray-200 bg-white h-40 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                        <div className="text-red-600 text-xs font-semibold">
+                                            <ErrorMessage className="font-normal text-xs text-poppy"
+                                                          name="cipher_text"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="flex justify-end mt-6">

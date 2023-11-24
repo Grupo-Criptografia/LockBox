@@ -47,6 +47,9 @@ import {HomeRabin} from "../pages/pagesrabin/homerabin.jsx";
 import {HomeElGamal} from "../pages/pageselgamal/homeelgamal.jsx";
 import {HomeSubstitution} from "../pages/pagessubs/homesubs.jsx";
 import {HomePermutation} from "../pages/pagespermutation/homepermutation.jsx";
+import {HomeDigSignature} from "../pages/pagesdigsignature/homedigsignature.jsx";
+import {FormSignature} from "../pages/pagesdigsignature/formsignature.jsx";
+import {FormVerifySignature} from "../pages/pagesdigsignature/formverifysignature.jsx";
 
 
 class Main extends Component {
@@ -122,6 +125,11 @@ class Main extends Component {
                     <Route path="/elgamal" element={<HomeElGamal/>}>
                         <Route path={"encrypt"} element={<ElgamalEncrypt/>}/>
                         <Route path={"decrypt"} element={<ElgamalDecrypt/>}/>
+                    </Route>
+                    {/*Pages Digital Signature*/}
+                    <Route path="/digsignature" element={<HomeDigSignature/>}>
+                        <Route path={"signature"} element={<FormSignature/>}/>
+                        <Route path={"verification"} element={<FormVerifySignature/>}/>
                     </Route>
                 </Routes>
             </div>

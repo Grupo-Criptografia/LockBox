@@ -175,16 +175,19 @@ export function ShiftDecrypt() {
                                     <div className="px-6 py-4">
                                         <ul className="ml-5">
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Cipher text: {data.cipher_text}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    <span className="font-bold">Cipher text: </span> {data.cipher_text}
+                                                </p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Key: {data.k}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    <span className="font-bold">Key: </span> {data.k}
+                                                </p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Plain text: {data.plain_text}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    <span className="font-bold">Plain text:</span> {data.plain_text}
+                                                </p>
                                             </li>
                                         </ul>
                                     </div>

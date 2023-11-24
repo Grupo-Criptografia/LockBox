@@ -92,3 +92,11 @@ class AesSerializer(serializers.Serializer):
     k = serializers.CharField()
     mode = serializers.CharField()
     method = serializers.CharField()
+
+
+class DigSignatureSerializer(serializers.Serializer):
+    message = serializers.CharField(allow_blank=True)
+    signature = serializers.CharField(allow_blank=True)
+    pk = serializers.CharField(allow_blank=True)
+    vk = serializers.CharField(allow_blank=True)
+    method = serializers.CharField(allow_blank=True)

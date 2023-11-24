@@ -134,7 +134,7 @@ export function AesDecrypt() {
                                 })}
                                 onSubmit={onSubmit}>
                                 {({setFieldValue}) => (
-                                    <Form className="w-3/4">
+                                    <Form className="w-10/12">
                                         <div className="grid grid-cols-1 gap-1 mt-4">
                                             <div className="grid grid-cols-1 gap-1 mt-4">
                                                 <label className="font-medium">Image</label>
@@ -181,9 +181,9 @@ export function AesDecrypt() {
                     </div>
                     <div
                         className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full">
+                        <div className="flex flex-col w-10/12">
                             {data?.cipher_img ?
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>
@@ -191,24 +191,24 @@ export function AesDecrypt() {
                                     <div className="px-6 py-4">
                                         <ul className="ml-5">
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Key: {data.k}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    <span className="font-bold">Key:</span> {data.k}</p>
                                             </li>
 
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md">
-                                                    Mode: {data.mode}</p>
+                                                    <span className="font-bold">Mode:</span> {data.mode}</p>
                                             </li>
 
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">Plain Image:</p>
+                                                <p className="mt-2 text-md font-bold">Plain Image:</p>
                                                 <img src={`data:image/png;base64,${data.cipher_img}`}
                                                      alt="Encrypted Image"
                                                      className="max-w-full max-h-60"/>
                                             </li>
 
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">Cipher Image: </p>
+                                                <p className="mt-2 text-md font-bold">Cipher Image: </p>
                                                 <img src={`data:image/png;base64,${data.plain_img}`}
                                                      alt="Decrypted Image"
                                                      className="max-w-full max-h-60"/>
@@ -217,7 +217,7 @@ export function AesDecrypt() {
                                     </div>
                                 </div>
                                 :
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>

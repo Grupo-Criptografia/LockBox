@@ -19,15 +19,16 @@ from .crypto_algorithms.permutation import encryptPermutation, decryptPermutatio
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
-from .crypto_algorithms.elgamal import encryptElGamal, decryptElGamal, generate_keys
+from .crypto_algorithms.elgamal import encryptElGamal, decryptElGamal
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 from .crypto_algorithms.RSA import RSAdecrypt, RSAencrypt
+from .crypto_algorithms.digital_signature import sign, verify
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
     dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer, dataRabinSerializer, \
-    TdesSerializer, AesSerializer, dataRSASerializer
+    TdesSerializer, AesSerializer, dataRSASerializer, DigSignatureSerializer
 from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest,
                     dataHillTextTest, dataElGamalTest,
                     dataRabinTest, dataRSATest)
@@ -223,7 +224,7 @@ class hillImgView(APIView):
     # los últimos parámetros son para aceptar opcionalmente más argumentos
     def post(self, request, *args, **kwargs):
         HillImgSerializer = dataHillImgSerializer(data=request.data)
-        print(f"serializervalid:{HillImgSerializer.is_valid()}")
+
         if HillImgSerializer.is_valid():
             plain_img = request.data['plain_img']
             k = request.data.get('k')
@@ -231,7 +232,6 @@ class hillImgView(APIView):
             method = request.data.get('method')
 
         if method == 'encrypt':
-            # cipher_img = Image.fromarray(encrypt_image_hill(np.ndarray(plain_img), np.ndarray(k)))
             print(f"k: {k}")
             k = ast.literal_eval(k)
             cipher_img = Image.fromarray(encrypt_image_hill(plain_img, np.array(k)))
@@ -263,12 +263,6 @@ class elGamalView(APIView):
         public_key = request.data.get('public_key')
         private_key = request.data.get('private_key')
         method = request.data.get('method')
-
-        print(f"plain_text: {plain_text}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"public_key: {public_key}")
-        print(f"private_key: {private_key}")
-        print(f"method: {method}")
 
         if method == 'encrypt':
             cipher_text = encryptElGamal(str(public_key), plain_text)
@@ -341,12 +335,6 @@ class rabinView(APIView):
         q = request.data.get('q')
         method = request.data.get('method')
 
-        print(f"plain_text: {plain_text}")
-        print(f"n: {n}")
-        print(f"p,q: {p, q}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         if method == 'encrypt':
             plain_text = plain_text.replace(" ", "").lower()
             cipher_text = encrypt_rabin(plain_text, int(n))
@@ -369,12 +357,6 @@ class RSAView(APIView):
         private_key = request.data.get('private_key')
         method = request.data.get('method')
 
-        print(f"plain_text: {plain_text}")
-        print(f"public_key (n,e): {public_key}")
-        print(f"private_key (d,p,q): {private_key}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         if method == 'encrypt':
             key_array = [int(x) for x in public_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
             key = rsa.PublicKey(key_array[0], key_array[1])
@@ -382,7 +364,7 @@ class RSAView(APIView):
 
         if method == 'decrypt':
             key_array = [int(x) for x in private_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
-            n = key_array[1]*key_array[2]
+            n = key_array[1] * key_array[2]
             key = rsa.PrivateKey(n, 0, key_array[0], key_array[1], key_array[2])
             plain_text = RSAdecrypt(cipher_text, key)
 
@@ -440,3 +422,40 @@ class aesView(APIView):
         }
 
         return Response(response, status=status.HTTP_200_OK)
+
+
+class digSignatureView(APIView):
+    @handle_exceptions
+    def post(self, request):
+        digSignatureSerializer = DigSignatureSerializer(data=request.data)
+
+        if digSignatureSerializer.is_valid():
+            message = request.data.get('message')
+            signature = request.data.get('signature')
+            pk = request.data.get('pk')
+            vk = request.data.get('vk')
+            method = request.data.get('method')
+
+            if method == 'sign':
+                signature, pk, vk = sign(message)
+
+                response = {
+                    'signature': signature,
+                    'pk': pk,
+                    'vk': vk
+                }
+
+            if method == 'verify':
+                response_verification = verify(signature, vk, message)
+
+                response = {
+                    'message': message,
+                    'signature': signature,
+                    'vk': vk,
+                    'response': response_verification
+                }
+
+            return Response(response, status=status.HTTP_200_OK)
+
+        else:
+            return Response(digSignatureSerializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

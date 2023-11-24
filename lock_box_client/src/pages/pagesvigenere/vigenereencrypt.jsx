@@ -145,7 +145,7 @@ export function VigenereEncrypt() {
                                         console.error("Error en el envio", error);
                                     })
                                 }}>
-                                <Form className="w-3/4">
+                                <Form className="w-10/12">
                                     <div className="grid grid-cols-1 gap-1 mt-4">
                                         <div>
                                             <label className="font-medium">Plain text</label>
@@ -178,9 +178,9 @@ export function VigenereEncrypt() {
                     </div>
                     <div
                         className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
-                        <div className="flex flex-col pl-12 w-full">
+                        <div className="flex flex-col w-10/12">
                             {data?.cipher_text ?
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>
@@ -188,22 +188,23 @@ export function VigenereEncrypt() {
                                     <div className="px-6 py-4">
                                         <ul className="ml-5">
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Plain text: {data.plain_text}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    <span className="font-bold">Plain text:</span> {data.plain_text}</p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Key: {data.k}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    <span className="font-bold">Key:</span> {data.k}</p>
                                             </li>
                                             <li className="list-disc">
-                                                <p className="mt-2 text-md">
-                                                    Cipher text: {data.cipher_text}</p>
+                                                <p className="mt-2 text-md break-all">
+                                                    <span className="font-bold">Cipher text:</span> {data.cipher_text}
+                                                </p>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 :
-                                <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>

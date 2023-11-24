@@ -125,12 +125,12 @@ export function AffineAttack() {
                                 })
                             }}>
 
-                            <Form className="w-3/4">
+                            <Form className="w-10/12">
                                 <div className="grid grid-cols-1 gap-1 mt-4">
                                     <div>
                                         <label className="font-medium">Cipher text</label>
-                                        <Field placeholder="Enter plain text" as="textarea" name="cipher_text"
-                                               className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                        <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
+                                               className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-40 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                         <div className="text-red-600 text-xs font-semibold">
                                             <ErrorMessage className="font-normal text-xs text-poppy"
                                                           name="cipher_text"/>
@@ -150,9 +150,9 @@ export function AffineAttack() {
                 {/* Casilla que bota el resultado */}
                 <div
                     className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
-                    <div className="flex flex-col pl-12 w-full">
+                    <div className="flex flex-col w-11/12">
                         {data?.cipher_text ?
-                            <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                            <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                 <div className="flex items-center px-6 py-3 bg-color3">
                                     <h2 className="text-xl font-semibold text-white">Results</h2>
                                 </div>
@@ -161,27 +161,27 @@ export function AffineAttack() {
                                     <ul className="ml-5">
                                         <li className="list-disc">
                                             <p className="mt-2 text-md break-all">
-                                                Cipher text: {data.cipher_text}</p>
+                                                <span className="font-bold">Cipher text:</span> {data.cipher_text}</p>
                                         </li>
                                         <li className="list-disc">
-                                            <p className="mt-2 text-md">
-                                                key a: {data.k[0]}
-                                            </p>
-                                        </li>
-                                        <li className="list-disc">
-                                            <p className="mt-2 text-md">
-                                                key b: {data.k[1]}
+                                            <p className="mt-2 text-md break-all">
+                                                <span className="font-bold">key a:</span> {data.k[0]}
                                             </p>
                                         </li>
                                         <li className="list-disc">
                                             <p className="mt-2 text-md break-all">
-                                                Plain text: {data.plain_text}</p>
+                                                <span className="font-bold">key b:</span> {data.k[1]}
+                                            </p>
+                                        </li>
+                                        <li className="list-disc">
+                                            <p className="mt-2 text-md break-all">
+                                                <span className="font-bold">Plain text:</span>{data.plain_text}</p>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             :
-                            <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+                            <div className="overflow-hidden bg-white rounded-lg shadow-lg">
                                 <div className="flex items-center px-6 py-3 bg-color3">
                                     <h2 className="text-xl font-semibold text-white">Results</h2>
                                 </div>

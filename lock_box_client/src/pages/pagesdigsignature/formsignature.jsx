@@ -1,21 +1,23 @@
-import {useEffect, useState} from "react";
-import {createElgamal} from '../../api/lockbox.api.js'
+import {useState} from "react";
+import {createSignature} from '../../api/lockbox.api.js'
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 
-export function ElgamalDecrypt() {
+export function FormSignature() {
 
     const [data, setData] = useState(null)
 
-    useEffect(() => {
-        console.log(data)
-    }, [data]);
-
-
-    const onSubmitHandler = async (data) => {
-        data.method = "decrypt"
+    const onSubmitHandler = async (values) => {
         try {
-            const response = await createElgamal(data)
+
+            const formData = new FormData();
+            formData.append('signature', '');
+            formData.append('message', values.message);
+            formData.append('pk', '');
+            formData.append('vk', '');
+            formData.append('method', 'sign');
+
+            const response = await createSignature(formData)
             setData(response)
         } catch (error) {
             console.log('Error: ', error)
@@ -30,7 +32,7 @@ export function ElgamalDecrypt() {
                 <div>
                     <div className="text-center w-full mb-10">
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                            User Guide for ElGamal Decryption
+                            User Guide for Digital Signature
                         </h1>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
@@ -39,45 +41,32 @@ export function ElgamalDecrypt() {
                                 <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            1. Enter the Cipher Text:
+                                            1. Enter the Message Text:
                                         </h2>
                                         <p className="leading-relaxed">
-                                            In the decryption tool or form, input the ciphertext you received. This is
-                                            typically a tuple of numbers (let's call them ) representing the encrypted
-                                            data.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex col-span-2 md:col-span-1 pb-6">
-                                    <div className="flex-grow pl-4">
-                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
-                                            2. Enter Your Private Key:
-                                        </h2>
-                                        <p className="leading-relaxed">Input your private key. Unlike the public key
-                                            used for encryption, the private key is only known to you and is used to
-                                            decrypt the received message. It's crucial to keep this key secure.
+                                            In the first field of the form, enter the message text that you want to
+                                            sign. This can be any piece of text.
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-2 md:col-span-1 pb-6">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            3. Encrypt the Text:
+                                            2. Create Signature:
                                         </h2>
                                         <p className="leading-relaxed">
-                                            Once you've entered the cipher text and the private key, click the
-                                            "Decrypt" button.
+                                            Once you've entered the message text, click the "Create Signature" button.
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex md:col-span-1 pb-6">
+                                <div className="flex md:col-span-2 pb-6">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            4. Obtain the results:
+                                            3. Obtain the results:
                                         </h2>
                                         <p className="leading-relaxed">
-                                            On the side of the form, the results will be displayed: the encrypted text,
-                                            your private key, and the plain text (decrypted message).
+                                            On the side of the form, the results will be displayed: the signature,
+                                            your private key, and public key.
                                         </p>
                                     </div>
                                 </div>
@@ -85,9 +74,9 @@ export function ElgamalDecrypt() {
                                     <div className="flex flex-col pl-4">
                                         <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
                                         <p className="leading-relaxed">
-                                            Like most public-key cryptosystems, ElGamal is typically used for encrypting
-                                            small amounts of data, such as keys for symmetric encryption algorithms,
-                                            rather than large datasets directly, due to computational efficiency.
+                                            Remember, this is a simplified explanation. Implementing digital signatures
+                                            in a real-world application involves meticulous programming and a robust
+                                            understanding of cryptographic principles.
                                         </p>
                                     </div>
                                 </div>
@@ -103,25 +92,20 @@ export function ElgamalDecrypt() {
                         <div
                             className="flex flex-col bg-color1 text-charcoal w-3/4 rounded-lg shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
-                                Form Decrypt
+                                Form Signature
                             </h1>
                             <Formik
                                 initialValues={{
-                                    cipher_text: '',
-                                    private_key: ''
+                                    message: '',
                                 }}
 
                                 validationSchema={Yup.object({
-                                    cipher_text: Yup.string()
-                                        .required("Cipher text is required"),
-                                    private_key: Yup.string()
-                                        .required("Private key is required")
-                                        .matches(/^\(\d+,\s*\d+,\s*\d+\)$/, "Private key must be a tuple of 5 elements")
+                                    message: Yup.string()
+                                        .required("Message is required")
                                 })}
 
                                 onSubmit={(values, {resetForm}) => {
                                     onSubmitHandler(values).then(() => {
-                                        resetForm();
                                     }).catch(error => {
                                         console.error("Error en el envio", error);
                                     })
@@ -129,22 +113,12 @@ export function ElgamalDecrypt() {
                                 <Form className="w-10/12">
                                     <div className="grid grid-cols-1 gap-1 mt-4">
                                         <div>
-                                            <label className="font-medium">Cipher text</label>
-                                            <Field placeholder="Enter cipher text" as="textarea" name="cipher_text"
-                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-32 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
+                                            <label className="font-medium">Message</label>
+                                            <Field placeholder="Enter message" as="textarea" name="message"
+                                                   className="block mt-2 w-full placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 h-60 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
                                             <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="cipher_text"/>
-                                            </div>
-                                        </div>
-
-                                        <div className="mt-3">
-                                            <label className="font-medium">Private Key</label>
-                                            <Field placeholder="Enter key" as="textarea" name="private_key"
-                                                   className="block w-full mt-2 placeholder-gray-400/70 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-charcoal focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"></Field>
-                                            <div className="text-red-600 text-xs font-semibold">
-                                                <ErrorMessage className="font-normal text-xs text-poppy"
-                                                              name="private_key"/>
+                                                <ErrorMessage className="font-normal text-xs"
+                                                              name="message"/>
                                             </div>
                                         </div>
                                     </div>
@@ -152,19 +126,18 @@ export function ElgamalDecrypt() {
                                     <div className="flex justify-end mt-6">
                                         <button type="submit"
                                                 className="px-8 py-2.5 leading-5 text-ivory bg-color3 rounded-md">
-                                            Decrypt
+                                            Create Signature
                                         </button>
                                     </div>
                                 </Form>
                             </Formik>
                         </div>
                     </div>
-
                     <div
-                        className="md:w-1/2 w-full md:mt-0 mt-5 flex justify-center items-center">
-                        <div className="flex flex-col w-10/12">
-                            {data?.plain_text ?
-                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
+                        className="md:w-1/2 w-full md:mt-0 mt-5 flex">
+                        <div className="flex flex-col justify-center items-center">
+                            {data ?
+                                <div className="w-11/12 overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>
@@ -173,27 +146,24 @@ export function ElgamalDecrypt() {
                                         <ul className="ml-5">
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md break-all">
-                                                    <span className="font-bold">Cipher text:</span> {data.cipher_text}
-                                                </p>
+                                                    <span className="font-bold"> Signature: </span> {data.signature}</p>
                                             </li>
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md break-all">
-                                                    <span className="font-bold">Private Key:</span> {data.private_key}
-                                                </p>
+                                                    <span className="font-bold"> Private Key: </span> {data.pk}</p>
                                             </li>
                                             <li className="list-disc">
                                                 <p className="mt-2 text-md break-all">
-                                                    <span className="font-bold">Plain text:</span> {data.plain_text}</p>
+                                                    <span className="font-bold"> Public Key: </span> {data.vk}</p>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 :
-                                <div className="overflow-hidden bg-white rounded-lg shadow-lg">
+                                <div className="w-11/12 overflow-hidden bg-white rounded-lg shadow-lg">
                                     <div className="flex items-center px-6 py-3 bg-color3">
                                         <h2 className="text-xl font-semibold text-white">Results</h2>
                                     </div>
-
                                     <div className="px-6 py-4">
                                         <p className="py-2 text-charcoal">Please enter data in the form to obtain
                                             results!</p>

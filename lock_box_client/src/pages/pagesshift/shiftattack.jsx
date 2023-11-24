@@ -106,7 +106,7 @@ export function ShiftAttack() {
 
                                 validationSchema={Yup.object({
                                     cipher_text: Yup.string()
-                                        .required("Plain text is required"),
+                                        .required("Cipher text is required"),
                                 })}
 
                                 onSubmit={(values, {resetForm}) => {
@@ -141,7 +141,7 @@ export function ShiftAttack() {
                     </div>
                     <div
                         className="w-full mt-10 md:border-l flex justify-center items-center">
-                            {data.list_plain_text?.length ?
+                        {data.list_plain_text?.length ?
                             <div className="w-3/5 overflow-hidden bg-white rounded-lg shadow-lg">
                                 <div className="flex items-center px-6 py-3 bg-color3">
                                     <h2 className="text-xl font-semibold text-white">Results</h2>
@@ -151,17 +151,18 @@ export function ShiftAttack() {
                                     {listRender}
                                 </div>
                             </div>
-                                :                                
+                            :
                             <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
                                 <div className="flex items-center px-6 py-3 bg-color3">
                                     <h2 className="text-xl font-semibold text-white">Results</h2>
                                 </div>
 
                                 <div className="px-6 py-4">
-                                    <p className="py-2 text-charcoal">Please enter a cipher text to show a list of possible plain text.</p>
+                                    <p className="py-2 text-charcoal">Please enter a cipher text to show a list of
+                                        possible plain text.</p>
                                 </div>
                             </div>
-                            }
+                        }
                     </div>
                 </div>
             </div>
