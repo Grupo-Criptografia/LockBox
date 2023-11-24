@@ -46,6 +46,7 @@ import {HomeRsa} from "../pages/pagesrsa/homersa.jsx";
 import {HomeRabin} from "../pages/pagesrabin/homerabin.jsx";
 import {HomeElGamal} from "../pages/pageselgamal/homeelgamal.jsx";
 import {HomeSubstitution} from "../pages/pagessubs/homesubs.jsx";
+import {HomePermutation} from "../pages/pagespermutation/homepermutation.jsx";
 
 
 class Main extends Component {
@@ -79,8 +80,11 @@ class Main extends Component {
                     </Route>
 
                     {/*Pages Permutation*/}
-                    <Route path="/permutation/encrypt" element={<PermutationEncrypt/>}/>
-                    <Route path="/permutation/decrypt" element={<PermutationDecrypt/>}/>
+                    <Route path="/permutation" element={<HomePermutation/>}>
+                        <Route path="encrypt" element={<PermutationEncrypt/>}/>
+                        <Route path="decrypt" element={<PermutationDecrypt/>}/>
+                    </Route>
+
                     {/*Pages Vigenere*/}
                     <Route path="/vigenere" element={<HomeVigenere/>}>
                         <Route path="encrypt" element={<VigenereEncrypt/>}/>
