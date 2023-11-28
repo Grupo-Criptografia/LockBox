@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 class Menu extends Component {
     render() {
         return (
-            <aside className="flex flex-col w-1/5 px-4 py-8 bg-white border-r rtl:border-r-0 rtl:border-l">
+            <aside className="flex flex-col w-1/5 h-auto px-4 py-8 bg-white border-r rtl:border-r-0 rtl:border-l">
                 <img src="/lockbox_logo-2.png" alt="logo"/>
-                <ul className="menu bg-white text-base h-screen py-8 px-0">
+                <ul className="menu bg-white text-base h-auto py-8 px-0">
                     <li><Link class="font-semibold text-black" to="/">Home</Link></li>
                     <li>
                         {/*Establecemos el menu desplegable para los cifrados clasicos*/}
