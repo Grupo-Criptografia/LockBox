@@ -11,11 +11,11 @@ export function HomeAes() {
                     <div className="flex justify-items-center py-10 font-semibold text-black divide-x-1">
                         <Link to="encrypt"
                               className="flex justify-center items-center rounded-l-md bg-color3 w-1/2 h-16">
-                            <span className="btm-nav-label">Encrypt Text</span>
+                            <span className="btm-nav-label">Encrypt</span>
                         </Link>
                         <Link className="bg-color4 w-1/2 h-16 rounded-r-md flex justify-center items-center"
                               to="decrypt">
-                            <span className="btm-nav-label">Decrypt Text</span>
+                            <span className="btm-nav-label">Decrypt</span>
                         </Link></div>
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-6 font-medium text-gray-900">Crypto System
