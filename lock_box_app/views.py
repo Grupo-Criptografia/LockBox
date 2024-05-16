@@ -1,11 +1,15 @@
 from functools import wraps
 from PIL import Image
+from io import BytesIO
+import base64
 import numpy as np
 import ast
 import rsa.pkcs1
 
 from .crypto_algorithms.util import convert_img_base64, convert_pil_image_to_base64
 
+from numpy import asarray
+import os
 # generar archivos de importación para estos from import
 from rest_framework import status
 from rest_framework.response import Response
@@ -19,18 +23,15 @@ from .crypto_algorithms.permutation import encryptPermutation, decryptPermutatio
 from .crypto_algorithms.vigenere import encryptVigenere, decryptVigenere, attackVigenere
 from .crypto_algorithms.simplified_des import encrypt_des, decrypt_des
 from .crypto_algorithms.hill import encrypt_text_hill, decrypt_text_hill, encrypt_image_hill, decrypt_image_hill
-from .crypto_algorithms.elgamal import encryptElGamal, decryptElGamal
+from .crypto_algorithms.elgamal import encryptElGamal, decryptElGamal, generate_keys
 from .crypto_algorithms.rabin import encrypt_rabin, decrypt_rabin
 from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 from .crypto_algorithms.RSA import RSAdecrypt, RSAencrypt
-from .crypto_algorithms.digital_signature import sign, verify
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer, dataRabinSerializer, \
-    TdesSerializer, AesSerializer, dataRSASerializer, DigSignatureSerializer
-from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest,
-                    dataHillTextTest, dataElGamalTest,
+    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer , dataRabinSerializer, TdesSerializer, AesSerializer, dataRSASerializer
+from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTextTest, dataElGamalTest,
                     dataRabinTest, dataRSATest)
 
 
@@ -45,6 +46,34 @@ def handle_exceptions(view_func):
 
     return wrapper
 
+
+# class shiftView(APIView):
+#     @handle_exceptions
+#     def post(self, request):
+
+#         plain_text = request.data.get('plain_text')
+#         k = request.data.get('k')
+#         cipher_text = request.data.get('cipher_text')
+#         method = request.data.get('method')
+#         list_plain_text = []
+
+#         if method == 'encrypt':
+#             k = int(k)
+#             cipher_text = encryptShift(plain_text, k - 1)
+
+#         if method == 'decrypt':
+#             k = int(k)
+#             plain_text = decryptShift(cipher_text, k - 1)
+
+#         if method == 'attack':
+#             k = 0
+#             list_plain_text = attackShift(cipher_text)
+
+#         data_obj = dataShiftTest(plain_text, cipher_text, k, list_plain_text)
+#         serializer_class = dataShiftSerializer(data_obj)
+#         return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+#HACK
 
 class shiftView(APIView):
     @handle_exceptions
@@ -71,6 +100,7 @@ class shiftView(APIView):
         data_obj = dataShiftTest(plain_text, cipher_text, k, list_plain_text)
         serializer_class = dataShiftSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
+
 
 
 class substitutionView(APIView):
@@ -205,6 +235,11 @@ class hillTextView(APIView):
         cipher_text = request.data.get('cipher_text')
         method = request.data.get('method')
 
+        print(f"plain_text: {plain_text}")
+        print(f"k: {k}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
         if method == 'encrypt':
             cipher_text = encrypt_text_hill(plain_text, k)
 
@@ -214,72 +249,78 @@ class hillTextView(APIView):
         data_obj = dataHillTextTest(plain_text, cipher_text, k)
         serializer_class = dataHillTextSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-
-
+    
 class hillImgView(APIView):
-    # Para recibir archivos
-    parser_classes = (MultiPartParser,)
-
+    #Para recibir archivos
+    parser_classes= (MultiPartParser,)
+    
     @handle_exceptions
-    # los últimos parámetros son para aceptar opcionalmente más argumentos
+    #los últimos parámetros son para aceptar opcionalmente más argumentos
     def post(self, request, *args, **kwargs):
         HillImgSerializer = dataHillImgSerializer(data=request.data)
-
+        print(f"serializervalid:{HillImgSerializer.is_valid()}")
         if HillImgSerializer.is_valid():
             plain_img = request.data['plain_img']
             k = request.data.get('k')
             cipher_img = request.data['cipher_img']
-            method = request.data.get('method')
-
+            method =request.data.get('method')
+            
         if method == 'encrypt':
+            # cipher_img = Image.fromarray(encrypt_image_hill(np.ndarray(plain_img), np.ndarray(k)))
             print(f"k: {k}")
             k = ast.literal_eval(k)
             cipher_img = Image.fromarray(encrypt_image_hill(plain_img, np.array(k)))
             plain_img_base64 = convert_img_base64(plain_img)
             cipher_img_base64 = convert_pil_image_to_base64(cipher_img)
-
+            
         if method == 'decrypt':
             k = ast.literal_eval(k)
             plain_img = Image.fromarray(decrypt_image_hill(cipher_img, k))
             plain_img_base64 = convert_pil_image_to_base64(plain_img)
-            cipher_img_base64 = convert_img_base64(cipher_img)
+            cipher_img_base64 = convert_img_base64(cipher_img)            
 
         response = {
             'plain_img': plain_img_base64,
             'cipher_img': cipher_img_base64,
             'k': k,
             'method': method
-        }
-
+        } 
+        
         return Response(response, status=status.HTTP_200_OK)
-
-
+    
 class elGamalView(APIView):
     @handle_exceptions
     def post(self, request):
-
+        
         plain_text = request.data.get('plain_text')
         cipher_text = request.data.get('cipher_text')
         public_key = request.data.get('public_key')
         private_key = request.data.get('private_key')
         method = request.data.get('method')
-
+        
+        print(f"plain_text: {plain_text}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"public_key: {public_key}")
+        print(f"private_key: {private_key}")
+        print(f"method: {method}")
+        
         if method == 'encrypt':
             cipher_text = encryptElGamal(str(public_key), plain_text)
         if method == 'decrypt':
             plain_text = decryptElGamal(str(private_key), cipher_text)
-
+        
         data_obj = dataElGamalTest(plain_text, cipher_text, public_key, private_key)
         serializer_class = ElGamalSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-
-
+        
 class tdesView(APIView):
     parser_classes = (MultiPartParser,)
 
     @handle_exceptions
     def post(self, request, *args, **kwargs):
         tdesSerializer = TdesSerializer(data=request.data)
+
+        print(f"Request: {tdesSerializer.is_valid()}")
 
         if tdesSerializer.is_valid():
             plain_img = request.data['plain_img']
@@ -303,6 +344,7 @@ class tdesView(APIView):
             if method == 'decrypt':
                 if mode == 'ECB':
                     plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode))
+                    plain_img.show()
                 if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
                     plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode, iv=b'initvect'))
                 if mode == 'CTR':
@@ -312,22 +354,20 @@ class tdesView(APIView):
                 plain_img_base64 = convert_pil_image_to_base64(plain_img)
                 cipher_img_base64 = convert_img_base64(cipher_img)
 
-            response = {
-                'plain_img': plain_img_base64,
-                'cipher_img': cipher_img_base64,
-                'k': k,
-                'mode': mode
-            }
+        response = {
+            'plain_img': plain_img_base64,
+            'cipher_img': cipher_img_base64,
+            'k': k,
+            'mode': mode
+        }
 
-            return Response(response, status=status.HTTP_200_OK)
-
-        else:
-            return Response(tdesSerializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class rabinView(APIView):
     @handle_exceptions
     def post(self, request):
+
         plain_text = request.data.get('plain_text')
         cipher_text = request.data.get('cipher_text')
         n = request.data.get('n')
@@ -335,18 +375,22 @@ class rabinView(APIView):
         q = request.data.get('q')
         method = request.data.get('method')
 
+        print(f"plain_text: {plain_text}")
+        print(f"n: {n}")
+        print(f"p,q: {p, q}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
         if method == 'encrypt':
-            plain_text = plain_text.replace(" ", "").lower()
-            cipher_text = encrypt_rabin(plain_text, int(n))
+            cipher_text = encrypt_rabin(plain_text, n)
 
         if method == 'decrypt':
-            plain_text = decrypt_rabin(cipher_text, int(p), int(q))
+            plain_text = decrypt_rabin(plain_text, p, q)
 
         data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-
-
+    
 class RSAView(APIView):
     @handle_exceptions
     def post(self, request):
@@ -357,16 +401,22 @@ class RSAView(APIView):
         private_key = request.data.get('private_key')
         method = request.data.get('method')
 
+        print(f"plain_text: {plain_text}")
+        print(f"public_key (n,e): {public_key}")
+        print(f"private_key (d,p,q): {private_key}")
+        print(f"cipher_text: {cipher_text}")
+        print(f"method: {method}")
+
         if method == 'encrypt':
             key_array = [int(x) for x in public_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
-            key = rsa.PublicKey(key_array[0], key_array[1])
-            cipher_text = RSAencrypt(plain_text, key)
+            pu_key = rsa.PublicKey(key_array[0], key_array[1])
+            cipher_text = RSAencrypt(plain_text, pu_key)
 
         if method == 'decrypt':
             key_array = [int(x) for x in private_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
-            n = key_array[1] * key_array[2]
-            key = rsa.PrivateKey(n, 0, key_array[0], key_array[1], key_array[2])
-            plain_text = RSAdecrypt(cipher_text, key)
+            n = key_array[1]*key_array[2]
+            pr_key = rsa.PrivateKey(n,0,key_array[0], key_array[1], key_array[2])
+            plain_text = RSAdecrypt(cipher_text, pr_key)
 
         data_obj = dataRSATest(plain_text, cipher_text, public_key, private_key)
         serializer_class = dataRSASerializer(data_obj)
@@ -422,40 +472,3 @@ class aesView(APIView):
         }
 
         return Response(response, status=status.HTTP_200_OK)
-
-
-class digSignatureView(APIView):
-    @handle_exceptions
-    def post(self, request):
-        digSignatureSerializer = DigSignatureSerializer(data=request.data)
-
-        if digSignatureSerializer.is_valid():
-            message = request.data.get('message')
-            signature = request.data.get('signature')
-            pk = request.data.get('pk')
-            vk = request.data.get('vk')
-            method = request.data.get('method')
-
-            if method == 'sign':
-                signature, pk, vk = sign(message)
-
-                response = {
-                    'signature': signature,
-                    'pk': pk,
-                    'vk': vk
-                }
-
-            if method == 'verify':
-                response_verification = verify(signature, vk, message)
-
-                response = {
-                    'message': message,
-                    'signature': signature,
-                    'vk': vk,
-                    'response': response_verification
-                }
-
-            return Response(response, status=status.HTTP_200_OK)
-
-        else:
-            return Response(digSignatureSerializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
