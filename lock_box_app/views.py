@@ -30,8 +30,10 @@ from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 from .crypto_algorithms.RSA import RSAdecrypt, RSAencrypt
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
-    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer , dataRabinSerializer, TdesSerializer, AesSerializer, dataRSASerializer
-from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest, dataHillTextTest, dataElGamalTest,
+    dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer, dataRabinSerializer, \
+    TdesSerializer, AesSerializer, dataRSASerializer
+from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest,
+                    dataHillTextTest, dataElGamalTest,
                     dataRabinTest, dataRSATest)
 
 
@@ -73,7 +75,7 @@ def handle_exceptions(view_func):
 #         serializer_class = dataShiftSerializer(data_obj)
 #         return Response(serializer_class.data, status=status.HTTP_200_OK)
 
-#HACK
+# HACK
 
 class shiftView(APIView):
     @handle_exceptions
@@ -100,7 +102,6 @@ class shiftView(APIView):
         data_obj = dataShiftTest(plain_text, cipher_text, k, list_plain_text)
         serializer_class = dataShiftSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-
 
 
 class substitutionView(APIView):
@@ -249,13 +250,14 @@ class hillTextView(APIView):
         data_obj = dataHillTextTest(plain_text, cipher_text, k)
         serializer_class = dataHillTextSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-    
+
+
 class hillImgView(APIView):
-    #Para recibir archivos
-    parser_classes= (MultiPartParser,)
-    
+    # Para recibir archivos
+    parser_classes = (MultiPartParser,)
+
     @handle_exceptions
-    #los últimos parámetros son para aceptar opcionalmente más argumentos
+    # los últimos parámetros son para aceptar opcionalmente más argumentos
     def post(self, request, *args, **kwargs):
         HillImgSerializer = dataHillImgSerializer(data=request.data)
         print(f"serializervalid:{HillImgSerializer.is_valid()}")
@@ -263,8 +265,8 @@ class hillImgView(APIView):
             plain_img = request.data['plain_img']
             k = request.data.get('k')
             cipher_img = request.data['cipher_img']
-            method =request.data.get('method')
-            
+            method = request.data.get('method')
+
         if method == 'encrypt':
             # cipher_img = Image.fromarray(encrypt_image_hill(np.ndarray(plain_img), np.ndarray(k)))
             print(f"k: {k}")
@@ -272,47 +274,49 @@ class hillImgView(APIView):
             cipher_img = Image.fromarray(encrypt_image_hill(plain_img, np.array(k)))
             plain_img_base64 = convert_img_base64(plain_img)
             cipher_img_base64 = convert_pil_image_to_base64(cipher_img)
-            
+
         if method == 'decrypt':
             k = ast.literal_eval(k)
             plain_img = Image.fromarray(decrypt_image_hill(cipher_img, k))
             plain_img_base64 = convert_pil_image_to_base64(plain_img)
-            cipher_img_base64 = convert_img_base64(cipher_img)            
+            cipher_img_base64 = convert_img_base64(cipher_img)
 
         response = {
             'plain_img': plain_img_base64,
             'cipher_img': cipher_img_base64,
             'k': k,
             'method': method
-        } 
-        
+        }
+
         return Response(response, status=status.HTTP_200_OK)
-    
+
+
 class elGamalView(APIView):
     @handle_exceptions
     def post(self, request):
-        
+
         plain_text = request.data.get('plain_text')
         cipher_text = request.data.get('cipher_text')
         public_key = request.data.get('public_key')
         private_key = request.data.get('private_key')
         method = request.data.get('method')
-        
+
         print(f"plain_text: {plain_text}")
         print(f"cipher_text: {cipher_text}")
         print(f"public_key: {public_key}")
         print(f"private_key: {private_key}")
         print(f"method: {method}")
-        
+
         if method == 'encrypt':
             cipher_text = encryptElGamal(str(public_key), plain_text)
         if method == 'decrypt':
             plain_text = decryptElGamal(str(private_key), cipher_text)
-        
+
         data_obj = dataElGamalTest(plain_text, cipher_text, public_key, private_key)
         serializer_class = ElGamalSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-        
+
+
 class tdesView(APIView):
     parser_classes = (MultiPartParser,)
 
@@ -390,7 +394,8 @@ class rabinView(APIView):
         data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)
         return Response(serializer_class.data, status=status.HTTP_200_OK)
-    
+
+
 class RSAView(APIView):
     @handle_exceptions
     def post(self, request):
@@ -414,8 +419,8 @@ class RSAView(APIView):
 
         if method == 'decrypt':
             key_array = [int(x) for x in private_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
-            n = key_array[1]*key_array[2]
-            pr_key = rsa.PrivateKey(n,0,key_array[0], key_array[1], key_array[2])
+            n = key_array[1] * key_array[2]
+            pr_key = rsa.PrivateKey(n, 0, key_array[0], key_array[1], key_array[2])
             plain_text = RSAdecrypt(cipher_text, pr_key)
 
         data_obj = dataRSATest(plain_text, cipher_text, public_key, private_key)
