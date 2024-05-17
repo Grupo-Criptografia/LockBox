@@ -21,6 +21,6 @@ urlpatterns = [
     path('TDES/', tdesView.as_view()),
     path('AES/', aesView.as_view()),
     path('digsignature/', digSignatureView.as_view()),
-    path('visual_crypt', visualCryptView.as_view()),
+    path('visual_crypt/', visualCryptView.as_view()),
     path("docs/", include_docs_urls(title="LockBox API")),
 ]

@@ -63,6 +63,8 @@ class Menu extends Component {
                     </li>
                     <li><Link className="font-semibold text-black dark:text-white" to="digsignature">Digital
                         Signature</Link></li>
+                    <li><Link className="font-semibold text-black dark:text-white" to="visualcrypt">Visual
+                        Cryptography</Link></li>
                 </ul>
             </aside>
         )
