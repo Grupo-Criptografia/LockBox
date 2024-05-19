@@ -49,67 +49,38 @@ export function VisualEncrypt() {
                                             1. Select the Image to encrypt:
                                         </h2>
                                         <p className="leading-relaxed">
-                                            In the first field of the form, choose the image you wish to encrypt. It's
-                                            important to ensure that the image is compatible with the block size used by
-                                            TDES. TDES processes data in fixed-size blocks, so larger images may need to
-                                            be segmented or resized.
+                                            In the first field of the form, choose the image you wish to encrypt.
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-2 md:col-span-1 pb-6">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
-                                            2. Enter the Encryption Key (k):
+                                        ¿How does it work?
                                         </h2>
-                                        <p className="leading-relaxed">For TDES encryption, provide a 24-byte (192-bit)
-                                            key. This is effectively three 8-byte (64-bit) keys concatenated together,
-                                            each satisfying the 56-bit key requirement of DES, with parity bits. </p>
-                                        <p className="leading-relaxed mt-1"> Example of TDES keys (in text format):</p>
+                                        <p className="leading-relaxed mt-1"> Step by step guide overview</p>
                                         <ul className="ml-5 list-disc">
                                             <li>
-                                                <p className="leading-relaxed mt-1"> Key 1: 1234567890ABCDEF12345678</p>
+                                                <p className="leading-relaxed mt-1"> The image is uploaded and converted to binary grayscale (black and white). </p>
+                                            </li>
+                                            <li>
+                                                <p className="leading-relaxed mt-1"> Two matrices of the same dimension as the original image are generated. </p>
+                                            </li>
+                                            <li>
+                                                <p className="leading-relaxed mt-1"> For each black pixel in the original image, random bits are generated and for each white pixel, bits are generated that, when overlapped, will maintain the integrity of the original pixel. </p>
+                                            </li>
+                                            <li>
+                                                <p className="leading-relaxed mt-1"> Las matrices de transparencias se guardan como imágenes. </p>
                                             </li>
                                         </ul>
 
-                                    </div>
-                                </div>
-                                <div className="flex md:col-span-1 pb-6">
-                                    <div className="flex-grow pl-4">
-                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            3. Choose Encryption Mode:
-                                        </h2>
-                                        <p className="leading-relaxed">
-                                            Select the mode of operation for the encryption (ECB, CBC, OFB, CFB, CTR).
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex col-span-1 pb-6">
-                                    <div className="flex-grow pl-4">
-                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            4. Encrypt the Image:
-                                        </h2>
-                                        <p className="leading-relaxed">
-                                            Once you've entered the image and the encryption key, click the
-                                            "Encrypt" button.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex md:col-span-1 pb-6">
-                                    <div className="flex-grow pl-4">
-                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            5. Obtain the results:
-                                        </h2>
-                                        <p className="leading-relaxed">
-                                            On the side of the form, you will see the result: your origin image, the
-                                            decryption key used, and the cipher image.
-                                        </p>
                                     </div>
                                 </div>
                                 <div className="flex col-span-2 pb-6">
                                     <div className="flex flex-col pl-4">
                                         <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
                                         <p className="leading-relaxed">
-                                            Remember save the cipher imagen and the key that you used to encrypt.
+                                            Remember save the shares generated in the process of encryption.
                                         </p>
                                     </div>
                                 </div>

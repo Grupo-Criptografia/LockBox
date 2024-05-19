@@ -19,14 +19,13 @@ export function HomeVisualCrypt() {
                         </Link></div>
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-6 font-medium text-gray-900">Visual Cryptography</h1>
-                        <p className="mb-4 leading-relaxed">Triple Data Encryption Standard (TDES), also known as Triple
-                            DES, 3DES, or TDEA (Triple Data Encryption Algorithm), is an advanced form of the Data
-                            Encryption Standard (DES), a symmetric-key block cipher.</p>
-                        <p className="mb-1 leading-relaxed">
-                            TDES served as an important bridge in cryptography, offering enhanced security over DES
-                            until more advanced algorithms like AES became standard. It's a testament to the evolving
-                            nature of cryptographic practices and the continuous quest for more secure encryption
-                            methods.
+                        <p className="mb-4 leading-relaxed">
+                        Image encryption scheme based on a method known as visual cryptography, 
+                        ideal for encrypting binary images. Its central idea is based on dividing 
+                        an image into several "transparencies" -known as shares-  such that by superimposing these 
+                        transparencies the original image is revealed. 
+                        It is important to emphasize that each transparency by itself does not reveal 
+                        information about the original image, ensuring confidentiality.
                         </p>
                     </div>
                 </div>
