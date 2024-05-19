@@ -496,6 +496,8 @@ class watermarkView(APIView):
             watermark_img = request.data['watermark_img']
             method = request.data.get('method')
 
+            print(method)
+
             if method == 'insert':
                 watermarked_img = add_watermark_w(original_img, watermark_img)
 

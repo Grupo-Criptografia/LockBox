@@ -35,3 +35,4 @@ export const createRsa = (data) => sendRequest("RSA/", data);
 export const createElgamal = (data) => sendRequest("elgamal/", data);
 export const createSignature = (data) => sendRequest("digsignature/", data);
 export const createVisualCrypt = (data) => sendRequest("visual_crypt/", data, 'multipart/form-data');
+export const createWatermark = (data) => sendRequest("watermark/", data, 'multipart/form-data');

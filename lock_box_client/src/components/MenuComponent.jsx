@@ -65,6 +65,7 @@ class Menu extends Component {
                         Signature</Link></li>
                     <li><Link className="font-semibold text-black dark:text-white" to="visualcrypt">Visual
                         Cryptography</Link></li>
+                    <li><Link className="font-semibold text-black dark:text-white" to="watermark">Watermark Image</Link></li>
                 </ul>
             </aside>
         )
