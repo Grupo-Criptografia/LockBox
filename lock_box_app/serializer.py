@@ -107,3 +107,9 @@ class VisualCryptSerializer(serializers.Serializer):
     share_img1 = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
     share_img2 = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
     method = serializers.CharField()
+
+
+class WatermarkSerializer(serializers.Serializer):
+    original_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    watermark_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    method = serializers.CharField()

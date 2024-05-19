@@ -26,10 +26,11 @@ from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 from .crypto_algorithms.RSA import RSAdecrypt, RSAencrypt
 from .crypto_algorithms.digital_signature import sign, verify
 from .crypto_algorithms.visual_cript import encrypt_image, decrypt_image
+from .crypto_algorithms.watermark import add_watermark_w, extract_watermark_w
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
     dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer, dataRabinSerializer, \
-    TdesSerializer, AesSerializer, dataRSASerializer, VisualCryptSerializer, DigSignatureSerializer
+    TdesSerializer, AesSerializer, dataRSASerializer, VisualCryptSerializer, DigSignatureSerializer, WatermarkSerializer
 from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest,
                     dataHillTextTest, dataElGamalTest,
                     dataRabinTest, dataRSATest)
@@ -46,34 +47,6 @@ def handle_exceptions(view_func):
 
     return wrapper
 
-
-# class shiftView(APIView):
-#     @handle_exceptions
-#     def post(self, request):
-
-#         plain_text = request.data.get('plain_text')
-#         k = request.data.get('k')
-#         cipher_text = request.data.get('cipher_text')
-#         method = request.data.get('method')
-#         list_plain_text = []
-
-#         if method == 'encrypt':
-#             k = int(k)
-#             cipher_text = encryptShift(plain_text, k - 1)
-
-#         if method == 'decrypt':
-#             k = int(k)
-#             plain_text = decryptShift(cipher_text, k - 1)
-
-#         if method == 'attack':
-#             k = 0
-#             list_plain_text = attackShift(cipher_text)
-
-#         data_obj = dataShiftTest(plain_text, cipher_text, k, list_plain_text)
-#         serializer_class = dataShiftSerializer(data_obj)
-#         return Response(serializer_class.data, status=status.HTTP_200_OK)
-
-# HACK
 
 class shiftView(APIView):
     @handle_exceptions
@@ -248,7 +221,6 @@ class hillImgView(APIView):
     # los últimos parámetros son para aceptar opcionalmente más argumentos
     def post(self, request, *args, **kwargs):
         HillImgSerializer = dataHillImgSerializer(data=request.data)
-        print(f"serializervalid:{HillImgSerializer.is_valid()}")
         if HillImgSerializer.is_valid():
             plain_img = request.data['plain_img']
             k = request.data.get('k')
@@ -256,8 +228,6 @@ class hillImgView(APIView):
             method = request.data.get('method')
 
         if method == 'encrypt':
-            # cipher_img = Image.fromarray(encrypt_image_hill(np.ndarray(plain_img), np.ndarray(k)))
-            print(f"k: {k}")
             k = ast.literal_eval(k)
             cipher_img = Image.fromarray(encrypt_image_hill(plain_img, np.array(k)))
             plain_img_base64 = convert_img_base64(plain_img)
@@ -509,6 +479,37 @@ class visualCryptView(APIView):
                 plain_img = decrypt_image(share_img1, share_img2)
                 response = {
                     'plain_img': plain_img
+                }
+
+        return Response(response, status=status.HTTP_200_OK)
+
+
+class watermarkView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    @handle_exceptions
+    def post(self, request, *args, **kwargs):
+        watermarkSerializer = WatermarkSerializer(data=request.data)
+
+        if watermarkSerializer.is_valid():
+            original_img = request.data['original_img']
+            watermark_img = request.data['watermark_img']
+            method = request.data.get('method')
+
+            if method == 'insert':
+                watermarked_img = add_watermark_w(original_img, watermark_img)
+
+                response = {
+                    'watermarked_img': watermarked_img,
+                    'message': 'ok'
+                }
+
+            if method == 'extract':
+                watermarked_img = extract_watermark_w(watermark_img)
+
+                response = {
+                    'ext_watermark_img': watermarked_img,
+                    'message': 'ok'
                 }
 
         return Response(response, status=status.HTTP_200_OK)
