@@ -19,14 +19,11 @@ export function HomeWatermark() {
                         </Link></div>
                     <div>
                         <h1 className="title-font sm:text-4xl text-3xl mb-6 font-medium text-gray-900">Water Mark in Images</h1>
-                        <p className="mb-4 leading-relaxed">Triple Data Encryption Standard (TDES), also known as Triple
-                            DES, 3DES, or TDEA (Triple Data Encryption Algorithm), is an advanced form of the Data
-                            Encryption Standard (DES), a symmetric-key block cipher.</p>
-                        <p className="mb-1 leading-relaxed">
-                            TDES served as an important bridge in cryptography, offering enhanced security over DES
-                            until more advanced algorithms like AES became standard. It's a testament to the evolving
-                            nature of cryptographic practices and the continuous quest for more secure encryption
-                            methods.
+                        <p className="mb-4 leading-relaxed">
+                            Implementation of an algorithm for the insertion of robust digital watermarks in images in 
+                            the frequency domain using the discrete Wavelet transform so that it is difficult to detect 
+                            and remove without affecting the visual quality of the image, the Wavelet method allows 
+                            dispersing the information through different levels of image detail.
                         </p>
                     </div>
                 </div>

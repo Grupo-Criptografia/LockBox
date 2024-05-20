@@ -37,7 +37,7 @@ export function WatermarkIns() {
                 <div>
                     <div className="text-center w-full mb-10">
                         <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                            User Guide for Insert Watermark in an Image
+                            User Guide for inserting the Watermark in an Image
                         </h1>
                     </div>
                     <div className="container px-5 mx-auto flex flex-wrap">
@@ -46,70 +46,34 @@ export function WatermarkIns() {
                                 <div className="flex pb-6 col-span-2 md:col-span-1 w-full">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            1. Select the Image to encrypt:
+                                            1. Decomposition of images in the wavelet domain
                                         </h2>
-                                        <p className="leading-relaxed">
-                                            In the first field of the form, choose the image you wish to encrypt. It's
-                                            important to ensure that the image is compatible with the block size used by
-                                            TDES. TDES processes data in fixed-size blocks, so larger images may need to
-                                            be segmented or resized.
-                                        </p>
+                                        <ul className="ml-5 list-disc">
+                                            <li>
+                                                <p className="leading-relaxed mt-1">The discrete wavelet transform is applied to the original image to obtain the wavelet coefficients, 
+                                                    this are segregate in LL, LH, HL or HH.</p>                        
+                                            </li>
+                                            <li>
+                                                <p className="leading-relaxed mt-1">The discrete wavelet transform is applied to the watermark to obtain its wavelet coefficients.</p>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div className="flex col-span-2 md:col-span-1 pb-6">
                                     <div className="flex-grow pl-4">
                                         <h2 className="font-medium title-font text-base text-gray-900 mb-1 trackng-wider">
-                                            2. Enter the Encryption Key (k):
-                                        </h2>
-                                        <p className="leading-relaxed">For TDES encryption, provide a 24-byte (192-bit)
-                                            key. This is effectively three 8-byte (64-bit) keys concatenated together,
-                                            each satisfying the 56-bit key requirement of DES, with parity bits. </p>
-                                        <p className="leading-relaxed mt-1"> Example of TDES keys (in text format):</p>
-                                        <ul className="ml-5 list-disc">
-                                            <li>
-                                                <p className="leading-relaxed mt-1"> Key 1: 1234567890ABCDEF12345678</p>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                </div>
-                                <div className="flex md:col-span-1 pb-6">
-                                    <div className="flex-grow pl-4">
-                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            3. Choose Encryption Mode:
+                                            2. Dip the watermark into the original image:
                                         </h2>
                                         <p className="leading-relaxed">
-                                            Select the mode of operation for the encryption (ECB, CBC, OFB, CFB, CTR).
+                                        The category of Wavelet coefficients (LL, LH, HL or HH) of the original image are selected, the selected coefficients are combined with the corresponding coefficients of the watermark using a weighted sum.
                                         </p>
                                     </div>
-                                </div>
-                                <div className="flex col-span-1 pb-6">
-                                    <div className="flex-grow pl-4">
-                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            4. Encrypt the Image:
-                                        </h2>
-                                        <p className="leading-relaxed">
-                                            Once you've entered the image and the encryption key, click the
-                                            "Encrypt" button.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex md:col-span-1 pb-6">
-                                    <div className="flex-grow pl-4">
-                                        <h2 className="font-medium title-font text-base text-gray-900 mb-1 tracking-wider">
-                                            5. Obtain the results:
-                                        </h2>
-                                        <p className="leading-relaxed">
-                                            On the side of the form, you will see the result: your origin image, the
-                                            decryption key used, and the cipher image.
-                                        </p>
-                                    </div>
-                                </div>
+                                </div>                        
                                 <div className="flex col-span-2 pb-6">
                                     <div className="flex flex-col pl-4">
                                         <h2 className="font-medium title-font text-base text-color3 mb-1 tracking-wider">Note</h2>
                                         <p className="leading-relaxed">
-                                            Remember save the cipher imagen and the key that you used to encrypt.
+                                            Remember save the image return by the program so you can extract the original image.
                                         </p>
                                     </div>
                                 </div>
@@ -126,7 +90,7 @@ export function WatermarkIns() {
                         <div
                             className="flex flex-col bg-color1 text-charcoal w-3/4  md:w-3/4 overflow-hidden rounded-lg h-auto shadow-lg items-center justify-center py-5">
                             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font mb-4">
-                                Form Encrypt Image
+                                Form to insert Watermark
                             </h1>
 
                             <Formik initialValues={initialValues}
