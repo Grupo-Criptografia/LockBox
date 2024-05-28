@@ -50,6 +50,12 @@ import {HomePermutation} from "../pages/pagespermutation/homepermutation.jsx";
 import {HomeDigSignature} from "../pages/pagesdigsignature/homedigsignature.jsx";
 import {FormSignature} from "../pages/pagesdigsignature/formsignature.jsx";
 import {FormVerifySignature} from "../pages/pagesdigsignature/formverifysignature.jsx";
+import {HomeVisualCrypt} from "../pages/pagesvisualcrypt/homevisualcrypt.jsx";
+import {VisualEncrypt} from "../pages/pagesvisualcrypt/visualencrypt.jsx";
+import {VisualDecrypt} from "../pages/pagesvisualcrypt/visualdecrypt.jsx";
+import {HomeWatermark} from "../pages/pageswatermark/homewatermark.jsx";
+import {WatermarkIns} from "../pages/pageswatermark/watermarkins.jsx";
+import {WatermarkExt} from "../pages/pageswatermark/watermarkext.jsx";
 
 
 class Main extends Component {
@@ -130,6 +136,16 @@ class Main extends Component {
                     <Route path="/digsignature" element={<HomeDigSignature/>}>
                         <Route path={"signature"} element={<FormSignature/>}/>
                         <Route path={"verification"} element={<FormVerifySignature/>}/>
+                    </Route>
+                    {/*Pages Visual Cryptography*/}
+                    <Route path="/visualcrypt" element={<HomeVisualCrypt/>}>
+                        <Route path={"encrypt"} element={<VisualEncrypt/>}/>
+                        <Route path={"decrypt"} element={<VisualDecrypt/>}/>
+                    </Route>
+                    {/*Pages Visual Cryptography*/}
+                    <Route path="/watermark" element={<HomeWatermark/>}>
+                        <Route path={"insert"} element={<WatermarkIns/>}/>
+                        <Route path={"extract"} element={<WatermarkExt/>}/>
                     </Route>
                 </Routes>
             </div>

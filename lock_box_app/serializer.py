@@ -100,3 +100,16 @@ class DigSignatureSerializer(serializers.Serializer):
     pk = serializers.CharField(allow_blank=True)
     vk = serializers.CharField(allow_blank=True)
     method = serializers.CharField(allow_blank=True)
+
+
+class VisualCryptSerializer(serializers.Serializer):
+    plain_image = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    share_img1 = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    share_img2 = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    method = serializers.CharField()
+
+
+class WatermarkSerializer(serializers.Serializer):
+    original_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    watermark_img = serializers.FileField(max_length=None, allow_empty_file=True, required=False)
+    method = serializers.CharField()

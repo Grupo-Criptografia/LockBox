@@ -25,10 +25,12 @@ from .crypto_algorithms.triple_des import encrypt_image_tdes, decrypt_image_tdes
 from .crypto_algorithms.aes import encrypt_image_aes, decrypt_image_aes
 from .crypto_algorithms.RSA import RSAdecrypt, RSAencrypt
 from .crypto_algorithms.digital_signature import sign, verify
+from .crypto_algorithms.visual_cript import encrypt_image, decrypt_image
+from .crypto_algorithms.watermark import add_watermark_w, extract_watermark_w
 
 from .serializer import dataShiftSerializer, dataSubstitutionSerializer, dataAffineSerializer, dataVigenereSerializer, \
     dataSDESSerializer, dataHillTextSerializer, dataHillImgSerializer, ElGamalSerializer, dataRabinSerializer, \
-    TdesSerializer, AesSerializer, dataRSASerializer, DigSignatureSerializer
+    TdesSerializer, AesSerializer, dataRSASerializer, VisualCryptSerializer, DigSignatureSerializer, WatermarkSerializer
 from .tests import (dataShiftTest, dataSubstitutionTest, dataAffineTest, dataVigenereTest, dataSDESTest,
                     dataHillTextTest, dataElGamalTest,
                     dataRabinTest, dataRSATest)
@@ -180,11 +182,6 @@ class sdesView(APIView):
 
         k = int(k, 2)
 
-        print(f"plain_text: {plain_text}")
-        print(f"k: {k}")
-        print(f"cipher_text: {cipher_text}")
-        print(f"method: {method}")
-
         if method == 'encrypt':
             cipher_text = encrypt_des(k, plain_text)
 
@@ -224,7 +221,6 @@ class hillImgView(APIView):
     # los últimos parámetros son para aceptar opcionalmente más argumentos
     def post(self, request, *args, **kwargs):
         HillImgSerializer = dataHillImgSerializer(data=request.data)
-
         if HillImgSerializer.is_valid():
             plain_img = request.data['plain_img']
             k = request.data.get('k')
@@ -232,7 +228,6 @@ class hillImgView(APIView):
             method = request.data.get('method')
 
         if method == 'encrypt':
-            print(f"k: {k}")
             k = ast.literal_eval(k)
             cipher_img = Image.fromarray(encrypt_image_hill(plain_img, np.array(k)))
             plain_img_base64 = convert_img_base64(plain_img)
@@ -303,6 +298,7 @@ class tdesView(APIView):
             if method == 'decrypt':
                 if mode == 'ECB':
                     plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode))
+                    plain_img.show()
                 if mode == 'CBC' or mode == 'OFB' or mode == 'CFB':
                     plain_img = Image.fromarray(decrypt_image_tdes(cipher_img, k.encode(), mode, iv=b'initvect'))
                 if mode == 'CTR':
@@ -312,22 +308,20 @@ class tdesView(APIView):
                 plain_img_base64 = convert_pil_image_to_base64(plain_img)
                 cipher_img_base64 = convert_img_base64(cipher_img)
 
-            response = {
-                'plain_img': plain_img_base64,
-                'cipher_img': cipher_img_base64,
-                'k': k,
-                'mode': mode
-            }
+        response = {
+            'plain_img': plain_img_base64,
+            'cipher_img': cipher_img_base64,
+            'k': k,
+            'mode': mode
+        }
 
-            return Response(response, status=status.HTTP_200_OK)
-
-        else:
-            return Response(tdesSerializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class rabinView(APIView):
     @handle_exceptions
     def post(self, request):
+
         plain_text = request.data.get('plain_text')
         cipher_text = request.data.get('cipher_text')
         n = request.data.get('n')
@@ -336,11 +330,10 @@ class rabinView(APIView):
         method = request.data.get('method')
 
         if method == 'encrypt':
-            plain_text = plain_text.replace(" ", "").lower()
-            cipher_text = encrypt_rabin(plain_text, int(n))
+            cipher_text = encrypt_rabin(plain_text, n)
 
         if method == 'decrypt':
-            plain_text = decrypt_rabin(cipher_text, int(p), int(q))
+            plain_text = decrypt_rabin(plain_text, p, q)
 
         data_obj = dataRabinTest(plain_text, cipher_text, n, p, q)
         serializer_class = dataRabinSerializer(data_obj)
@@ -359,14 +352,14 @@ class RSAView(APIView):
 
         if method == 'encrypt':
             key_array = [int(x) for x in public_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
-            key = rsa.PublicKey(key_array[0], key_array[1])
-            cipher_text = RSAencrypt(plain_text, key)
+            pu_key = rsa.PublicKey(key_array[0], key_array[1])
+            cipher_text = RSAencrypt(plain_text, pu_key)
 
         if method == 'decrypt':
             key_array = [int(x) for x in private_key.replace('(', '').replace(')', '').replace(' ', '').split(",")]
             n = key_array[1] * key_array[2]
-            key = rsa.PrivateKey(n, 0, key_array[0], key_array[1], key_array[2])
-            plain_text = RSAdecrypt(cipher_text, key)
+            pr_key = rsa.PrivateKey(n, 0, key_array[0], key_array[1], key_array[2])
+            plain_text = RSAdecrypt(cipher_text, pr_key)
 
         data_obj = dataRSATest(plain_text, cipher_text, public_key, private_key)
         serializer_class = dataRSASerializer(data_obj)
@@ -459,3 +452,66 @@ class digSignatureView(APIView):
 
         else:
             return Response(digSignatureSerializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class visualCryptView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    @handle_exceptions
+    def post(self, request, *args, **kwargs):
+        visualCryptSerializer = VisualCryptSerializer(data=request.data)
+
+        if visualCryptSerializer.is_valid():
+            plain_img = request.data['plain_img']
+            share_img1 = request.data['share_img1']
+            share_img2 = request.data['share_img2']
+            method = request.data.get('method')
+
+            if method == 'encrypt':
+                share_img1, share_img2 = encrypt_image(plain_img)
+
+                response = {
+                    'share_img1': share_img1,
+                    'share_img2': share_img2
+                }
+
+            elif method == 'decrypt':
+                plain_img = decrypt_image(share_img1, share_img2)
+                response = {
+                    'plain_img': plain_img
+                }
+
+        return Response(response, status=status.HTTP_200_OK)
+
+
+class watermarkView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    @handle_exceptions
+    def post(self, request, *args, **kwargs):
+        watermarkSerializer = WatermarkSerializer(data=request.data)
+
+        if watermarkSerializer.is_valid():
+            original_img = request.data['original_img']
+            watermark_img = request.data['watermark_img']
+            method = request.data.get('method')
+
+            print(method)
+
+            if method == 'insert':
+                watermarked_img = add_watermark_w(original_img, watermark_img)
+
+                response = {
+                    'watermarked_img': watermarked_img,
+                    'message': 'ok'
+                }
+
+            if method == 'extract':
+                watermarked_img = extract_watermark_w(watermark_img)
+
+                response = {
+                    'ext_watermark_img': watermarked_img,
+                    'message': 'ok'
+                }
+
+        return Response(response, status=status.HTTP_200_OK)
